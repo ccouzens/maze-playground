@@ -4,12 +4,6 @@ use wasm_bindgen::prelude::wasm_bindgen;
 #[wasm_bindgen(js_name = Maze)]
 pub struct WasmMaze(Maze);
 
-impl std::fmt::Display for WasmMaze {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0.as_block_printer())
-    }
-}
-
 #[wasm_bindgen(js_class=Maze)]
 impl WasmMaze {
     #[wasm_bindgen(constructor)]
@@ -35,5 +29,10 @@ impl WasmMaze {
 
     pub fn walls_pointer(&self) -> *const bool {
         self.0.walls().as_ptr()
+    }
+
+    #[wasm_bindgen(js_name = toString)]
+    pub fn to_string(&self) -> String {
+        format!("{}", self.0.as_block_printer())
     }
 }
