@@ -1,5 +1,7 @@
 mod printers;
 use printers::BlockPrinter;
+
+pub mod generators;
 /// A rectangular grid of cells with passageways or walls connecting or isolating them in the 4 cardinal directions
 ///
 /// The top left corner cell has coordinates x=0, y=0.
