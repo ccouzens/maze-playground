@@ -140,6 +140,18 @@ impl Maze {
 
         (0..(width * height)).map(move |i| (i % width, i / width))
     }
+
+    pub fn width(&self) -> usize {
+        self.width
+    }
+
+    pub fn height(&self) -> usize {
+        self.height
+    }
+
+    pub fn walls(&self) -> &[bool] {
+        &self.walls
+    }
 }
 
 #[cfg(test)]
