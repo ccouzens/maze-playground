@@ -1,8 +1,6 @@
-use maze::generators::generate_maze_with_binary_tree_algorithm;
-
-use maze::generators::generate_maze_with_sidewinder_algorithm;
-
-mod maze;
+use maze_playground::maze::generators::{
+    generate_maze_with_binary_tree_algorithm, generate_maze_with_sidewinder_algorithm,
+};
 
 fn main() {
     let maze = generate_maze_with_binary_tree_algorithm(&mut rand::thread_rng(), 10, 10);
