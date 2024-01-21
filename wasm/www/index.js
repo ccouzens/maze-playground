@@ -1,4 +1,4 @@
-import { Maze } from "wasm-maze";
+import { Maze } from "../pkg";
 
 const m = new Maze(10, 10);
 

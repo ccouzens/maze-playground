@@ -1,4 +1,5 @@
 const path = require("path");
+const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 
 module.exports = {
   mode: "development",
@@ -11,4 +12,9 @@ module.exports = {
       directory: path.join(__dirname, "public"),
     },
   },
+  plugins: [
+    new WasmPackPlugin({
+      crateDirectory: path.resolve(__dirname, ".."),
+    }),
+  ],
 };
