@@ -1,5 +1,6 @@
 mod printers;
 use printers::BlockPrinter;
+use std::fmt::Write;
 
 pub mod generators;
 /// A rectangular grid of cells with passageways or walls connecting or isolating them in the 4 cardinal directions
@@ -62,6 +63,33 @@ impl Maze {
 
     pub fn as_block_printer(&self) -> BlockPrinter {
         BlockPrinter { maze: self }
+    }
+
+    /// Create an SVG path representing the walls of this maze.
+    /// The native coordinate space is (0,0) top left, (1, 1) bottom right.
+    /// Use the scale values to better fit your viewbox.
+    /// https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#path_commands
+    pub fn to_svg_path(&self, scale_x: f64, scale_y: f64) -> String {
+        let scale_x = scale_x / self.width as f64;
+        let scale_y = scale_y / self.height as f64;
+        let mut output = String::new();
+        let mut draw_line = |x1: usize, y1: usize, x2: usize, y2: usize| {
+            write!(
+                &mut output,
+                "M {}, {} {}, {}",
+                x1 as f64 * scale_x,
+                y1 as f64 * scale_y,
+                x2 as f64 * scale_x,
+                y2 as f64 * scale_y
+            )
+            .unwrap();
+        };
+        draw_line(0, 0, self.width, 0);
+        draw_line(0, 0, 0, self.height - 1);
+        draw_line(0, self.height, self.width, self.height);
+        draw_line(self.width, 1, self.width, self.height);
+
+        output
     }
 
     fn wall_index_between(
