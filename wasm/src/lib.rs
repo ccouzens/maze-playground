@@ -36,6 +36,11 @@ impl WasmMaze {
         format!("{}", self.0.as_block_printer())
     }
 
+    #[wasm_bindgen(js_name = toBoxDrawingString)]
+    pub fn to_box_drawing_string(&self) -> String {
+        format!("{}", self.0.as_box_drawing_printer())
+    }
+
     pub fn to_svg_path(&self, scale_x: f64, scale_y: f64) -> String {
         self.0.to_svg_path(scale_x, scale_y)
     }

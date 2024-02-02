@@ -33,6 +33,8 @@ pub struct Maze {
 }
 use thiserror::Error;
 
+use self::printers::BoxDrawingPrinter;
+
 #[derive(Error, Debug)]
 pub enum MazeNewError {
     #[error("inputs exceed index")]
@@ -63,6 +65,10 @@ impl Maze {
 
     pub fn as_block_printer(&self) -> BlockPrinter {
         BlockPrinter { maze: self }
+    }
+
+    pub fn as_box_drawing_printer(&self) -> BoxDrawingPrinter {
+        BoxDrawingPrinter { maze: self }
     }
 
     /// Create an SVG path representing the walls of this maze.
