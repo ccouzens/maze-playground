@@ -76,7 +76,7 @@ impl Maze {
         let mut draw_line = |x1: usize, y1: usize, x2: usize, y2: usize| {
             write!(
                 &mut output,
-                "M {}, {} {}, {}",
+                "M{} {} {} {}",
                 x1 as f64 * scale_x,
                 y1 as f64 * scale_y,
                 x2 as f64 * scale_x,
@@ -93,19 +93,37 @@ impl Maze {
 
         // vertical walls
         for (x1, x2) in (0..self.width()).zip(1..self.width()) {
-            for y in 0..self.height() {
-                if !self.is_connected_pair(x1, y, x2, y) {
-                    draw_line(x2, y, x2, y + 1);
+            let mut y = 0;
+            while y < self.height() {
+                let y1 = y;
+
+                while self.is_wall_between(x1, y, x2, y) {
+                    y += 1;
                 }
+
+                if y1 != y {
+                    draw_line(x2, y, x2, y1);
+                }
+
+                y += 1;
             }
         }
 
         // horizontal walls
         for (y1, y2) in (0..self.height()).zip(1..self.height()) {
-            for x in 0..self.width() {
-                if !self.is_connected_pair(x, y1, x, y2) {
-                    draw_line(x, y2, x + 1, y2);
+            let mut x = 0;
+            while x < self.width() {
+                let x1 = x;
+
+                while self.is_wall_between(x, y1, x, y2) {
+                    x += 1;
                 }
+
+                if x1 != x {
+                    draw_line(x, y2, x1, y2);
+                }
+
+                x += 1;
             }
         }
 
@@ -162,6 +180,20 @@ impl Maze {
         match wall_index {
             None => false,
             Some(i) => !self.walls[i],
+        }
+    }
+
+    fn is_wall_between(
+        &self,
+        cell_a_x: usize,
+        cell_a_y: usize,
+        cell_b_x: usize,
+        cell_b_y: usize,
+    ) -> bool {
+        let wall_index = self.wall_index_between(cell_a_x, cell_a_y, cell_b_x, cell_b_y);
+        match wall_index {
+            None => false,
+            Some(i) => self.walls[i],
         }
     }
 
