@@ -84,10 +84,30 @@ impl Maze {
             )
             .unwrap();
         };
+
+        // outer
         draw_line(0, 0, self.width, 0);
         draw_line(0, 0, 0, self.height - 1);
         draw_line(0, self.height, self.width, self.height);
         draw_line(self.width, 1, self.width, self.height);
+
+        // vertical walls
+        for (x1, x2) in (0..self.width()).zip(1..self.width()) {
+            for y in 0..self.height() {
+                if !self.is_connected_pair(x1, y, x2, y) {
+                    draw_line(x2, y, x2, y + 1);
+                }
+            }
+        }
+
+        // horizontal walls
+        for (y1, y2) in (0..self.height()).zip(1..self.height()) {
+            for x in 0..self.width() {
+                if !self.is_connected_pair(x, y1, x, y2) {
+                    draw_line(x, y2, x + 1, y2);
+                }
+            }
+        }
 
         output
     }
