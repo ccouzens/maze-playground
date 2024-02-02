@@ -8,4 +8,5 @@ const svgPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
 svgPath.setAttribute("d", m.to_svg_path(m.width, m.height));
 svg.append(svgPath);
 
-console.log(m.toString());
+const printArea = document.getElementById("print");
+printArea.textContent = m.toString();
