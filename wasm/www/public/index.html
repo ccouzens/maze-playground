@@ -4,16 +4,30 @@
     <meta charset="utf-8" />
     <title>Maze</title>
     <style>
+      :root {
+        --background: white;
+        --foreground: black;
+        background: var(--background);
+        color: var(--foreground);
+      }
+
       #svg {
         width: 20em;
         height: 20em;
       }
 
       #svg path {
-        stroke: black;
+        stroke: var(--foreground);
         fill: none;
         stroke-width: 0.1;
         stroke-linecap: square;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: black;
+          --foreground: rgb(128, 255, 128);
+        }
       }
     </style>
   </head>
@@ -26,6 +40,6 @@
     <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
     <pre id="stringBlock"></pre>
     <pre id="stringBoxDrawing"></pre>
-    <script src="./main.js"></script>
+    <script src=" ./main.js"></script>
   </body>
 </html>
