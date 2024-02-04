@@ -91,24 +91,18 @@ impl Maze {
             .unwrap();
         };
 
-        // outer
-        draw_line(0, 0, self.width, 0);
-        draw_line(0, 0, 0, self.height - 1);
-        draw_line(0, self.height, self.width, self.height);
-        draw_line(self.width, 1, self.width, self.height);
-
         // vertical walls
-        for (x1, x2) in (0..self.width()).zip(1..self.width()) {
+        for x in 0..=self.width {
             let mut y = 0;
-            while y < self.height() {
+            while y < self.height {
                 let y1 = y;
 
-                while self.is_wall_between(x1, y, x2, y) {
+                while self.displayed_as_vertical_wall(x, y) {
                     y += 1;
                 }
 
                 if y1 != y {
-                    draw_line(x2, y, x2, y1);
+                    draw_line(x, y, x, y1);
                 }
 
                 y += 1;
@@ -116,17 +110,17 @@ impl Maze {
         }
 
         // horizontal walls
-        for (y1, y2) in (0..self.height()).zip(1..self.height()) {
+        for y in 0..=self.height {
             let mut x = 0;
-            while x < self.width() {
+            while x < self.width {
                 let x1 = x;
 
-                while self.is_wall_between(x, y1, x, y2) {
+                while self.displayed_as_horizontal_wall(x, y) {
                     x += 1;
                 }
 
                 if x1 != x {
-                    draw_line(x, y2, x1, y2);
+                    draw_line(x, y, x1, y);
                 }
 
                 x += 1;
@@ -189,17 +183,27 @@ impl Maze {
         }
     }
 
-    fn is_wall_between(
-        &self,
-        cell_a_x: usize,
-        cell_a_y: usize,
-        cell_b_x: usize,
-        cell_b_y: usize,
-    ) -> bool {
-        let wall_index = self.wall_index_between(cell_a_x, cell_a_y, cell_b_x, cell_b_y);
-        match wall_index {
-            None => false,
-            Some(i) => self.walls[i],
+    fn displayed_as_horizontal_wall(&self, x: usize, y: usize) -> bool {
+        if x >= self.width {
+            return false;
+        }
+        match y {
+            0 => true,
+            _ if y < self.height => !self.is_connected_pair(x, y - 1, x, y),
+            _ if y == self.height => true,
+            _ => false,
+        }
+    }
+
+    fn displayed_as_vertical_wall(&self, x: usize, y: usize) -> bool {
+        if y >= self.height {
+            return false;
+        }
+        match x {
+            0 => y + 1 != self.height,
+            _ if x < self.width => !self.is_connected_pair(x - 1, y, x, y),
+            _ if x == self.width => y != 0,
+            _ => false,
         }
     }
 
