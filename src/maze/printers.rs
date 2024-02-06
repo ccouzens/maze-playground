@@ -1,4 +1,6 @@
 use super::Maze;
+mod bitmap;
+pub use bitmap::BitmapRenderer;
 
 pub struct BlockPrinter<'a> {
     pub maze: &'a Maze,

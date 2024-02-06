@@ -44,4 +44,35 @@ impl WasmMaze {
     pub fn to_svg_path(&self, scale_x: f64, scale_y: f64) -> String {
         self.0.to_svg_path(scale_x, scale_y)
     }
+
+    pub fn to_bitmap(&self) -> WasmBitmap {
+        let renderer = self.0.as_bitmap_printer();
+        WasmBitmap {
+            data: renderer.to_bitmap(),
+            width: renderer.width(),
+            height: renderer.height(),
+        }
+    }
+}
+
+#[wasm_bindgen(js_name = Bitmap)]
+pub struct WasmBitmap {
+    data: Vec<u8>,
+    width: usize,
+    height: usize,
+}
+
+#[wasm_bindgen(js_class=Bitmap)]
+impl WasmBitmap {
+    pub fn width(&self) -> usize {
+        self.width
+    }
+
+    pub fn height(&self) -> usize {
+        self.height
+    }
+
+    pub fn bitmap(&self) -> Vec<u8> {
+        self.data.clone()
+    }
 }

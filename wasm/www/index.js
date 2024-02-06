@@ -13,3 +13,17 @@ stringBlockPre.textContent = m.toString();
 
 const stringBoxDrawingPre = document.getElementById("stringBoxDrawing");
 stringBoxDrawingPre.textContent = m.toBoxDrawingString();
+
+const bitmapRendererCanvas = document.getElementById("bitmapRendererCanvas");
+const bitmapRendererContext = bitmapRendererCanvas.getContext("bitmaprenderer");
+const bitmap = m.to_bitmap();
+bitmapRendererContext.transferFromImageBitmap(
+  await createImageBitmap(
+    new ImageData(
+      new Uint8ClampedArray(bitmap.bitmap()),
+      bitmap.width(),
+      bitmap.height(),
+    ),
+  ),
+);
+bitmap.free();

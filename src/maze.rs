@@ -1,5 +1,5 @@
 mod printers;
-use printers::BlockPrinter;
+use printers::{BitmapRenderer, BlockPrinter, BoxDrawingPrinter};
 use std::fmt::Write;
 
 pub mod generators;
@@ -32,8 +32,6 @@ pub struct Maze {
     walls: Vec<bool>,
 }
 use thiserror::Error;
-
-use self::printers::BoxDrawingPrinter;
 
 #[derive(Error, Debug)]
 pub enum MazeNewError {
@@ -69,6 +67,10 @@ impl Maze {
 
     pub fn as_box_drawing_printer(&self) -> BoxDrawingPrinter {
         BoxDrawingPrinter { maze: self }
+    }
+
+    pub fn as_bitmap_printer(&self) -> BitmapRenderer {
+        BitmapRenderer { maze: self }
     }
 
     /// Create an SVG path representing the walls of this maze.
