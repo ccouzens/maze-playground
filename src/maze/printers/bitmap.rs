@@ -1,7 +1,7 @@
 use super::Maze;
 
 const WALL: [u8; 4] = [255, 255, 255, 255];
-const PASSAGE: [u8; 4] = [0, 0, 0, 255];
+const PASSAGE: [u8; 4] = [0, 0, 0, 0];
 
 pub struct BitmapRenderer<'a> {
     pub maze: &'a Maze,

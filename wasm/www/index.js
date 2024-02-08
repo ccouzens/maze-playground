@@ -14,9 +14,12 @@ stringBlockPre.textContent = m.toString();
 const stringBoxDrawingPre = document.getElementById("stringBoxDrawing");
 stringBoxDrawingPre.textContent = m.toBoxDrawingString();
 
-const bitmapRendererCanvas = document.getElementById("bitmapRendererCanvas");
-const bitmapRendererContext = bitmapRendererCanvas.getContext("bitmaprenderer");
 const bitmap = m.to_bitmap();
+const bitmapRendererCanvas = new OffscreenCanvas(
+  bitmap.width(),
+  bitmap.height(),
+);
+const bitmapRendererContext = bitmapRendererCanvas.getContext("bitmaprenderer");
 bitmapRendererContext.transferFromImageBitmap(
   await createImageBitmap(
     new ImageData(
@@ -27,3 +30,7 @@ bitmapRendererContext.transferFromImageBitmap(
   ),
 );
 bitmap.free();
+const bitmapBlob = await bitmapRendererCanvas.convertToBlob();
+const bitmapUrl = URL.createObjectURL(bitmapBlob);
+const bitmapRendererMask = document.getElementById("bitmapRendererMask");
+bitmapRendererMask.style.maskImage = `url(${bitmapUrl})`;

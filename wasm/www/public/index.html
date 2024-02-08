@@ -16,31 +16,17 @@
         stroke-linecap: square;
       }
 
-      #bitmapRendererCanvasParent {
+      #bitmapRendererMask {
         width: 20em;
         height: 20em;
-        background-color: white;
-      }
-
-      #bitmapRendererCanvas {
-        width: 100%;
-        height: 100%;
-        image-rendering: crisp-edges;
-        mix-blend-mode: difference;
+        background-color: currentColor;
+        mask-size: 100% 100%;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
           background-color: black;
           color: hsl(30, 100%, 75%);
-        }
-
-        #bitmapRendererCanvasParent {
-          background-color: currentColor;
-        }
-
-        #bitmapRendererCanvas {
-          mix-blend-mode: multiply;
         }
       }
     </style>
@@ -54,9 +40,7 @@
     <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
     <pre id="stringBlock"></pre>
     <pre id="stringBoxDrawing"></pre>
-    <div id="bitmapRendererCanvasParent">
-      <canvas id="bitmapRendererCanvas"></canvas>
-    </div>
+    <div id="bitmapRendererMask"></div>
     <script src=" ./main.js"></script>
   </body>
 </html>
