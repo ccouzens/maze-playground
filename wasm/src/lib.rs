@@ -1,78 +1,126 @@
-use maze_playground::maze::Maze;
-use wasm_bindgen::prelude::wasm_bindgen;
-
-#[wasm_bindgen(js_name = Maze)]
+use maze_playground::maze::{printers::BitmapRenderer, Maze};
 pub struct WasmMaze(Maze);
 
-#[wasm_bindgen(js_class=Maze)]
-impl WasmMaze {
-    #[wasm_bindgen(constructor)]
-    pub fn new(width: usize, height: usize) -> Self {
-        WasmMaze(
-            maze_playground::maze::generators::generate_maze_with_sidewinder_algorithm(
-                &mut rand::thread_rng(),
-                width,
-                height,
-            ),
-        )
+#[link(wasm_import_module = "random")]
+extern "C" {
+    fn fill_bytes(offset: *mut u8, length: usize);
+}
+
+struct JSRand();
+
+impl rand::RngCore for JSRand {
+    fn next_u32(&mut self) -> u32 {
+        rand_core::impls::next_u32_via_fill(self)
     }
 
-    #[wasm_bindgen(getter)]
-    pub fn width(&self) -> usize {
-        self.0.width()
+    fn next_u64(&mut self) -> u64 {
+        rand_core::impls::next_u64_via_fill(self)
     }
 
-    #[wasm_bindgen(getter)]
-    pub fn height(&self) -> usize {
-        self.0.height()
+    fn fill_bytes(&mut self, dest: &mut [u8]) {
+        unsafe { fill_bytes(dest.as_mut_ptr(), dest.len()) }
     }
 
-    pub fn walls_pointer(&self) -> *const bool {
-        self.0.walls().as_ptr()
-    }
-
-    #[wasm_bindgen(js_name = toString)]
-    pub fn to_string(&self) -> String {
-        format!("{}", self.0.as_block_printer())
-    }
-
-    #[wasm_bindgen(js_name = toBoxDrawingString)]
-    pub fn to_box_drawing_string(&self) -> String {
-        format!("{}", self.0.as_box_drawing_printer())
-    }
-
-    pub fn to_svg_path(&self, scale_x: f64, scale_y: f64) -> String {
-        self.0.to_svg_path(scale_x, scale_y)
-    }
-
-    pub fn to_bitmap(&self) -> WasmBitmap {
-        let renderer = self.0.as_bitmap_printer();
-        WasmBitmap {
-            data: renderer.to_bitmap(),
-            width: renderer.width(),
-            height: renderer.height(),
-        }
+    fn try_fill_bytes(&mut self, dest: &mut [u8]) -> Result<(), rand::Error> {
+        Ok(self.fill_bytes(dest))
     }
 }
 
-#[wasm_bindgen(js_name = Bitmap)]
-pub struct WasmBitmap {
-    data: Vec<u8>,
-    width: usize,
-    height: usize,
+#[no_mangle]
+pub extern "C" fn new_maze(width: usize, height: usize) -> &'static mut Maze {
+    let maze = maze_playground::maze::generators::generate_maze_with_sidewinder_algorithm(
+        &mut JSRand(),
+        width,
+        height,
+    );
+    Box::leak(Box::new(maze))
 }
 
-#[wasm_bindgen(js_class=Bitmap)]
-impl WasmBitmap {
-    pub fn width(&self) -> usize {
-        self.width
-    }
+#[no_mangle]
+pub extern "C" fn maze_width(maze: &Maze) -> usize {
+    maze.width()
+}
 
-    pub fn height(&self) -> usize {
-        self.height
-    }
+#[no_mangle]
+pub extern "C" fn maze_height(maze: &Maze) -> usize {
+    maze.height()
+}
 
-    pub fn bitmap(&self) -> Vec<u8> {
-        self.data.clone()
-    }
+#[no_mangle]
+pub unsafe extern "C" fn free_maze(maze: &mut Maze) {
+    drop(Box::from_raw(maze))
+}
+
+#[no_mangle]
+pub extern "C" fn maze_svg_path(maze: &Maze) -> &'static String {
+    let path = maze.to_svg_path(maze.width() as f64, maze.height() as f64);
+    Box::leak(Box::new(path))
+}
+
+#[no_mangle]
+pub extern "C" fn string_ptr(string: &String) -> *const u8 {
+    string.as_ptr()
+}
+
+#[no_mangle]
+pub extern "C" fn string_length(string: &String) -> usize {
+    string.len()
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn free_string(string: &mut String) {
+    drop(Box::from_raw(string))
+}
+
+#[no_mangle]
+pub extern "C" fn maze_to_block_string(maze: &Maze) -> &'static String {
+    let b = format!("{}", maze.as_block_printer());
+    Box::leak(Box::new(b))
+}
+
+#[no_mangle]
+pub extern "C" fn maze_to_drawing_string(maze: &Maze) -> &'static String {
+    let b = format!("{}", maze.as_box_drawing_printer());
+    Box::leak(Box::new(b))
+}
+
+#[no_mangle]
+pub extern "C" fn maze_to_bitmap_renderer(maze: &Maze) -> &'static BitmapRenderer {
+    let b = maze.as_bitmap_printer();
+    Box::leak(Box::new(b))
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn free_bitmap_renderer(bitmap: &mut BitmapRenderer) {
+    drop(Box::from_raw(bitmap))
+}
+
+#[no_mangle]
+pub extern "C" fn bitmap_renderer_width(bitmap: &BitmapRenderer) -> usize {
+    bitmap.width()
+}
+
+#[no_mangle]
+pub extern "C" fn bitmap_renderer_height(bitmap: &BitmapRenderer) -> usize {
+    bitmap.height()
+}
+
+#[no_mangle]
+pub extern "C" fn bitmap_renderer_to_bitmap(bitmap: &BitmapRenderer) -> &'static Vec<u8> {
+    Box::leak(Box::new(bitmap.to_bitmap()))
+}
+
+#[no_mangle]
+pub extern "C" fn vec_u8_ptr(vec: &Vec<u8>) -> *const u8 {
+    vec.as_ptr()
+}
+
+#[no_mangle]
+pub extern "C" fn vec_u8_length(vec: &Vec<u8>) -> usize {
+    vec.len()
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn free_vec_u8(vec: &mut Vec<u8>) {
+    drop(Box::from_raw(vec))
 }

@@ -1,4 +1,4 @@
-mod printers;
+pub mod printers;
 use printers::{BitmapRenderer, BlockPrinter, BoxDrawingPrinter};
 use std::fmt::Write;
 
