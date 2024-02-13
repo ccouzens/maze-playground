@@ -1,12 +1,17 @@
 {
   "scripts": {
-    "compileRust": "cd ..; cargo build --target=wasm32-unknown-unknown --release && wasm-opt -O3 -o ../target/wasm32-unknown-unknown/release/wasm.wasm ../target/wasm32-unknown-unknown/release/wasm.wasm",
+    "compileRust": "cd ..; cargo build --target=wasm32-unknown-unknown --release && wasm-opt -O3 -o ./www/public/computer.wasm ../target/wasm32-unknown-unknown/release/wasm.wasm",
     "build": "webpack --config webpack.config.js",
     "start": "webpack-dev-server",
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "@tsconfig/strictest": "^2.0.3",
+    "@types/node": "^20.11.17",
+    "@types/webpack": "^5.28.5",
     "prettier": "^3.2.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"

@@ -2,10 +2,7 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: "./bootstrap.js",
-  experiments: {
-    asyncWebAssembly: true,
-  },
+  entry: "./src/bootstrap.ts",
   devServer: {
     static: {
       directory: path.join(__dirname, "public"),
@@ -17,6 +14,18 @@ module.exports = {
         test: /\.wasm/,
         type: "asset/resource",
       },
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
     ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+  },
+  output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist"),
   },
 };

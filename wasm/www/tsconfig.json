@@ -1,0 +1,7 @@
+{
+  "extends": "@tsconfig/strictest/tsconfig.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "outDir": "./public/",
+  },
+}
