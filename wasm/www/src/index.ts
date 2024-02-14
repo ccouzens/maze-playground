@@ -44,12 +44,15 @@ async function initializeComputer(): Promise<Computer> {
 }
 
 function rustStringToJS(computer: Computer, rustString: RustString): string {
-  const ptr = computer.string_ptr(rustString);
-  const length = computer.string_length(rustString);
-  const bytes = new Uint8Array(computer.memory.buffer, ptr, length);
-  const jsString = new TextDecoder().decode(bytes);
-  computer.free_string(rustString);
-  return jsString;
+  try {
+    const ptr = computer.string_ptr(rustString);
+    const length = computer.string_length(rustString);
+    const bytes = new Uint8Array(computer.memory.buffer, ptr, length);
+    const jsString = new TextDecoder().decode(bytes);
+    return jsString;
+  } finally {
+    computer.free_string(rustString);
+  }
 }
 
 function putMazeInSvg(computer: Computer, maze: Maze) {
@@ -87,42 +90,48 @@ function putMazeInPre(computer: Computer, maze: Maze) {
 
 async function putMazeInMaskImage(computer: Computer, maze: Maze) {
   const bitmapRenderer = computer.maze_to_bitmap_renderer(maze);
-  const bitmapRendererCanvas = new OffscreenCanvas(
-    computer.bitmap_renderer_width(bitmapRenderer),
-    computer.bitmap_renderer_height(bitmapRenderer),
-  );
-  const bitmapRendererContext =
-    bitmapRendererCanvas.getContext("bitmaprenderer")!;
-  const bitmapVec = computer.bitmap_renderer_to_bitmap(bitmapRenderer);
-
-  bitmapRendererContext.transferFromImageBitmap(
-    await createImageBitmap(
-      new ImageData(
-        new Uint8ClampedArray(
-          computer.memory.buffer,
-          computer.vec_u8_ptr(bitmapVec),
-          computer.vec_u8_length(bitmapVec),
+  try {
+    const bitmapRendererCanvas = new OffscreenCanvas(
+      computer.bitmap_renderer_width(bitmapRenderer),
+      computer.bitmap_renderer_height(bitmapRenderer),
+    );
+    const bitmapRendererContext =
+      bitmapRendererCanvas.getContext("bitmaprenderer")!;
+    const bitmapVec = computer.bitmap_renderer_to_bitmap(bitmapRenderer);
+    try {
+      bitmapRendererContext.transferFromImageBitmap(
+        await createImageBitmap(
+          new ImageData(
+            new Uint8ClampedArray(
+              computer.memory.buffer,
+              computer.vec_u8_ptr(bitmapVec),
+              computer.vec_u8_length(bitmapVec),
+            ),
+            computer.bitmap_renderer_width(bitmapRenderer),
+            computer.bitmap_renderer_height(bitmapRenderer),
+          ),
         ),
-        computer.bitmap_renderer_width(bitmapRenderer),
-        computer.bitmap_renderer_height(bitmapRenderer),
-      ),
-    ),
-  );
-  computer.free_vec_u8(bitmapVec);
-  const bitmapBlob = await bitmapRendererCanvas.convertToBlob();
-  const bitmapUrl = URL.createObjectURL(bitmapBlob);
-  const bitmapRendererMask = document.getElementById("bitmapRendererMask")!;
-  bitmapRendererMask.style.maskImage = `url(${bitmapUrl})`;
-
-  computer.free_bitmap_renderer(bitmapRenderer);
+      );
+    } finally {
+      computer.free_vec_u8(bitmapVec);
+    }
+    const bitmapBlob = await bitmapRendererCanvas.convertToBlob();
+    const bitmapUrl = URL.createObjectURL(bitmapBlob);
+    const bitmapRendererMask = document.getElementById("bitmapRendererMask")!;
+    bitmapRendererMask.style.maskImage = `url(${bitmapUrl})`;
+  } finally {
+    computer.free_bitmap_renderer(bitmapRenderer);
+  }
 }
 
 export async function putMazeOnPage() {
   const computer = await initializeComputer();
   const maze = computer.new_maze(10, 10);
-
-  putMazeInSvg(computer, maze);
-  putMazeInPre(computer, maze);
-  await putMazeInMaskImage(computer, maze);
-  computer.free_maze(maze);
+  try {
+    putMazeInSvg(computer, maze);
+    putMazeInPre(computer, maze);
+    await putMazeInMaskImage(computer, maze);
+  } finally {
+    computer.free_maze(maze);
+  }
 }
