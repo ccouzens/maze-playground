@@ -3,5 +3,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "outDir": "./public/",
+    "target": "ES2022",
   },
+  "include": ["src/**/*"],
 }
