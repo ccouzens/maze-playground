@@ -1,9 +1,9 @@
 {
   "scripts": {
-    "compileRust": "cd ..; cargo build --target=wasm32-unknown-unknown --release && wasm-opt -O3 -o ./www/public/computer.wasm ../target/wasm32-unknown-unknown/release/wasm.wasm",
+    "compileRust": "./build.bash",
     "build": "webpack --config webpack.config.js",
     "start": "webpack-dev-server",
-    "format": "prettier --write ."
+    "format": "prettier --write '**/*.{ts,md,json,html,js,yaml,css}'"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.3",
