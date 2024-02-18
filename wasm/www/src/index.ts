@@ -190,7 +190,7 @@ async function putMazeInWebgl(_computer: Computer, _maze: Maze) {
   gl.useProgram(program);
   gl.bindVertexArray(vao);
 
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
 
 export async function putMazeOnPage() {
