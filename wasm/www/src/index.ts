@@ -160,7 +160,7 @@ async function putMazeInWebgl(_computer: Computer, _maze: Maze) {
 
   const [fragmentShader, vertexShader] = await Promise.all([
     fetchAndCreateFunction(gl, gl.FRAGMENT_SHADER, "./maze.frag"),
-    fetchAndCreateFunction(gl, gl.VERTEX_SHADER, "./identity.vert"),
+    fetchAndCreateFunction(gl, gl.VERTEX_SHADER, "./maze.vert"),
   ]);
 
   const program = gl.createProgram()!;
