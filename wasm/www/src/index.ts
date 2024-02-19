@@ -124,7 +124,7 @@ async function putMazeInMaskImage(computer: Computer, maze: Maze) {
   }
 }
 
-async function putMazeInWebgl(_computer: Computer, _maze: Maze) {
+async function putMazeInWebgl(computer: Computer, maze: Maze) {
   const canvas = document.querySelector<HTMLCanvasElement>("#webgl2");
   const gl = canvas?.getContext("webgl2");
   if (!gl) {
@@ -173,6 +173,19 @@ async function putMazeInWebgl(_computer: Computer, _maze: Maze) {
     throw `Could not compile program`;
   }
   const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+  const dimensionsUniformLocation = gl.getUniformLocation(
+    program,
+    "u_dimensions",
+  );
+  const pixelDimensionsUniformLocation = gl.getUniformLocation(
+    program,
+    "u_pixel_dimensions",
+  );
+  const wallSizeUniformLocation = gl.getUniformLocation(program, "u_wall_size");
+  const passageSizeUniformLocation = gl.getUniformLocation(
+    program,
+    "u_passage_size",
+  );
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   gl.bufferData(
@@ -184,10 +197,39 @@ async function putMazeInWebgl(_computer: Computer, _maze: Maze) {
   gl.bindVertexArray(vao);
   gl.enableVertexAttribArray(positionAttributeLocation);
   gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
-  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+  const mazeDimensions: [number, number] = [
+    computer.maze_width(maze),
+    computer.maze_height(maze),
+  ];
+  const WALL_SIZE = 1;
+  const PASSAGE_SIZE = 3;
+  const pixelDimensions: [number, number] = [
+    mazeDimensions[0] * (WALL_SIZE + PASSAGE_SIZE) + WALL_SIZE,
+    mazeDimensions[1] * (WALL_SIZE + PASSAGE_SIZE) + WALL_SIZE,
+  ];
   gl.clearColor(0, 0, 0, 0);
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(program);
+  gl.uniform2ui(
+    dimensionsUniformLocation,
+    mazeDimensions[0],
+    mazeDimensions[1],
+  );
+  gl.uniform1f(wallSizeUniformLocation, WALL_SIZE);
+  gl.uniform1f(passageSizeUniformLocation, PASSAGE_SIZE);
+  gl.uniform2f(
+    pixelDimensionsUniformLocation,
+    pixelDimensions[0],
+    pixelDimensions[1],
+  );
+  gl.viewport(
+    0,
+    0,
+    gl.canvas.width,
+    gl.canvas.height,
+    // mazeDimensions[0] * (WALL_SIZE + PASSAGE_SIZE) + WALL_SIZE,
+    // mazeDimensions[1] * (WALL_SIZE + PASSAGE_SIZE) + WALL_SIZE,
+  );
   gl.bindVertexArray(vao);
 
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
