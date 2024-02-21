@@ -3,7 +3,7 @@
     "compileRust": "./build.bash",
     "build": "webpack --config webpack.config.js",
     "start": "webpack-dev-server",
-    "format": "prettier --write '**/*.{ts,md,json,html,js,yaml,css}'"
+    "format": "prettier --write '**/*.{ts,md,json,html,js,yaml,css}' && clang-format -i public/maze.{vert,frag}"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.3",
