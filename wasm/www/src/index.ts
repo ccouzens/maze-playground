@@ -16,6 +16,8 @@ interface Computer {
   free_vec_u8: (str: RustVecU8) => void;
   maze_width: (maze: Maze) => number;
   maze_height: (maze: Maze) => number;
+  maze_walls_ptr: (maze: Maze) => number;
+  maze_walls_length: (maze: Maze) => number;
   maze_svg_path: (maze: Maze) => RustString;
   maze_to_block_string: (maze: Maze) => RustString;
   maze_to_drawing_string: (maze: Maze) => RustString;
@@ -53,6 +55,12 @@ function rustStringToJS(computer: Computer, rustString: RustString): string {
   } finally {
     computer.free_string(rustString);
   }
+}
+
+function mazeWalls(computer: Computer, maze: Maze): Uint8Array {
+  const ptr = computer.maze_walls_ptr(maze);
+  const length = computer.maze_walls_length(maze);
+  return new Uint8Array(computer.memory.buffer, ptr, length);
 }
 
 function putMazeInSvg(computer: Computer, maze: Maze) {
@@ -186,6 +194,10 @@ async function putMazeInWebgl(computer: Computer, maze: Maze) {
     program,
     "u_passage_size",
   );
+
+  const wallsUniformLocation = gl.getUniformLocation(program, "u_walls");
+  const walls = mazeWalls(computer, maze);
+
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   gl.bufferData(
@@ -201,6 +213,24 @@ async function putMazeInWebgl(computer: Computer, maze: Maze) {
     computer.maze_width(maze),
     computer.maze_height(maze),
   ];
+  const texture = gl.createTexture()!;
+  gl.activeTexture(gl.TEXTURE0 + 0);
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.R8,
+    walls.length,
+    1,
+    0,
+    gl.RED,
+    gl.UNSIGNED_BYTE,
+    walls,
+  );
   const WALL_SIZE = 1;
   const PASSAGE_SIZE = 3;
   const pixelDimensions: [number, number] = [
@@ -222,6 +252,7 @@ async function putMazeInWebgl(computer: Computer, maze: Maze) {
     pixelDimensions[0],
     pixelDimensions[1],
   );
+  gl.uniform1i(wallsUniformLocation, 0);
   gl.viewport(
     0,
     0,
