@@ -53,6 +53,7 @@ void main() {
       (in_wall.x && mazeDisplayedAsVerticalWall(normalized_pos)) ||
       (in_wall.y && mazeDisplayedAsHorizontalWall(normalized_pos));
 
-  outColour = displayAsWall ? vec4(1, 0.75, 0.5, 1)
-                            : vec4(0, vec2(normalized_pos) * 0.05, 1);
+  outColour = displayAsWall
+                  ? vec4(1)
+                  : vec4(vec2(normalized_pos) / vec2(u_dimensions), 0, 1);
 }
