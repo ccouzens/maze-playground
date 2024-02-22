@@ -253,14 +253,9 @@ async function putMazeInWebgl(computer: Computer, maze: Maze) {
     pixelDimensions[1],
   );
   gl.uniform1i(wallsUniformLocation, 0);
-  gl.viewport(
-    0,
-    0,
-    gl.canvas.width,
-    gl.canvas.height,
-    // mazeDimensions[0] * (WALL_SIZE + PASSAGE_SIZE) + WALL_SIZE,
-    // mazeDimensions[1] * (WALL_SIZE + PASSAGE_SIZE) + WALL_SIZE,
-  );
+  gl.canvas.width = mazeDimensions[0] * (WALL_SIZE + PASSAGE_SIZE) + WALL_SIZE;
+  gl.canvas.height = mazeDimensions[1] * (WALL_SIZE + PASSAGE_SIZE) + WALL_SIZE;
+  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
   gl.bindVertexArray(vao);
 
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
