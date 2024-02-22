@@ -47,6 +47,16 @@ pub extern "C" fn maze_height(maze: &Maze) -> usize {
 }
 
 #[no_mangle]
+pub extern "C" fn maze_walls_ptr(maze: &Maze) -> *const bool {
+    maze.walls().as_ptr()
+}
+
+#[no_mangle]
+pub extern "C" fn maze_walls_length(maze: &Maze) -> usize {
+    maze.walls().len()
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn free_maze(maze: &mut Maze) {
     drop(Box::from_raw(maze))
 }

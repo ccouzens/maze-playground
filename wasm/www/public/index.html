@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <title>Maze</title>
     <style>
-      #svg {
+      #svg,
+      #bitmapRendererMask,
+      #webgl2 {
         width: 20em;
         height: 20em;
       }
@@ -17,8 +19,6 @@
       }
 
       #bitmapRendererMask {
-        width: 20em;
-        height: 20em;
         background-color: currentColor;
         mask-size: 100% 100%;
         image-rendering: pixelated;
@@ -42,6 +42,7 @@
     <pre id="stringBlock"></pre>
     <pre id="stringBoxDrawing"></pre>
     <div id="bitmapRendererMask"></div>
+    <canvas id="webgl2"></canvas>
     <script src=" ./bundle.js"></script>
   </body>
 </html>
