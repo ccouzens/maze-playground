@@ -104,8 +104,6 @@ export async function putMazeInWebgl(computer: Computer, maze: Maze) {
     mazeDimensions[0] * (WALL_SIZE + PASSAGE_SIZE) + WALL_SIZE,
     mazeDimensions[1] * (WALL_SIZE + PASSAGE_SIZE) + WALL_SIZE,
   ];
-  gl.clearColor(0, 0, 0, 0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(program);
   gl.uniform2ui(
     dimensionsUniformLocation,
