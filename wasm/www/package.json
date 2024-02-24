@@ -3,7 +3,7 @@
     "compileRust": "./build.bash",
     "build": "webpack --config webpack.config.js --mode production",
     "start": "webpack-dev-server",
-    "format": "prettier --write '**/*.{ts,md,json,html,js,yaml,css}' '../../README.md' && clang-format -i public/{vert,frag}-LATEST.glsl"
+    "format": "prettier --write '../../**/*.{ts,md,json,html,js,yml,yaml,css}' && clang-format -i public/{vert,frag}-LATEST.glsl"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.3",

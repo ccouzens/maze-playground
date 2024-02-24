@@ -1,0 +1,17 @@
+$schema: https://json.schemastore.org/github-workflow.json
+name: Build and Deploy to Google Cloud Storage
+on:
+  push:
+    branches: ["main"]
+env:
+  GCP_TOKEN: ${{ secrets.GCP_TOKEN }}
+jobs:
+  build-deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: build and deploy
+        run: ./build.bash
