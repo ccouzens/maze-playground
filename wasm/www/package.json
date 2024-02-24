@@ -1,9 +1,9 @@
 {
   "scripts": {
     "compileRust": "./build.bash",
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js --mode production",
     "start": "webpack-dev-server",
-    "format": "prettier --write '**/*.{ts,md,json,html,js,yaml,css}' && clang-format -i public/maze.{vert,frag}"
+    "format": "prettier --write '**/*.{ts,md,json,html,js,yaml,css}' && clang-format -i public/{vert,frag}.glsl"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.3",
