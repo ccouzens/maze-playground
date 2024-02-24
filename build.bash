@@ -6,8 +6,8 @@ set -e
 # brew install binaryen
 
 (cd wasm/www; ./build.bash)
-(cd wasm/www; pnpm install)
-(cd wasm/www; pnpm run build)
+(cd wasm/www; npm install)
+(cd wasm/www; npm run build)
 
 VERSION="$(git rev-parse HEAD)"
 mkdir -p build
