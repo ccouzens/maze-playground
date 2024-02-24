@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Install rust wasm
         run: rustup target add wasm32-unknown-unknown
+      - name: Install wasm-opt
+        run: apt-get install binaryen
       - name: Checkout
         uses: actions/checkout@v3
       - name: build and deploy
