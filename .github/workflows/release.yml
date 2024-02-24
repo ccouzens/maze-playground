@@ -1,8 +1,8 @@
-$schema: https://json.schemastore.org/github-workflow.json
 name: Build and Deploy to Google Cloud Storage
 on:
   push:
     branches: ["main"]
+  workflow_dispatch:
 env:
   GCP_TOKEN: ${{ secrets.GCP_TOKEN }}
 jobs:
