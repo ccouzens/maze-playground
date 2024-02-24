@@ -16,6 +16,6 @@ jobs:
       - name: Install wasm-opt
         run: sudo apt-get install binaryen
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: build and deploy
         run: ./build.bash
