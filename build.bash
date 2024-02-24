@@ -27,7 +27,7 @@ curl -X POST --data-binary "@build/computer-${VERSION}.wasm" \
     --fail-with-body \
     -H "Authorization: Bearer ${GCP_TOKEN}" \
     -H "Content-Type: application/wasm" \
-    "https://storage.googleapis.com/upload/storage/v1/b/maze-playground/o?uploadType=media&name=wasm-${VERSION}.wasm"
+    "https://storage.googleapis.com/upload/storage/v1/b/maze-playground/o?uploadType=media&name=computer-${VERSION}.wasm"
 
 curl -X POST --data-binary "@build/frag-${VERSION}.glsl" \
     --fail-with-body \
