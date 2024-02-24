@@ -33,7 +33,7 @@ export interface Computer {
 async function initializeComputer(): Promise<Computer> {
   let computer: Computer;
   const wasm = await WebAssembly.instantiateStreaming(
-    fetch("./computer.wasm"),
+    fetch("./computer-LATEST.wasm"),
     {
       random: {
         fill_bytes(offset: number, length: number) {
