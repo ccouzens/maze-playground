@@ -12,32 +12,17 @@ uniform sampler2D u_walls;
 
 out vec4 outColour;
 
-float horizontalWallIndex(uvec2 pos) {
-  uint total = uint(2) * u_dimensions.x * u_dimensions.y - u_dimensions.x -
-               u_dimensions.y;
-  return float(pos.y - uint(1) + pos.x * (u_dimensions.y - uint(1))) /
-         float(total);
-}
-
-float verticalWallIndex(uvec2 pos) {
-  uint horizontalWallOffset = u_dimensions.x * (u_dimensions.y - uint(2));
-  uint total = uint(2) * u_dimensions.x * u_dimensions.y - u_dimensions.x -
-               u_dimensions.y;
-  return float(horizontalWallOffset + pos.y + pos.x * u_dimensions.y) /
-         float(total);
-}
-
-bool mazeDisplayedAsHorizontalWall(uvec2 pos) {
+bool mazeDisplayedAsHorizontalWall(uvec2 pos, vec2 texture_index) {
   return pos.y == uint(0) || pos.y == u_dimensions.y ||
          (pos.y > uint(0) && pos.y < u_dimensions.y &&
-          texture(u_walls, vec2(horizontalWallIndex(pos), 0)).r != 0.0);
+          texture(u_walls, vec2(texture_index.x, 0)).r != 0.0);
 }
 
-bool mazeDisplayedAsVerticalWall(uvec2 pos) {
+bool mazeDisplayedAsVerticalWall(uvec2 pos, vec2 texture_index) {
   return (pos.x == uint(0) && pos.y + uint(1) != u_dimensions.y) ||
          (pos.x == u_dimensions.x && pos.y != uint(0)) ||
          (pos.x > uint(0) && pos.x < u_dimensions.x &&
-          texture(u_walls, vec2(verticalWallIndex(pos), 0)).r != 0.0);
+          texture(u_walls, vec2(texture_index.y, 0)).r != 0.0);
 }
 
 void main() {
@@ -48,10 +33,20 @@ void main() {
   bvec2 in_wall =
       lessThan(mod(vec2(normalized_pixel), cell_size), vec2(u_wall_size));
 
+  vec2 texture_index =
+      vec2(float(normalized_pos.y - uint(1) +
+                 normalized_pos.x * (u_dimensions.y - uint(1))),
+           float((u_dimensions.x * (u_dimensions.y - uint(2))) +
+                 normalized_pos.y + normalized_pos.x * u_dimensions.y)) /
+      float(uint(2) * u_dimensions.x * u_dimensions.y - u_dimensions.x -
+            u_dimensions.y);
+
   bool displayAsWall =
       all(in_wall) ||
-      (in_wall.x && mazeDisplayedAsVerticalWall(normalized_pos)) ||
-      (in_wall.y && mazeDisplayedAsHorizontalWall(normalized_pos));
+      (in_wall.x &&
+       mazeDisplayedAsVerticalWall(normalized_pos, texture_index)) ||
+      (in_wall.y &&
+       mazeDisplayedAsHorizontalWall(normalized_pos, texture_index));
 
   outColour = displayAsWall
                   ? vec4(1)
