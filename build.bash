@@ -21,28 +21,24 @@ curl -X POST --data-binary "@build/bundle-${VERSION}.js" \
     --fail-with-body \
     -H "Authorization: Bearer ${GCP_TOKEN}" \
     -H "Content-Type: application/javascript" \
-    -H "Cache-Control: public, max-age=31536000" \
     "https://storage.googleapis.com/upload/storage/v1/b/maze-playground/o?uploadType=media&name=bundle-${VERSION}.js"
 
 curl -X POST --data-binary "@build/computer-${VERSION}.wasm" \
     --fail-with-body \
     -H "Authorization: Bearer ${GCP_TOKEN}" \
     -H "Content-Type: application/wasm" \
-    -H "Cache-Control: public, max-age=31536000" \
     "https://storage.googleapis.com/upload/storage/v1/b/maze-playground/o?uploadType=media&name=computer-${VERSION}.wasm"
 
 curl -X POST --data-binary "@build/frag-${VERSION}.glsl" \
     --fail-with-body \
     -H "Authorization: Bearer ${GCP_TOKEN}" \
     -H "Content-Type: text/plain" \
-    -H "Cache-Control: public, max-age=31536000" \
     "https://storage.googleapis.com/upload/storage/v1/b/maze-playground/o?uploadType=media&name=frag-${VERSION}.glsl"
 
 curl -X POST --data-binary "@build/vert-${VERSION}.glsl" \
     --fail-with-body \
     -H "Authorization: Bearer ${GCP_TOKEN}" \
     -H "Content-Type: text/plain" \
-    -H "Cache-Control: public, max-age=31536000" \
     "https://storage.googleapis.com/upload/storage/v1/b/maze-playground/o?uploadType=media&name=vert-${VERSION}.glsl"
 
 curl -X POST --data-binary "@build/index.html" \
