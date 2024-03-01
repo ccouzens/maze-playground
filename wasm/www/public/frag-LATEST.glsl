@@ -41,12 +41,12 @@ void main() {
       float(uint(2) * u_dimensions.x * u_dimensions.y - u_dimensions.x -
             u_dimensions.y);
 
-  bool displayAsWall =
-      all(in_wall) ||
-      (in_wall.x &&
-       mazeDisplayedAsVerticalWall(normalized_pos, texture_index)) ||
-      (in_wall.y &&
-       mazeDisplayedAsHorizontalWall(normalized_pos, texture_index));
+  bvec2 wall_at_pos =
+      bvec2(mazeDisplayedAsVerticalWall(normalized_pos, texture_index),
+            mazeDisplayedAsHorizontalWall(normalized_pos, texture_index));
+
+  bool displayAsWall = all(in_wall) || (in_wall.x && wall_at_pos.x) ||
+                       (in_wall.y && wall_at_pos.y);
 
   outColour = displayAsWall
                   ? vec4(1)
