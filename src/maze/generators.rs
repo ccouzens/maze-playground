@@ -1,3 +1,5 @@
+use std::collections::BTreeSet;
+
 use super::Maze;
 
 pub fn generate_maze_with_binary_tree_algorithm(
@@ -58,50 +60,93 @@ pub fn generate_maze_with_sidewinder_algorithm(
     maze
 }
 
+fn random_neighbour(
+    rng: &mut impl rand::Rng,
+    x: usize,
+    y: usize,
+    width: usize,
+    height: usize,
+) -> (usize, usize) {
+    let mut candidates = [None; 4];
+    let mut len = 0;
+    if x > 0 {
+        candidates[0] = Some((x - 1, y));
+        len += 1;
+    }
+    if y > 0 {
+        candidates[1] = Some((x, y - 1));
+        len += 1;
+    }
+    if x + 1 < width {
+        candidates[2] = Some((x + 1, y));
+        len += 1;
+    }
+    if y + 1 < height {
+        candidates[3] = Some((x, y + 1));
+        len += 1;
+    }
+    candidates
+        .iter()
+        .filter_map(|c| *c)
+        .nth(rng.gen_range(0..len))
+        .unwrap()
+}
+
 pub fn generate_maze_with_aldous_broder(
     rng: &mut impl rand::Rng,
     width: usize,
     height: usize,
 ) -> Maze {
     let mut maze = Maze::new(width, height).unwrap();
-    let mut visited = std::collections::HashSet::new();
+    let mut visited = BTreeSet::new();
 
     let mut cell = (rng.gen_range(0..width), rng.gen_range(0..height));
-
-    let mut find_next_cell = |cell: (usize, usize)| {
-        let mut candidates = [None; 4];
-        let mut len = 0;
-        if cell.0 > 0 {
-            candidates[0] = Some((cell.0 - 1, cell.1));
-            len += 1;
-        }
-        if cell.1 > 0 {
-            candidates[1] = Some((cell.0, cell.1 - 1));
-            len += 1;
-        }
-        if cell.0 + 1 < width {
-            candidates[2] = Some((cell.0 + 1, cell.1));
-            len += 1;
-        }
-        if cell.1 + 1 < width {
-            candidates[3] = Some((cell.0, cell.1 + 1));
-            len += 1;
-        }
-        candidates
-            .iter()
-            .filter_map(|c| *c)
-            .nth(rng.gen_range(0..len))
-            .unwrap()
-    };
 
     visited.insert(cell);
 
     while visited.len() != width * height {
-        let next_cell = find_next_cell(cell);
+        let next_cell = random_neighbour(rng, cell.0, cell.1, width, height);
         if visited.insert(next_cell) {
             maze.connect_pair(cell.0, cell.1, next_cell.0, next_cell.1);
         }
         cell = next_cell;
     }
+    maze
+}
+
+pub fn generate_maze_with_wilsons_algorithm(
+    rng: &mut impl rand::Rng,
+    width: usize,
+    height: usize,
+) -> Maze {
+    let mut maze = Maze::new(width, height).unwrap();
+    let mut unvisited: BTreeSet<(usize, usize)> = maze.every_cell().collect();
+    let first = *unvisited
+        .iter()
+        .nth(rng.gen_range(0..unvisited.len()))
+        .unwrap();
+    unvisited.remove(&first);
+
+    while !unvisited.is_empty() {
+        let mut cell = *unvisited
+            .iter()
+            .nth(rng.gen_range(0..unvisited.len()))
+            .unwrap();
+        let mut path = vec![cell];
+        while unvisited.get(&cell).is_some() {
+            cell = random_neighbour(rng, cell.0, cell.1, width, height);
+            if let Some(position) = path.iter().position(|&c| c == cell) {
+                path.truncate(position + 1);
+            } else {
+                path.push(cell);
+            }
+        }
+
+        for (a, b) in path.iter().zip(path.iter().skip(1)) {
+            maze.connect_pair(a.0, a.1, b.0, b.1);
+            unvisited.remove(a);
+        }
+    }
+
     maze
 }

@@ -28,7 +28,7 @@ impl rand::RngCore for JSRand {
 
 #[no_mangle]
 pub extern "C" fn new_maze(width: usize, height: usize) -> &'static mut Maze {
-    let maze = maze_playground::maze::generators::generate_maze_with_aldous_broder(
+    let maze = maze_playground::maze::generators::generate_maze_with_wilsons_algorithm(
         &mut JSRand(),
         width,
         height,
