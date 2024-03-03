@@ -17,7 +17,34 @@ cp wasm/www/public/computer-LATEST.wasm "build/computer-${VERSION}.wasm"
 cp wasm/www/public/frag-LATEST.glsl "build/frag-${VERSION}.glsl"
 cp wasm/www/public/vert-LATEST.glsl "build/vert-${VERSION}.glsl"
 
-gsutil cp \
-  "build/*" \
+gcloud info
+
+gsutil \
+  cp \
+  -h "Content-Type:text/plain" \
+  "build/frag-${VERSION}.glsl" \
   gs://maze-playground/
 
+gsutil \
+  cp \
+  -h "Content-Type:text/plain" \
+  "build/vert-${VERSION}.glsl" \
+  gs://maze-playground/
+
+gsutil \
+  cp \
+  -h "Content-Type:application/wasm" \
+  "build/computer-${VERSION}.wasm" \
+  gs://maze-playground/
+
+gsutil \
+  cp \
+  -h "Content-Type:text/javascript" \
+  "build/computer-${VERSION}.wasm" \
+  gs://maze-playground/
+
+gsutil \
+  cp \
+  -h "Content-Type:text/html" \
+  "build/index.html" \
+  gs://maze-playground/
