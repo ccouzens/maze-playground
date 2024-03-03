@@ -38,7 +38,7 @@ gsutil \
 gsutil \
   -h "Content-Type:text/javascript" \
   cp \
-  "build/computer-${VERSION}.wasm" \
+  "build/bundle-${VERSION}.js" \
   gs://maze-playground/
 
 gsutil \
