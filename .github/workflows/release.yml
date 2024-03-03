@@ -10,6 +10,10 @@ jobs:
     name: Build and deploy
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
       - name: Install rust wasm
         run: rustup target add wasm32-unknown-unknown
@@ -17,5 +21,9 @@ jobs:
         run: sudo apt-get install binaryen
       - name: Checkout
         uses: actions/checkout@v4
+      - uses: 'google-github-actions/auth@v2'
+        with:
+          project_id: 'maze-playground'
+          workload_identity_provider: 'projects/206430360926/locations/global/workloadIdentityPools/github/providers/my-repo'
       - name: build and deploy
         run: ./build.bash

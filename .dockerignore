@@ -1,4 +1,5 @@
 .git/
 target/
 wasm/www/node_modules/
+gha-creds-*.json
 
