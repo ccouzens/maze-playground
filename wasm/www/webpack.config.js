@@ -21,7 +21,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    filename: "bundle-LATEST.js",
+    filename: "script-LATEST.js",
     path: path.resolve(__dirname, "public"),
   },
 };

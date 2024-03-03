@@ -16,4 +16,4 @@ RUN npm run build
 FROM docker.io/library/nginx:1.25 
 COPY ./wasm/www/public/ /usr/share/nginx/html
 COPY --from=wasmBuilder /app/wasm/www/public/computer-LATEST.wasm /usr/share/nginx/html
-COPY --from=nodeBuilder /app/public/bundle-LATEST.js /usr/share/nginx/html
+COPY --from=nodeBuilder /app/public/script-LATEST.js /usr/share/nginx/html
