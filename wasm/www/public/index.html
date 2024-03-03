@@ -9,7 +9,8 @@
     <title>Maze</title>
     <style>
       #svg,
-      #webgl2 {
+      #webgl2,
+      #webgpu {
         width: 20em;
         height: 20em;
       }
@@ -21,7 +22,8 @@
         stroke-linecap: square;
       }
 
-      #webgl2 {
+      #webgl2,
+      #webgpu {
         image-rendering: pixelated;
       }
 
@@ -41,6 +43,7 @@
     >
     <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
     <canvas id="webgl2"></canvas>
+    <canvas id="webgpu"></canvas>
     <script src=" ./bundle-LATEST.js"></script>
   </body>
 </html>

@@ -4,6 +4,7 @@
   "compilerOptions": {
     "outDir": "./public/",
     "target": "ES2022",
+    "types": ["@webgpu/types"],
   },
   "include": ["src/**/*"],
 }

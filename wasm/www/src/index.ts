@@ -1,4 +1,5 @@
 import { putMazeInWebgl } from "./putMazeInWebgl";
+import { putMazeInWebGPU } from "./putMazeInWebgpu";
 
 declare const tag: unique symbol;
 export type Maze = number & { readonly [tag]: "MAZE" };
@@ -75,6 +76,7 @@ export async function putMazeOnPage() {
   const maze = computer.new_maze(10, 10);
   try {
     await Promise.all([
+      putMazeInWebGPU(computer, maze),
       putMazeInWebgl(computer, maze),
       putMazeInSvg(computer, maze),
     ]);
