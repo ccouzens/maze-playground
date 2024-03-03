@@ -2,9 +2,7 @@ import { putMazeInWebgl } from "./putMazeInWebgl";
 
 declare const tag: unique symbol;
 export type Maze = number & { readonly [tag]: "MAZE" };
-export type RustString = number & { readonly [tag]: "RUST_STRING" };
-export type RustVecU8 = number & { readonly [tag]: "RUST_VEC" };
-export type BitmapRenderer = number & { readonly [tag]: "BITMAP_RENDERER" };
+type RustString = number & { readonly [tag]: "RUST_STRING" };
 
 export interface Computer {
   memory: WebAssembly.Memory;
