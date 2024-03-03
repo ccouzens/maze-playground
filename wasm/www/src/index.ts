@@ -21,8 +21,6 @@ export interface Computer {
   maze_walls_ptr: (maze: Maze) => number;
   maze_walls_length: (maze: Maze) => number;
   maze_svg_path: (maze: Maze) => RustString;
-  maze_to_block_string: (maze: Maze) => RustString;
-  maze_to_drawing_string: (maze: Maze) => RustString;
   maze_to_bitmap_renderer: (maze: Maze) => BitmapRenderer;
   bitmap_renderer_width: (bitmapRenderer: BitmapRenderer) => number;
   bitmap_renderer_height: (bitmapRenderer: BitmapRenderer) => number;
@@ -82,22 +80,6 @@ function putMazeInSvg(computer: Computer, maze: Maze) {
   svg.append(svgPath);
 }
 
-function putMazeInPre(computer: Computer, maze: Maze) {
-  const stringBlockPre =
-    document.querySelector<HTMLPreElement>("#stringBlock")!;
-  stringBlockPre.textContent = rustStringToJS(
-    computer,
-    computer.maze_to_block_string(maze),
-  );
-
-  const stringBoxDrawingPre =
-    document.querySelector<HTMLPreElement>("#stringBoxDrawing")!;
-  stringBoxDrawingPre.textContent = rustStringToJS(
-    computer,
-    computer.maze_to_drawing_string(maze),
-  );
-}
-
 async function putMazeInMaskImage(computer: Computer, maze: Maze) {
   const bitmapRenderer = computer.maze_to_bitmap_renderer(maze);
   try {
@@ -139,7 +121,6 @@ export async function putMazeOnPage() {
   const maze = computer.new_maze(10, 10);
   try {
     putMazeInSvg(computer, maze);
-    putMazeInPre(computer, maze);
     await putMazeInMaskImage(computer, maze);
     await putMazeInWebgl(computer, maze);
   } finally {

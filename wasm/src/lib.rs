@@ -84,18 +84,6 @@ pub unsafe extern "C" fn free_string(string: &mut String) {
 }
 
 #[no_mangle]
-pub extern "C" fn maze_to_block_string(maze: &Maze) -> &'static String {
-    let b = format!("{}", maze.as_block_printer());
-    Box::leak(Box::new(b))
-}
-
-#[no_mangle]
-pub extern "C" fn maze_to_drawing_string(maze: &Maze) -> &'static String {
-    let b = format!("{}", maze.as_box_drawing_printer());
-    Box::leak(Box::new(b))
-}
-
-#[no_mangle]
 pub extern "C" fn maze_to_bitmap_renderer(maze: &Maze) -> &'static BitmapRenderer {
     let b = maze.as_bitmap_printer();
     Box::leak(Box::new(b))
