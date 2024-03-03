@@ -17,8 +17,6 @@ cp wasm/www/public/computer-LATEST.wasm "build/computer-${VERSION}.wasm"
 cp wasm/www/public/frag-LATEST.glsl "build/frag-${VERSION}.glsl"
 cp wasm/www/public/vert-LATEST.glsl "build/vert-${VERSION}.glsl"
 
-gcloud info
-
 gsutil \
   -h "Content-Type:text/plain" \
   cp \
