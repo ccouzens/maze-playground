@@ -20,31 +20,31 @@ cp wasm/www/public/vert-LATEST.glsl "build/vert-${VERSION}.glsl"
 gcloud info
 
 gsutil \
-  cp \
   -h "Content-Type:text/plain" \
+  cp \
   "build/frag-${VERSION}.glsl" \
   gs://maze-playground/
 
 gsutil \
-  cp \
   -h "Content-Type:text/plain" \
+  cp \
   "build/vert-${VERSION}.glsl" \
   gs://maze-playground/
 
 gsutil \
-  cp \
   -h "Content-Type:application/wasm" \
+  cp \
   "build/computer-${VERSION}.wasm" \
   gs://maze-playground/
 
 gsutil \
-  cp \
   -h "Content-Type:text/javascript" \
+  cp \
   "build/computer-${VERSION}.wasm" \
   gs://maze-playground/
 
 gsutil \
-  cp \
   -h "Content-Type:text/html" \
+  cp \
   "build/index.html" \
   gs://maze-playground/
