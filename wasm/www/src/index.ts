@@ -1,5 +1,5 @@
 import { putMazeInWebgl } from "./putMazeInWebgl";
-import { putMazeInWebGPU } from "./putMazeInWebgpu";
+import { putMazeInWebGPU } from "./putMazeInWebGpu";
 
 declare const tag: unique symbol;
 export type Maze = number & { readonly [tag]: "MAZE" };
