@@ -33,20 +33,8 @@ export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
     console.log("WebGPU is not supported");
     return;
   }
-  const context = document
-    .querySelector<HTMLCanvasElement>("#webgpu")
-    ?.getContext("webgpu");
-  if (!context) {
-    console.log("WebGPU is not supported");
-    return;
-  }
-  const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
-  context.configure({
-    device,
-    format: presentationFormat,
-  });
 
-  const shaderCode = await fetch("./shader-LATEST.wgsl").then((r) => r.text());
+  const shaderCode = await fetch("./compute-LATEST.wgsl").then((r) => r.text());
   const module = device.createShaderModule({
     label: "shader from example",
     code: shaderCode,
