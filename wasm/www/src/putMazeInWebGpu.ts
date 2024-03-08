@@ -1,30 +1,5 @@
 import { type Computer, type Maze } from "./index";
 
-function render(
-  context: GPUCanvasContext,
-  device: GPUDevice,
-  pipeline: GPURenderPipeline,
-) {
-  const encoder = device.createCommandEncoder({ label: "our encoder" });
-  const pass = encoder.beginRenderPass({
-    label: "our basic canvas renderPass",
-    colorAttachments: [
-      {
-        view: context.getCurrentTexture().createView(),
-        clearValue: [0.3, 0.3, 0.3, 1],
-        loadOp: "clear",
-        storeOp: "store",
-      },
-    ],
-  });
-  pass.setPipeline(pipeline);
-  pass.draw(3);
-  pass.end();
-
-  const commandBuffer = encoder.finish();
-  device.queue.submit([commandBuffer]);
-}
-
 export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
   const device = await navigator.gpu
     ?.requestAdapter()
@@ -40,19 +15,56 @@ export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
     code: shaderCode,
   });
 
-  const pipeline = await device.createRenderPipelineAsync({
+  const pipeline = await device.createComputePipelineAsync({
     label: "example pipeline",
     layout: "auto",
-    vertex: {
+    compute: {
       module,
-      entryPoint: "vs",
-    },
-    fragment: {
-      module,
-      entryPoint: "fs",
-      targets: [{ format: presentationFormat }],
+      entryPoint: "computeSomething",
     },
   });
 
-  render(context, device, pipeline);
+  const input = new Float32Array([1, 3, 5]);
+
+  const workBuffer = device.createBuffer({
+    label: "work buffer",
+    size: input.byteLength,
+    usage:
+      GPUBufferUsage.STORAGE |
+      GPUBufferUsage.COPY_SRC |
+      GPUBufferUsage.COPY_DST,
+  });
+
+  device.queue.writeBuffer(workBuffer, 0, input);
+
+  const resultBuffer = device.createBuffer({
+    label: "result buffer",
+    size: input.byteLength,
+    usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST,
+  });
+
+  const bindGroup = device.createBindGroup({
+    label: "bindGroup for work buffer",
+    layout: pipeline.getBindGroupLayout(0),
+    entries: [{ binding: 0, resource: { buffer: workBuffer } }],
+  });
+
+  const encoder = device.createCommandEncoder({ label: "doubling encoder" });
+  const pass = encoder.beginComputePass({ label: "doubling compute pass" });
+  pass.setPipeline(pipeline);
+  pass.setBindGroup(0, bindGroup);
+  pass.dispatchWorkgroups(input.length);
+  pass.end();
+
+  encoder.copyBufferToBuffer(workBuffer, 0, resultBuffer, 0, resultBuffer.size);
+
+  const commandBuffer = encoder.finish();
+  device.queue.submit([commandBuffer]);
+
+  await resultBuffer.mapAsync(GPUMapMode.READ);
+  const result = new Float32Array(resultBuffer.getMappedRange());
+
+  console.log({ input, result: [...result] });
+
+  resultBuffer.unmap();
 }
