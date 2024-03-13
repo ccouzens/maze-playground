@@ -4,7 +4,16 @@ function render(
   context: GPUCanvasContext,
   device: GPUDevice,
   pipeline: GPURenderPipeline,
+  setScale: (x: number, y: number) => void,
+  uniformBuffer: GPUBuffer,
+  uniformValues: Float32Array,
+  bindGroup: GPUBindGroup,
 ) {
+  const aspect = context.canvas.width / context.canvas.height;
+  setScale(0.5 / aspect, 0.5);
+
+  device.queue.writeBuffer(uniformBuffer, 0, uniformValues);
+
   const encoder = device.createCommandEncoder({ label: "our encoder" });
   const pass = encoder.beginRenderPass({
     label: "our basic canvas renderPass",
@@ -18,6 +27,7 @@ function render(
     ],
   });
   pass.setPipeline(pipeline);
+  pass.setBindGroup(0, bindGroup);
   pass.draw(3);
   pass.end();
 
@@ -46,6 +56,15 @@ export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
     format: presentationFormat,
   });
 
+  const uniformBuffer = device.createBuffer({
+    size: 32,
+    usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+  });
+
+  const uniformValues = new Float32Array(uniformBuffer.size / 4);
+  uniformValues.set([0, 1, 0, 1], 0); // set the color
+  uniformValues.set([-0.5, -0.25], 6); // set the offset
+
   const shaderCode = await fetch("./shader-LATEST.wgsl").then((r) => r.text());
   const module = device.createShaderModule({
     label: "shader from example",
@@ -66,5 +85,20 @@ export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
     },
   });
 
-  render(context, device, pipeline);
+  const bindGroup = device.createBindGroup({
+    layout: pipeline.getBindGroupLayout(0),
+    entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
+  });
+
+  render(
+    context,
+    device,
+    pipeline,
+    function setScale(scaleX, scaleY) {
+      uniformValues.set([scaleX, scaleY], 4);
+    },
+    uniformBuffer,
+    uniformValues,
+    bindGroup,
+  );
 }
