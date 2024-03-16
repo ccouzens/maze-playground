@@ -50,5 +50,5 @@ void main() {
 
   outColour = displayAsWall
                   ? vec4(1)
-                  : vec4(vec2(normalized_pos) / vec2(u_dimensions), 0, 1);
+                  : vec4(vec3(0), 1);
 }

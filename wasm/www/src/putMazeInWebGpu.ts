@@ -58,7 +58,7 @@ export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
   const pipeline = await device.createRenderPipelineAsync({
     label: "example pipeline",
     layout: "auto",
-    primitive: {topology: 'triangle-strip'},
+    primitive: { topology: "triangle-strip" },
     vertex: {
       module,
       entryPoint: "vs",
@@ -70,9 +70,5 @@ export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
     },
   });
 
-  render(
-    context,
-    device,
-    pipeline,
-  );
+  render(context, device, pipeline);
 }
