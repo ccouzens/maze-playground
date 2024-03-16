@@ -16,6 +16,7 @@ sed "s/-LATEST/-${VERSION}/g" < wasm/www/public/script-LATEST.js > "build/script
 cp wasm/www/public/computer-LATEST.wasm "build/computer-${VERSION}.wasm"
 cp wasm/www/public/frag-LATEST.glsl "build/frag-${VERSION}.glsl"
 cp wasm/www/public/vert-LATEST.glsl "build/vert-${VERSION}.glsl"
+cp wasm/www/public/shader-LATEST.wgsl "build/shader-${VERSION}.wgsl"
 
 gsutil \
   -h "Content-Type:text/plain" \
@@ -27,6 +28,12 @@ gsutil \
   -h "Content-Type:text/plain" \
   cp \
   "build/vert-${VERSION}.glsl" \
+  gs://maze-playground/
+
+gsutil \
+  -h "Content-Type:text/plain" \
+  cp \
+  "build/shader-${VERSION}.wgsl" \
   gs://maze-playground/
 
 gsutil \
