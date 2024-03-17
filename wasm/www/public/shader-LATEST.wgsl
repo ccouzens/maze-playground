@@ -41,7 +41,7 @@ fn is_wall_at_index(index: u32) -> bool {
   let wall_at_cell = vec2(
     (cell_pos.x == 0 && cell_pos.y + 1 != maze.dimensions.y )
       || (cell_pos.x == maze.dimensions.x && cell_pos.y != 0)
-      || is_wall_at_index(array_index.y),
+      || (cell_pos.x > 0 && cell_pos.x < maze.dimensions.x && is_wall_at_index(array_index.y)),
     cell_pos.y == 0
       || cell_pos.y == maze.dimensions.y
       || is_wall_at_index(array_index.x)
