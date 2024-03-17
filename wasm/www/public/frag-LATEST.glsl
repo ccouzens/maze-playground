@@ -34,10 +34,11 @@ void main() {
       lessThan(mod(vec2(normalized_pixel), cell_size), vec2(u_wall_size));
 
   vec2 texture_index =
-      vec2(float(normalized_pos.y - uint(1) +
-                 normalized_pos.x * (u_dimensions.y - uint(1))),
-           float((u_dimensions.x * (u_dimensions.y - uint(2))) +
-                 normalized_pos.y + normalized_pos.x * u_dimensions.y)) /
+      (vec2(float(normalized_pos.y - uint(1) +
+                  normalized_pos.x * (u_dimensions.y - uint(1))),
+            float((u_dimensions.x * (u_dimensions.y - uint(2))) +
+                  normalized_pos.y + normalized_pos.x * u_dimensions.y)) +
+       vec2(0.5)) /
       float(uint(2) * u_dimensions.x * u_dimensions.y - u_dimensions.x -
             u_dimensions.y);
 
