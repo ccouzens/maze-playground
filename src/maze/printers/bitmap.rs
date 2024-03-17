@@ -1,7 +1,7 @@
 use super::Maze;
 
-const WALL: [u8; 4] = [255, 255, 255, 255];
-const PASSAGE: [u8; 4] = [0, 0, 0, 0];
+const WALL: [u8; 4] = [0, 0, 0, 255];
+const PASSAGE: [u8; 4] = [255; 4];
 const WALL_SIZE: usize = 1;
 const PASSAGE_SIZE: usize = 3;
 
