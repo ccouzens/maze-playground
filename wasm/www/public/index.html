@@ -7,11 +7,14 @@
     <link rel="preload" href="frag-LATEST.glsl" as="fetch" crossorigin />
     <link rel="preload" href="vert-LATEST.glsl" as="fetch" crossorigin />
     <link rel="preload" href="shader-LATEST.wgsl" as="fetch" crossorigin />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Maze</title>
     <style>
       #filter {
         visibility: hidden;
         position: absolute;
+        width: 0;
+        height: 0;
       }
 
       #svg,
@@ -19,9 +22,18 @@
       #webgl2,
       #webgpu,
       #bitmapRenderer {
-        width: 15em;
-        height: 15em;
+        height: min(15em, 100%);
         image-rendering: pixelated;
+      }
+
+      h1,
+      h2,
+      #svg,
+      #image,
+      #webgl2,
+      #webgpu,
+      #bitmapRenderer {
+        width: min(15rem, 100%);
       }
 
       #svg path {
@@ -36,14 +48,14 @@
 
       :root {
         color: black;
-        background-color: hsl(120, 100%, 85%);
+        background-color: hsl(180, 100%, 85%);
         font-family: sans-serif;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
           color: white;
-          background-color: hsl(120, 100%, 15%);
+          background-color: hsl(180, 100%, 15%);
         }
       }
     </style>
