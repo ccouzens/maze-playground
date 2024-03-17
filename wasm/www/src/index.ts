@@ -111,6 +111,8 @@ async function imageBitmap(
 function putMazeInBitmapRenderer(imageBitmap: ImageBitmap) {
   const canvas = document.querySelector<HTMLCanvasElement>("#bitmapRenderer")!;
   const context = canvas.getContext("bitmaprenderer")!;
+  canvas.width = imageBitmap.width;
+  canvas.height = imageBitmap.height;
   context.transferFromImageBitmap(imageBitmap);
   canvas.classList.add("canvas-ready");
 }
