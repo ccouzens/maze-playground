@@ -1,4 +1,4 @@
-use maze_playground::maze::Maze;
+use maze_playground::maze::{printers::BitmapRenderer, Maze};
 pub struct WasmMaze(Maze);
 
 #[link(wasm_import_module = "random")]
@@ -81,4 +81,45 @@ pub extern "C" fn string_length(string: &String) -> usize {
 #[no_mangle]
 pub unsafe extern "C" fn free_string(string: &mut String) {
     drop(Box::from_raw(string))
+}
+
+#[no_mangle]
+pub extern "C" fn maze_to_bitmap_renderer(maze: &Maze) -> &'static BitmapRenderer {
+    let b = maze.as_bitmap_printer();
+    Box::leak(Box::new(b))
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn free_bitmap_renderer(bitmap: &mut BitmapRenderer) {
+    drop(Box::from_raw(bitmap))
+}
+
+#[no_mangle]
+pub extern "C" fn bitmap_renderer_width(bitmap: &BitmapRenderer) -> usize {
+    bitmap.width()
+}
+
+#[no_mangle]
+pub extern "C" fn bitmap_renderer_height(bitmap: &BitmapRenderer) -> usize {
+    bitmap.height()
+}
+
+#[no_mangle]
+pub extern "C" fn bitmap_renderer_to_bitmap(bitmap: &BitmapRenderer) -> &'static Vec<u8> {
+    Box::leak(Box::new(bitmap.to_bitmap()))
+}
+
+#[no_mangle]
+pub extern "C" fn vec_u8_ptr(vec: &Vec<u8>) -> *const u8 {
+    vec.as_ptr()
+}
+
+#[no_mangle]
+pub extern "C" fn vec_u8_length(vec: &Vec<u8>) -> usize {
+    vec.len()
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn free_vec_u8(vec: &mut Vec<u8>) {
+    drop(Box::from_raw(vec))
 }
