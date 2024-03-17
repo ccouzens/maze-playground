@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="preload" href="script-LATEST.js" as="script" />
+    <script src=" ./script-LATEST.js" type="module"></script>
     <link rel="preload" href="computer-LATEST.wasm" as="fetch" crossorigin />
     <link rel="preload" href="frag-LATEST.glsl" as="fetch" crossorigin />
     <link rel="preload" href="vert-LATEST.glsl" as="fetch" crossorigin />
@@ -31,7 +31,7 @@
       #webgl2,
       #webgpu {
         image-rendering: pixelated;
-        filter: url("#applyColours");
+        filter: invert(1) url("#applyColours");
       }
 
       @media (prefers-color-scheme: dark) {
@@ -51,10 +51,10 @@
           in="SourceGraphic"
           type="matrix"
           result="matrix"
-          values="1 1 1 0 0
-                1 1 1 0 0
-                1 1 1 0 0
-                1 1 1 0 0"
+          values="1 0 0 0 0
+                1 0 0 0 0
+                1 0 0 0 0
+                1 0 0 0 0"
         />
         <feComposite in="floodFill" in2="matrix" operator="in" />
       </filter>
@@ -66,6 +66,5 @@
     <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
     <canvas id="webgl2"></canvas>
     <canvas id="webgpu"></canvas>
-    <script src=" ./script-LATEST.js"></script>
   </body>
 </html>

@@ -41,8 +41,8 @@
   let wall_at_pixel = all(in_wall) || any(in_wall & wall_at_cell);
 
   return select(
-    vec4<f32>(0, 0, 0, 1),
     vec4<f32>(1, 1, 1, 1),
+    vec4<f32>(0, 0, 0, 1),
     wall_at_pixel
   );
 }

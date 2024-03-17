@@ -48,7 +48,5 @@ void main() {
   bool displayAsWall = all(in_wall) || (in_wall.x && wall_at_pos.x) ||
                        (in_wall.y && wall_at_pos.y);
 
-  outColour = displayAsWall
-                  ? vec4(1)
-                  : vec4(vec3(0), 1);
+  outColour = displayAsWall ? vec4(vec3(0), 1) : vec4(1);
 }
