@@ -1,13 +1,17 @@
-import { type Computer, type Maze } from "./index";
+import { mazeWalls, type Computer, type Maze } from "./index";
+
+const WALLSIZE: [number, number] = [1, 1];
+const CELLSIZE: [number, number] = [4, 4];
 
 function render(
   context: GPUCanvasContext,
   device: GPUDevice,
   pipeline: GPURenderPipeline,
+  bindGroup: GPUBindGroup,
 ) {
-  const encoder = device.createCommandEncoder({ label: "our encoder" });
+  const encoder = device.createCommandEncoder({ label: "maze encoder" });
   const pass = encoder.beginRenderPass({
-    label: "our basic canvas renderPass",
+    label: "maze renderPass",
     colorAttachments: [
       {
         view: context.getCurrentTexture().createView(),
@@ -18,6 +22,7 @@ function render(
     ],
   });
   pass.setPipeline(pipeline);
+  pass.setBindGroup(0, bindGroup);
   pass.draw(4);
   pass.end();
 
@@ -25,7 +30,7 @@ function render(
   device.queue.submit([commandBuffer]);
 }
 
-export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
+export async function putMazeInWebGPU(computer: Computer, maze: Maze) {
   const device = await navigator.gpu
     ?.requestAdapter()
     .then((adapter) => adapter?.requestDevice());
@@ -45,17 +50,41 @@ export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
     format: presentationFormat,
   });
 
-  context.canvas.width = 41;
-  context.canvas.height = 41;
+  const dimensions: [number, number] = [
+    computer.maze_width(maze),
+    computer.maze_height(maze),
+  ];
+
+  context.canvas.width = dimensions[0] * CELLSIZE[0] + WALLSIZE[0];
+  context.canvas.height = dimensions[1] * CELLSIZE[1] + WALLSIZE[1];
+
+  const wallData = mazeWalls(computer, maze);
+
+  const uniformBuffer = device.createBuffer({
+    size: 24 + wallData.length + 4 - (wallData.length % 4),
+    usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
+  });
+
+  const mazeStructValues = new ArrayBuffer(uniformBuffer.size);
+  const mazeStructViews = {
+    dimensions: new Uint32Array(mazeStructValues, 0, 2),
+    wall_size: new Uint32Array(mazeStructValues, 8, 2),
+    cell_size: new Uint32Array(mazeStructValues, 16, 2),
+    walls: new Uint8Array(mazeStructValues, 24),
+  };
+  mazeStructViews.dimensions.set(dimensions);
+  mazeStructViews.wall_size.set(WALLSIZE);
+  mazeStructViews.cell_size.set(CELLSIZE);
+  mazeStructViews.walls.set(wallData);
 
   const shaderCode = await fetch("./shader-LATEST.wgsl").then((r) => r.text());
   const module = device.createShaderModule({
-    label: "shader from example",
+    label: "maze shader",
     code: shaderCode,
   });
 
   const pipeline = await device.createRenderPipelineAsync({
-    label: "example pipeline",
+    label: "maze pipeline",
     layout: "auto",
     primitive: { topology: "triangle-strip" },
     vertex: {
@@ -69,6 +98,13 @@ export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
     },
   });
 
-  render(context, device, pipeline);
+  const bindGroup = device.createBindGroup({
+    layout: pipeline.getBindGroupLayout(0),
+    entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
+  });
+
+  device.queue.writeBuffer(uniformBuffer, 0, mazeStructValues);
+
+  render(context, device, pipeline, bindGroup);
   canvas?.classList.add("canvas-ready");
 }
