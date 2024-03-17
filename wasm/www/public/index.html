@@ -33,6 +33,11 @@
         filter: invert(1) url("#applyColours");
       }
 
+      :root {
+        color: hsl(30, 100%, 12.5%);
+        font-family: sans-serif;
+      }
+
       @media (prefers-color-scheme: dark) {
         :root {
           background-color: black;
@@ -58,13 +63,18 @@
         <feComposite in="floodFill" in2="matrix" operator="in" />
       </filter>
     </svg>
+    <h1>Maze rendering playground</h1>
     <noscript
       >This page contains webassembly and javascript content, please enable
       javascript in your browser.</noscript
     >
+    <h2>SVG</h2>
     <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
+    <h2>Canvas bitmaprenderer context</h2>
     <canvas id="bitmapRenderer"></canvas>
+    <h2>Canvas webgl2 context</h2>
     <canvas id="webgl2"></canvas>
+    <h2>Canvas webgpu context</h2>
     <canvas id="webgpu"></canvas>
   </body>
 </html>
