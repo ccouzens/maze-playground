@@ -81,10 +81,10 @@ function putMazeInSvg(computer: Computer, maze: Maze) {
   svg.append(svgPath);
 }
 
-async function putMazeInBitmapRenderer(computer: Computer, maze: Maze) {
-  let bitmap: ImageBitmap;
-  const canvas = document.querySelector<HTMLCanvasElement>("#bitmapRenderer")!;
-  const context = canvas.getContext("bitmaprenderer")!;
+async function imageBitmap(
+  computer: Computer,
+  maze: Maze,
+): Promise<ImageBitmap> {
   const bitmapRenderer = computer.maze_to_bitmap_renderer(maze);
   try {
     const bitmapVec = computer.bitmap_renderer_to_bitmap(bitmapRenderer);
@@ -99,15 +99,31 @@ async function putMazeInBitmapRenderer(computer: Computer, maze: Maze) {
         computer.bitmap_renderer_width(bitmapRenderer),
         computer.bitmap_renderer_height(bitmapRenderer),
       );
-      bitmap = await createImageBitmap(imageData);
+      return await createImageBitmap(imageData);
     } finally {
       computer.free_vec_u8(bitmapVec);
     }
   } finally {
     computer.free_bitmap_renderer(bitmapRenderer);
   }
-  context.transferFromImageBitmap(bitmap);
+}
+
+function putMazeInBitmapRenderer(imageBitmap: ImageBitmap) {
+  const canvas = document.querySelector<HTMLCanvasElement>("#bitmapRenderer")!;
+  const context = canvas.getContext("bitmaprenderer")!;
+  context.transferFromImageBitmap(imageBitmap);
   canvas.classList.add("canvas-ready");
+}
+
+async function putMazeInImage(imageBitmap: ImageBitmap) {
+  const canvas = new OffscreenCanvas(imageBitmap.width, imageBitmap.height);
+  const context = canvas.getContext("bitmaprenderer")!;
+  context.transferFromImageBitmap(imageBitmap);
+  const blob = await canvas.convertToBlob();
+  const url = URL.createObjectURL(blob);
+  const image = document.querySelector<HTMLImageElement>("#image")!;
+  image.src = url;
+  image.classList.add("canvas-ready");
 }
 
 export async function putMazeOnPage() {
@@ -116,7 +132,14 @@ export async function putMazeOnPage() {
   try {
     await Promise.all([
       putMazeInWebGPU(computer, maze),
-      putMazeInBitmapRenderer(computer, maze),
+      imageBitmap(computer, maze).then(async (bitmap) => {
+        const copy = await createImageBitmap(bitmap);
+
+        return Promise.all([
+          putMazeInBitmapRenderer(bitmap),
+          putMazeInImage(copy),
+        ]);
+      }),
       putMazeInWebgl(computer, maze),
       putMazeInSvg(computer, maze),
     ]);
