@@ -68,7 +68,7 @@ function putMazeInSvg(computer: Computer, maze: Maze) {
   const svg = document.querySelector<SVGElement>("#svg")!;
   svg.setAttribute(
     "viewBox",
-    `-1 -1 ${computer.maze_width(maze) + 2} ${computer.maze_height(maze) + 2}`,
+    `-0.125 -0.125 ${computer.maze_width(maze) + 0.25} ${computer.maze_height(maze) + 0.25}`,
   );
   const svgPath = document.createElementNS(
     "http://www.w3.org/2000/svg",
