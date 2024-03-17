@@ -33,9 +33,8 @@ export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
     console.log("WebGPU is not supported");
     return;
   }
-  const context = document
-    .querySelector<HTMLCanvasElement>("#webgpu")
-    ?.getContext("webgpu");
+  const canvas = document.querySelector<HTMLCanvasElement>("#webgpu");
+  const context = canvas?.getContext("webgpu");
   if (!context) {
     console.log("WebGPU is not supported");
     return;
@@ -71,4 +70,5 @@ export async function putMazeInWebGPU(_computer: Computer, _maze: Maze) {
   });
 
   render(context, device, pipeline);
+  canvas?.classList.add("canvas-ready");
 }

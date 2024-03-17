@@ -124,4 +124,5 @@ export async function putMazeInWebgl(computer: Computer, maze: Maze) {
   gl.bindVertexArray(vao);
 
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  canvas?.classList.add("canvas-ready");
 }
