@@ -31,41 +31,20 @@ function render(
 }
 
 export async function putMazeInWebGPU(computer: Computer, maze: Maze) {
-  const device = await navigator.gpu
-    ?.requestAdapter()
-    .then((adapter) => adapter?.requestDevice());
-  if (device === undefined) {
-    console.log("WebGPU is not supported");
-    return;
-  }
-  const canvas = document.querySelector<HTMLCanvasElement>("#webgpu");
-  const context = canvas?.getContext("webgpu");
-  if (!context) {
-    console.log("WebGPU is not supported");
-    return;
-  }
-  const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
-  context.configure({
-    device,
-    format: presentationFormat,
-  });
-
+  const canvas = document.querySelector<HTMLCanvasElement>("#webgpu")!;
   const dimensions: [number, number] = [
     computer.maze_width(maze),
     computer.maze_height(maze),
   ];
 
-  context.canvas.width = dimensions[0] * CELLSIZE[0] + WALLSIZE[0];
-  context.canvas.height = dimensions[1] * CELLSIZE[1] + WALLSIZE[1];
+  canvas.width = dimensions[0] * CELLSIZE[0] + WALLSIZE[0];
+  canvas.height = dimensions[1] * CELLSIZE[1] + WALLSIZE[1];
 
   const wallData = mazeWalls(computer, maze);
 
-  const uniformBuffer = device.createBuffer({
-    size: 24 + wallData.length + 4 - (wallData.length % 4),
-    usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
-  });
-
-  const mazeStructValues = new ArrayBuffer(uniformBuffer.size);
+  const mazeStructValues = new ArrayBuffer(
+    24 + wallData.length + 4 - (wallData.length % 4),
+  );
   const mazeStructViews = {
     dimensions: new Uint32Array(mazeStructValues, 0, 2),
     wall_size: new Uint32Array(mazeStructValues, 8, 2),
@@ -76,6 +55,29 @@ export async function putMazeInWebGPU(computer: Computer, maze: Maze) {
   mazeStructViews.wall_size.set(WALLSIZE);
   mazeStructViews.cell_size.set(CELLSIZE);
   mazeStructViews.walls.set(wallData);
+
+  const device = await navigator.gpu
+    ?.requestAdapter()
+    .then((adapter) => adapter?.requestDevice());
+  if (device === undefined) {
+    console.log("WebGPU is not supported");
+    return;
+  }
+  const context = canvas.getContext("webgpu");
+  if (!context) {
+    console.log("WebGPU is not supported");
+    return;
+  }
+  const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
+  context.configure({
+    device,
+    format: presentationFormat,
+  });
+
+  const uniformBuffer = device.createBuffer({
+    size: mazeStructValues.byteLength,
+    usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
+  });
 
   const shaderCode = await fetch("./shader-LATEST.wgsl").then((r) => r.text());
   const module = device.createShaderModule({
