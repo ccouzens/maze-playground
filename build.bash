@@ -5,18 +5,18 @@ set -e
 # dnf install binaryen
 # brew install binaryen
 
-(cd wasm/www; ./build.bash)
-(cd wasm/www; npm install)
-(cd wasm/www; npm run build)
+(cd www; ./build.bash)
+(cd www; npm install)
+(cd www; npm run build)
 
 VERSION="$(git rev-parse HEAD)"
 mkdir -p build
-sed "s/-LATEST/-${VERSION}/g" < wasm/www/public/index.html > build/index.html
-sed "s/-LATEST/-${VERSION}/g" < wasm/www/public/script-LATEST.js > "build/script-${VERSION}.js"
-cp wasm/www/public/computer-LATEST.wasm "build/computer-${VERSION}.wasm"
-cp wasm/www/public/frag-LATEST.glsl "build/frag-${VERSION}.glsl"
-cp wasm/www/public/vert-LATEST.glsl "build/vert-${VERSION}.glsl"
-cp wasm/www/public/shader-LATEST.wgsl "build/shader-${VERSION}.wgsl"
+sed "s/-LATEST/-${VERSION}/g" < www/public/index.html > build/index.html
+sed "s/-LATEST/-${VERSION}/g" < www/public/script-LATEST.js > "build/script-${VERSION}.js"
+cp www/public/computer-LATEST.wasm "build/computer-${VERSION}.wasm"
+cp www/public/frag-LATEST.glsl "build/frag-${VERSION}.glsl"
+cp www/public/vert-LATEST.glsl "build/vert-${VERSION}.glsl"
+cp www/public/shader-LATEST.wgsl "build/shader-${VERSION}.wgsl"
 
 gsutil \
   -h "Content-Type:text/plain" \
@@ -53,3 +53,9 @@ gsutil \
   cp \
   "build/index.html" \
   gs://maze-playground/
+
+gsutil \
+  -h "Content-Type:text/html" \
+  cp \
+  "build/index.html" \
+  "gs://maze-playground/index-${VERSION}.html"
