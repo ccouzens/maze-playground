@@ -1,4 +1,5 @@
 node_modules
 public/computer-*.wasm
 public/script-*.js
+public/script-*.js.map
 
