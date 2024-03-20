@@ -2,8 +2,7 @@
   "scripts": {
     "compileRust": "./build.bash",
     "build": "esbuild src/bootstrap.ts --bundle --minify --sourcemap --outfile=public/script-LATEST.js",
-    "start": "npm run build && npm run server",
-    "server": "python3 -m http.server 8080 -b localhost -d public",
+    "start": "esbuild src/bootstrap.ts --bundle --outdir=public --serve --servedir=public",
     "format": "prettier --write '../**/*.{ts,md,json,html,js,yml,yaml,css}' && clang-format -i public/{vert,frag}-LATEST.glsl"
   },
   "devDependencies": {
