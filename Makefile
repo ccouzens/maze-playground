@@ -1,4 +1,4 @@
-www/public/computer-LATEST.wasm: target/wasm32-unknown-unknown/release/wasm.wasm
+www/public/computer-LATEST.wasm: target/wasm32-unknown-unknown/release/maze_playground.wasm
 	wasm-opt -O3 -o $@ $< || cp $< $@
 
 .PHONY : clean
