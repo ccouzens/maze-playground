@@ -1,0 +1,48 @@
+#filter {
+  visibility: hidden;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+#svg,
+#image,
+#webgl2,
+#webgpu,
+#bitmapRenderer {
+  image-rendering: pixelated;
+  aspect-ratio: 1;
+}
+
+h1,
+h2,
+#svg,
+#image,
+#webgl2,
+#webgpu,
+#bitmapRenderer {
+  width: min(15rem, 100%);
+}
+
+#svg path {
+  stroke: currentColor;
+  stroke-width: 0.25;
+  stroke-linecap: square;
+}
+
+.canvas-ready {
+  filter: invert(1) url("#applyColours");
+}
+
+:root {
+  color: black;
+  background-color: hsl(180, 100%, 85%);
+  font-family: sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: white;
+    background-color: hsl(180, 100%, 15%);
+  }
+}

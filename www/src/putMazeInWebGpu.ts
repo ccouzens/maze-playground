@@ -1,4 +1,5 @@
-import { mazeWalls, type Computer, type Maze } from "./index";
+import { mazeWalls, type Computer, type Maze } from "./main";
+import shaderFile from "../public/shader.wgsl";
 
 const WALLSIZE: [number, number] = [1, 1];
 const CELLSIZE: [number, number] = [4, 4];
@@ -79,7 +80,7 @@ export async function putMazeInWebGPU(computer: Computer, maze: Maze) {
     usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
   });
 
-  const shaderCode = await fetch("./shader-LATEST.wgsl").then((r) => r.text());
+  const shaderCode = await fetch(shaderFile).then((r) => r.text());
   const module = device.createShaderModule({
     label: "maze shader",
     code: shaderCode,

@@ -1,4 +1,6 @@
-import { type Computer, type Maze, mazeWalls } from "./index";
+import { type Computer, type Maze, mazeWalls } from "./main";
+import fragShaderFile from "../public/frag.glsl";
+import vertShaderFile from "../public/vert.glsl";
 
 async function fetchAndCreateShader(
   gl: WebGL2RenderingContext,
@@ -34,8 +36,8 @@ export async function putMazeInWebgl(computer: Computer, maze: Maze) {
   }
 
   const [fragmentShader, vertexShader] = await Promise.all([
-    fetchAndCreateShader(gl, gl.FRAGMENT_SHADER, "./frag-LATEST.glsl"),
-    fetchAndCreateShader(gl, gl.VERTEX_SHADER, "./vert-LATEST.glsl"),
+    fetchAndCreateShader(gl, gl.FRAGMENT_SHADER, fragShaderFile),
+    fetchAndCreateShader(gl, gl.VERTEX_SHADER, vertShaderFile),
   ]);
 
   const program = gl.createProgram()!;

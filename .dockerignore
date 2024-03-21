@@ -3,7 +3,6 @@ target/
 build/
 gha-creds-*.json
 www/node_modules/
-www/public/computer-*.wasm
-www/public/script-*.js
-www/public/script-*.js.map
+www/public/computer.wasm
+www/build/
 

@@ -2,63 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <script src=" ./script-LATEST.js" type="module"></script>
-    <link rel="preload" href="computer-LATEST.wasm" as="fetch" crossorigin />
-    <link rel="preload" href="frag-LATEST.glsl" as="fetch" crossorigin />
-    <link rel="preload" href="vert-LATEST.glsl" as="fetch" crossorigin />
-    <link rel="preload" href="shader-LATEST.wgsl" as="fetch" crossorigin />
+    <script src=" ./script.js" type="module"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preload" href="computer.wasm" as="fetch" crossorigin />
+    <link rel="preload" href="frag.glsl" as="fetch" crossorigin />
+    <link rel="preload" href="vert.glsl" as="fetch" crossorigin />
+    <link rel="preload" href="shader.wgsl" as="fetch" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Maze</title>
-    <style>
-      #filter {
-        visibility: hidden;
-        position: absolute;
-        width: 0;
-        height: 0;
-      }
-
-      #svg,
-      #image,
-      #webgl2,
-      #webgpu,
-      #bitmapRenderer {
-        image-rendering: pixelated;
-        aspect-ratio: 1;
-      }
-
-      h1,
-      h2,
-      #svg,
-      #image,
-      #webgl2,
-      #webgpu,
-      #bitmapRenderer {
-        width: min(15rem, 100%);
-      }
-
-      #svg path {
-        stroke: currentColor;
-        stroke-width: 0.25;
-        stroke-linecap: square;
-      }
-
-      .canvas-ready {
-        filter: invert(1) url("#applyColours");
-      }
-
-      :root {
-        color: black;
-        background-color: hsl(180, 100%, 85%);
-        font-family: sans-serif;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          color: white;
-          background-color: hsl(180, 100%, 15%);
-        }
-      }
-    </style>
   </head>
 
   <body>
