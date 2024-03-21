@@ -8,11 +8,8 @@ await fs.rm("./build/", {
   force: true,
 });
 
-// console.log("mkdir ./build");
-// await fs.mkdir("./build");
-
-await esbuild.build({
-  entryPoints: ["src/index.ts", "public/style.css"],
+const buildOutput = await esbuild.build({
+  entryPoints: ["src/script.ts", "public/style.css"],
   bundle: true,
   loader: {
     ".wasm": "file",
@@ -25,17 +22,25 @@ await esbuild.build({
   sourcemap: true,
   outdir: "./build",
   logLevel: "info",
+  metafile: true,
 });
 
-// await esbuild.build({
-//   entryPoints: ["public/style.css"],
-//   bundle: true,
-//   assetNames: "../build/[name]-[hash]",
-//   entryNames: "[dir]/[name]-[hash]",
-//   minify: true,
-//   sourcemap: true,
-//   outfile: "build/style.css",
-//   logLevel: "info",
-// });
+const outputs = Object.keys(buildOutput.metafile.outputs).map((o) => {
+  const m = o.match(
+    /^build\/(?<name>[^-]+)(?<hash>-[A-Z0-9]{8})(?<ext>\..+)/,
+  ).groups;
+  return [`${m.name}${m.ext}`, `${m.name}${m.hash}${m.ext}`];
+});
 
-console.log("cp public/index.html ./build/");
+console.log(outputs);
+
+console.log("cat public/index.html");
+let html = await fs.readFile("public/index.html", {
+  encoding: "utf8",
+});
+for (const [orig, hashed] of outputs) {
+  html = html.replace(orig, hashed);
+}
+
+console.log("cat > build/index.html");
+await fs.writeFile("build/index.html", html);
