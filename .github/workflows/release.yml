@@ -17,8 +17,6 @@ jobs:
     steps:
       - name: Install rust wasm
         run: rustup target add wasm32-unknown-unknown
-      - name: Install wasm-opt
-        run: sudo apt-get install binaryen
       - name: Checkout
         uses: actions/checkout@v4
       - uses: "google-github-actions/auth@v2"
@@ -28,4 +26,4 @@ jobs:
       - name: "Set up Cloud SDK"
         uses: "google-github-actions/setup-gcloud@v2"
       - name: build and deploy
-        run: ./build.bash
+        run: ./build-and-release.bash
