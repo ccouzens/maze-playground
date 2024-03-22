@@ -1,6 +1,5 @@
 pub mod maze;
 use maze::{printers::BitmapRenderer, Maze};
-pub struct WasmMaze(Maze);
 
 #[link(wasm_import_module = "random")]
 extern "C" {
