@@ -1,8 +1,5 @@
 .git/
-target/
 build/
 gha-creds-*.json
-www/node_modules/
-www/public/computer.wasm
-www/build/
-
+node_modules/
+computer/target/

@@ -1,5 +1,4 @@
-/target
 /build/
 gha-creds-*.json
-
-node_modules/
+/node_modules/
+/computer/target/

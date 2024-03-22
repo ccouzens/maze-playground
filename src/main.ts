@@ -1,6 +1,6 @@
 import { putMazeInWebgl } from "./putMazeInWebgl";
 import { putMazeInWebGPU } from "./putMazeInWebGpu";
-import computerFile from "../computer/target/wasm32-unknown-unknown/release/maze_playground.wasm";
+import computerFile from "../computer/target/wasm32-unknown-unknown/release/computer.wasm";
 
 declare const tag: unique symbol;
 export type Maze = number & { readonly [tag]: "MAZE" };

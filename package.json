@@ -3,7 +3,7 @@
     "compileRust": "./build.bash",
     "build": "node ./build.mjs",
     "start": "esbuild src/script.ts --bundle --loader:.wasm=file --loader:.glsl=file --loader:.wgsl=file --loader:.css=css --serve --servedir=public --outfile=public/script.js --asset-names=[name]",
-    "format": "prettier --write '../**/*.{mjs,ts,md,json,html,js,yml,yaml,css}' && clang-format -i public/{vert,frag}.glsl"
+    "format": "prettier --write './**/*.{mjs,ts,md,json,html,js,yml,yaml,css}' && clang-format -i public/{vert,frag}.glsl"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.3",

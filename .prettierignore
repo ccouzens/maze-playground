@@ -1,7 +1,4 @@
-dist
-node_modules/
-../target/
-public/script-*.js
-public/script-*.js.map
-build
-
+/build/
+gha-creds-*.json
+/node_modules/
+/computer/target/
