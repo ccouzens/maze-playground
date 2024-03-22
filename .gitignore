@@ -2,3 +2,4 @@
 /build/
 gha-creds-*.json
 
+node_modules/

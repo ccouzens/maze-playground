@@ -1,6 +1,33 @@
 import * as esbuild from "esbuild";
 
 import * as fs from "node:fs/promises";
+import { spawn } from "node:child_process";
+
+console.log("cargo build --target=wasm32-unknown-unknown --release");
+const cargo = spawn(
+  "cargo",
+  ["build", "--target=wasm32-unknown-unknown", "--release"],
+  {
+    cwd: "computer",
+  },
+);
+
+cargo.stdout.on("data", (d) => {
+  console.log(d.toString());
+});
+cargo.stderr.on("data", (d) => {
+  console.error(d.toString());
+});
+
+await new Promise((resolve, reject) => {
+  cargo.on("close", (code) => {
+    if (code === 0) {
+      resolve();
+    } else {
+      reject(`cargo exited with status ${code}`);
+    }
+  });
+});
 
 console.log("rm -r ./build/");
 await fs.rm("./build/", {
