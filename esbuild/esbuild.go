@@ -8,7 +8,7 @@ import (
 	"github.com/evanw/esbuild/pkg/api"
 )
 
-func main() {
+func compileRust() {
 	cargo := exec.Command("cargo", "build", "--target=wasm32-unknown-unknown", "--release")
 	cargo.Stderr = os.Stderr
 	cargo.Stdout = os.Stdout
@@ -16,7 +16,9 @@ func main() {
 	if err := cargo.Run(); err != nil {
 		log.Fatal(err)
 	}
+}
 
+func serve() {
 	ctx, err := api.Context(api.BuildOptions{
 		EntryPoints: []string{"../src/script.ts", "../public/style.css"},
 		Loader: map[string]api.Loader{
@@ -46,4 +48,12 @@ func main() {
 	// Returning from main() exits immediately in Go.
 	// Block forever so we keep serving and don't exit.
 	<-make(chan struct{})
+}
+
+func main() {
+	compileRust()
+
+	if len(os.Args) >= 2 && os.Args[1] == "serve" {
+		serve()
+	}
 }
