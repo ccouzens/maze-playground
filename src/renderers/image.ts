@@ -11,17 +11,18 @@ export const image: Renderer<State> = {
     return Promise.resolve({ image, url: null });
   },
 
-  async render({ imageBitmapFactory }, { image, url: oldUrl }) {
+  async render({ imageBitmapFactory }, state) {
     const imageBitmap = await imageBitmapFactory();
     const canvas = new OffscreenCanvas(imageBitmap.width, imageBitmap.height);
     const context = canvas.getContext("bitmaprenderer")!;
     context.transferFromImageBitmap(imageBitmap);
     const blob = await canvas.convertToBlob();
     const url = URL.createObjectURL(blob);
-    image.src = url;
-    image.classList.add("canvas-ready");
-    if (oldUrl !== null) {
-      URL.revokeObjectURL(oldUrl);
+    state.image.src = url;
+    state.image.classList.add("canvas-ready");
+    if (state.url !== null) {
+      URL.revokeObjectURL(state.url);
     }
+    state.url = url;
   },
 };

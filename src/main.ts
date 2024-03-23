@@ -1,4 +1,3 @@
-import { putMazeInWebGPU } from "./putMazeInWebGpu";
 import computerFile from "../computer/target/wasm32-unknown-unknown/release/computer.wasm";
 import { imageBitmap, type Computer } from "./computer";
 import { svg } from "./renderers/svg";
@@ -6,6 +5,7 @@ import { image } from "./renderers/image";
 import { type RenderProps } from "./renderers/type";
 import { bitmapRenderer } from "./renderers/bitmapRenderer";
 import { webGL } from "./renderers/webGL";
+import { webGPU } from "./renderers/webGPU";
 
 async function initializeComputer(): Promise<Computer> {
   let computer: Computer;
@@ -25,7 +25,7 @@ export async function putMazeOnPage() {
   const [computer, renderFns] = await Promise.all([
     initializeComputer(),
     Promise.all(
-      [svg, image, bitmapRenderer, webGL].map(async (renderer) => {
+      [svg, image, bitmapRenderer, webGL, webGPU].map(async (renderer) => {
         const state = await renderer.init();
         return (props: RenderProps) => renderer.render(props, state as any);
       }),
@@ -42,7 +42,6 @@ export async function putMazeOnPage() {
       }
       await Promise.all([
         bitmapPromise,
-        putMazeInWebGPU(computer, maze),
         ...renderFns.map((r) => r({ computer, maze, imageBitmapFactory })),
       ]);
     } finally {
