@@ -1,6 +1,6 @@
 module github.com/ccouzens/maze-playground/esbuild
 
-go 1.21.8
+go 1.21
 
 require github.com/evanw/esbuild v0.20.2
 

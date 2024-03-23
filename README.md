@@ -4,7 +4,7 @@
 
 ```bash
 # podman
-podman container run --rm -p 8080:80 "$(podman image build -f Dockerfile . --quiet | tail -n 1)"
+podman container run --rm -p 8080:80 "$(podman image build . --quiet | tail -n 1)"
 # docker
-docker container run --rm -p 8080:80 "$(docker image build -f Dockerfile . --quiet | tail -n 1)"
+docker container run --rm -p 8080:80 "$(docker image build . --quiet | tail -n 1)"
 ```

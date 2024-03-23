@@ -2,8 +2,7 @@ set -e
 
 # rustup target add wasm32-unknown-unknown
 
-npm install
-node build.mjs
+(cd esbuild; go run .)
 
 VERSION="$(git rev-parse HEAD)"
 
