@@ -1,4 +1,4 @@
-import { type Computer, type Maze, mazeWalls } from "./main";
+import { type Computer, type Maze, mazeWalls } from "./computer";
 import fragShaderFile from "../public/frag.glsl";
 import vertShaderFile from "../public/vert.glsl";
 

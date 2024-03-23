@@ -1,4 +1,4 @@
-import { mazeWalls, type Computer, type Maze } from "./main";
+import { mazeWalls, type Computer, type Maze } from "./computer";
 import shaderFile from "../public/shader.wgsl";
 
 const WALLSIZE: [number, number] = [1, 1];
