@@ -1,4 +1,3 @@
-import { putMazeInWebgl } from "./putMazeInWebgl";
 import { putMazeInWebGPU } from "./putMazeInWebGpu";
 import computerFile from "../computer/target/wasm32-unknown-unknown/release/computer.wasm";
 import { imageBitmap, type Computer } from "./computer";
@@ -6,6 +5,7 @@ import { svg } from "./renderers/svg";
 import { image } from "./renderers/image";
 import { type RenderProps } from "./renderers/type";
 import { bitmapRenderer } from "./renderers/bitmapRenderer";
+import { webGL } from "./renderers/webGL";
 
 async function initializeComputer(): Promise<Computer> {
   let computer: Computer;
@@ -25,26 +25,30 @@ export async function putMazeOnPage() {
   const [computer, renderFns] = await Promise.all([
     initializeComputer(),
     Promise.all(
-      [svg, image, bitmapRenderer].map(async (renderer) => {
+      [svg, image, bitmapRenderer, webGL].map(async (renderer) => {
         const state = await renderer.init();
         return (props: RenderProps) => renderer.render(props, state as any);
       }),
     ),
   ]);
-  const maze = computer.new_maze(10, 10);
-  try {
-    const bitmapPromise = imageBitmap(computer, maze);
-    async function imageBitmapFactory() {
-      const image = await bitmapPromise;
-      return createImageBitmap(image);
+  async function rerender() {
+    const size = 8 + Math.random() * 5;
+    const maze = computer.new_maze(size, size);
+    try {
+      const bitmapPromise = imageBitmap(computer, maze);
+      async function imageBitmapFactory() {
+        const image = await bitmapPromise;
+        return createImageBitmap(image);
+      }
+      await Promise.all([
+        bitmapPromise,
+        putMazeInWebGPU(computer, maze),
+        ...renderFns.map((r) => r({ computer, maze, imageBitmapFactory })),
+      ]);
+    } finally {
+      computer.free_maze(maze);
     }
-    await Promise.all([
-      bitmapPromise,
-      putMazeInWebGPU(computer, maze),
-      ...renderFns.map((r) => r({ computer, maze, imageBitmapFactory })),
-      putMazeInWebgl(computer, maze),
-    ]);
-  } finally {
-    computer.free_maze(maze);
+    setTimeout(rerender, 2000);
   }
+  await rerender();
 }
