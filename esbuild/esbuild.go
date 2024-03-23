@@ -2,11 +2,21 @@ package main
 
 import (
 	"log"
+	"os"
+	"os/exec"
 
 	"github.com/evanw/esbuild/pkg/api"
 )
 
 func main() {
+	cargo := exec.Command("cargo", "build", "--target=wasm32-unknown-unknown", "--release")
+	cargo.Stderr = os.Stderr
+	cargo.Stdout = os.Stdout
+	cargo.Dir = "../computer"
+	if err := cargo.Run(); err != nil {
+		log.Fatal(err)
+	}
+
 	ctx, err := api.Context(api.BuildOptions{
 		EntryPoints: []string{"../src/script.ts", "../public/style.css"},
 		Loader: map[string]api.Loader{
