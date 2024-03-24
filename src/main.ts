@@ -21,6 +21,25 @@ async function initializeComputer(): Promise<Computer> {
   return computer;
 }
 
+function measureSync<T>(name: string[], callback: () => T): T {
+  const start = performance.now();
+  const out = callback();
+  const end = performance.now();
+  console.info(...name, end - start);
+  return out;
+}
+
+async function measureAsync<T>(
+  name: string[],
+  callback: () => Promise<T>,
+): Promise<T> {
+  const start = performance.now();
+  const out = await callback();
+  const end = performance.now();
+  console.info(...name, end - start);
+  return out;
+}
+
 export async function putMazeOnPage() {
   const initRenderers: [string, InitRenderer][] = [
     ["webGPU", webGPU],
@@ -29,19 +48,24 @@ export async function putMazeOnPage() {
     ["bitmapRenderer", bitmapRenderer],
     ["webGL", webGL],
   ];
-  const computer = await initializeComputer();
+  const computer = await measureAsync(
+    ["initializeComputer"],
+    initializeComputer,
+  );
   const renderers: [string, (props: RenderProps) => Promise<void>][] = [];
   for (const [name, initRenderer] of initRenderers) {
-    const start = performance.now();
-    const renderer = await initRenderer();
-    const end = performance.now();
-    console.info("initialize timing", name, end - start);
+    const renderer = await measureAsync(
+      ["initilize timing", name],
+      initRenderer,
+    );
     renderers.push([name, renderer]);
   }
   async function rerender() {
-    const maze = computer.new_maze(10, 10);
+    const maze = measureSync(["new maze"], () => computer.new_maze(30, 30));
     try {
-      const bitmap = await imageBitmap(computer, maze);
+      const bitmap = await measureAsync(["image bitmap"], () =>
+        imageBitmap(computer, maze),
+      );
       const props = {
         computer,
         maze,
@@ -50,10 +74,7 @@ export async function putMazeOnPage() {
         },
       };
       for (const [name, renderer] of renderers) {
-        const start = performance.now();
-        await renderer(props);
-        const end = performance.now();
-        console.info("render timing", name, end - start);
+        measureAsync(["render timing", name], () => renderer(props));
       }
     } finally {
       computer.free_maze(maze);
