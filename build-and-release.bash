@@ -17,26 +17,26 @@ gsutil \
 gsutil \
   -h "Content-Type:application/wasm" \
   cp \
-  "build/computer-*.wasm" \
+  "build/*.wasm" \
   gs://maze-playground/
 
 gsutil \
   -h "Content-Type:text/javascript" \
   cp \
-  "build/script-*.js" \
+  "build/*.js" \
   gs://maze-playground/
   
 gsutil \
   -h "Content-Type:text/css" \
   cp \
-  "build/style-*.css" \
+  "build/*.css" \
   gs://maze-playground/
   
 gsutil \
   -h "Content-Type:application/json" \
   cp \
-  "build/script-*.js.map" \
-  "build/style-*.css.map" \
+  "build/*.js.map" \
+  "build/*.css.map" \
   gs://maze-playground/
 
 gsutil \
