@@ -6,7 +6,4 @@ export interface RenderProps {
   imageBitmapFactory: () => Promise<ImageBitmap>;
 }
 
-export interface Renderer<T> {
-  init: () => Promise<T>;
-  render: (props: RenderProps, state: T) => Promise<void>;
-}
+export type InitRenderer = () => Promise<(props: RenderProps) => Promise<void>>;

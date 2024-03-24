@@ -2,10 +2,10 @@ import computerFile from "../computer/target/wasm32-unknown-unknown/release/comp
 import { imageBitmap, type Computer } from "./computer";
 import { svg } from "./renderers/svg";
 import { image } from "./renderers/image";
-import { type RenderProps } from "./renderers/type";
 import { bitmapRenderer } from "./renderers/bitmapRenderer";
 import { webGL } from "./renderers/webGL";
 import { webGPU } from "./renderers/webGPU";
+import { type RenderProps, type InitRenderer } from "./renderers/type";
 
 async function initializeComputer(): Promise<Computer> {
   let computer: Computer;
@@ -22,28 +22,39 @@ async function initializeComputer(): Promise<Computer> {
 }
 
 export async function putMazeOnPage() {
-  const [computer, renderFns] = await Promise.all([
-    initializeComputer(),
-    Promise.all(
-      [svg, image, bitmapRenderer, webGL, webGPU].map(async (renderer) => {
-        const state = await renderer.init();
-        return (props: RenderProps) => renderer.render(props, state as any);
-      }),
-    ),
-  ]);
+  const initRenderers: [string, InitRenderer][] = [
+    ["webGPU", webGPU],
+    ["svg", svg],
+    ["image", image],
+    ["bitmapRenderer", bitmapRenderer],
+    ["webGL", webGL],
+  ];
+  const computer = await initializeComputer();
+  const renderers: [string, (props: RenderProps) => Promise<void>][] = [];
+  for (const [name, initRenderer] of initRenderers) {
+    const start = performance.now();
+    const renderer = await initRenderer();
+    const end = performance.now();
+    console.info("initialize timing", name, end - start);
+    renderers.push([name, renderer]);
+  }
   async function rerender() {
-    const size = 8 + Math.random() * 5;
-    const maze = computer.new_maze(size, size);
+    const maze = computer.new_maze(10, 10);
     try {
-      const bitmapPromise = imageBitmap(computer, maze);
-      async function imageBitmapFactory() {
-        const image = await bitmapPromise;
-        return createImageBitmap(image);
+      const bitmap = await imageBitmap(computer, maze);
+      const props = {
+        computer,
+        maze,
+        imageBitmapFactory() {
+          return createImageBitmap(bitmap);
+        },
+      };
+      for (const [name, renderer] of renderers) {
+        const start = performance.now();
+        await renderer(props);
+        const end = performance.now();
+        console.info("render timing", name, end - start);
       }
-      await Promise.all([
-        bitmapPromise,
-        ...renderFns.map((r) => r({ computer, maze, imageBitmapFactory })),
-      ]);
     } finally {
       computer.free_maze(maze);
     }

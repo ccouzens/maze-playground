@@ -1,20 +1,8 @@
 import { mazeWalls } from "../computer";
-import { type Renderer } from "./type";
+import { type InitRenderer } from "./type";
 
 import fragShaderFile from "../../public/frag.glsl";
 import vertShaderFile from "../../public/vert.glsl";
-
-interface State {
-  canvas: HTMLCanvasElement;
-  gl: WebGL2RenderingContext;
-  vao: WebGLVertexArrayObject;
-  program: WebGLProgram;
-  dimensionsUniformLocation: WebGLUniformLocation;
-  wallSizeUniformLocation: WebGLUniformLocation;
-  passageSizeUniformLocation: WebGLUniformLocation;
-  pixelDimensionsUniformLocation: WebGLUniformLocation;
-  wallsUniformLocation: WebGLUniformLocation;
-}
 
 const WALL_SIZE = 1;
 const PASSAGE_SIZE = 3;
@@ -45,91 +33,59 @@ async function fetchAndCreateShader(
   throw `Could not compile shader ${filename}`;
 }
 
-export const webGL: Renderer<State | null> = {
-  async init() {
-    const canvas = document.querySelector<HTMLCanvasElement>("#webgl2")!;
-    const gl = canvas?.getContext("webgl2");
-    if (!gl) {
-      return null;
-    }
+export const webGL: InitRenderer = async function initWebGL() {
+  const canvas = document.querySelector<HTMLCanvasElement>("#webgl2")!;
+  const gl = canvas?.getContext("webgl2");
+  if (!gl) {
+    return () => Promise.resolve();
+  }
 
-    const [fragmentShader, vertexShader] = await Promise.all([
-      fetchAndCreateShader(gl, gl.FRAGMENT_SHADER, fragShaderFile),
-      fetchAndCreateShader(gl, gl.VERTEX_SHADER, vertShaderFile),
-    ]);
+  const [fragmentShader, vertexShader] = await Promise.all([
+    fetchAndCreateShader(gl, gl.FRAGMENT_SHADER, fragShaderFile),
+    fetchAndCreateShader(gl, gl.VERTEX_SHADER, vertShaderFile),
+  ]);
 
-    const program = gl.createProgram()!;
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error(gl.getProgramInfoLog(program));
-      gl.deleteProgram(program);
-      throw `Could not compile program`;
-    }
-    const positionAttributeLocation = gl.getAttribLocation(
-      program,
-      "a_position",
-    );
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, -1, 1, 1, -1, 1, 1]),
-      gl.STATIC_DRAW,
-    );
-    const vao = gl.createVertexArray()!;
-    gl.bindVertexArray(vao);
-    gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
-    const dimensionsUniformLocation = gl.getUniformLocation(
-      program,
-      "u_dimensions",
-    )!;
-    const pixelDimensionsUniformLocation = gl.getUniformLocation(
-      program,
-      "u_pixel_dimensions",
-    )!;
-    const wallSizeUniformLocation = gl.getUniformLocation(
-      program,
-      "u_wall_size",
-    )!;
-    const passageSizeUniformLocation = gl.getUniformLocation(
-      program,
-      "u_passage_size",
-    )!;
+  const program = gl.createProgram()!;
+  gl.attachShader(program, vertexShader);
+  gl.attachShader(program, fragmentShader);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    console.error(gl.getProgramInfoLog(program));
+    gl.deleteProgram(program);
+    throw `Could not compile program`;
+  }
+  const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+  const positionBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
+    new Float32Array([-1, -1, -1, 1, 1, -1, 1, 1]),
+    gl.STATIC_DRAW,
+  );
+  const vao = gl.createVertexArray()!;
+  gl.bindVertexArray(vao);
+  gl.enableVertexAttribArray(positionAttributeLocation);
+  gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+  const dimensionsUniformLocation = gl.getUniformLocation(
+    program,
+    "u_dimensions",
+  )!;
+  const pixelDimensionsUniformLocation = gl.getUniformLocation(
+    program,
+    "u_pixel_dimensions",
+  )!;
+  const wallSizeUniformLocation = gl.getUniformLocation(
+    program,
+    "u_wall_size",
+  )!;
+  const passageSizeUniformLocation = gl.getUniformLocation(
+    program,
+    "u_passage_size",
+  )!;
 
-    const wallsUniformLocation = gl.getUniformLocation(program, "u_walls")!;
+  const wallsUniformLocation = gl.getUniformLocation(program, "u_walls")!;
 
-    return {
-      canvas,
-      gl,
-      vao,
-      program,
-      dimensionsUniformLocation,
-      wallSizeUniformLocation,
-      passageSizeUniformLocation,
-      pixelDimensionsUniformLocation,
-      wallsUniformLocation,
-    };
-  },
-
-  render({ computer, maze }, state) {
-    if (state === null) {
-      return Promise.resolve();
-    }
-    const {
-      canvas,
-      gl,
-      vao,
-      program,
-      dimensionsUniformLocation,
-      wallSizeUniformLocation,
-      passageSizeUniformLocation,
-      pixelDimensionsUniformLocation,
-      wallsUniformLocation,
-    } = state;
-
+  return function renderWebGL({ computer, maze }) {
     const walls = mazeWalls(computer, maze);
     const mazeDimensions: [number, number] = [
       computer.maze_width(maze),
@@ -181,5 +137,5 @@ export const webGL: Renderer<State | null> = {
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     canvas?.classList.add("canvas-ready");
     return Promise.resolve();
-  },
+  };
 };

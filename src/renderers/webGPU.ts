@@ -1,4 +1,4 @@
-import { type Renderer } from "./type";
+import { type InitRenderer } from "./type";
 
 import { mazeWalls } from "../computer";
 import shaderFile from "../../public/shader.wgsl";
@@ -6,63 +6,46 @@ import shaderFile from "../../public/shader.wgsl";
 const WALLSIZE: [number, number] = [1, 1];
 const CELLSIZE: [number, number] = [4, 4];
 
-interface State {
-  canvas: HTMLCanvasElement;
-  device: GPUDevice;
-  pipeline: GPURenderPipeline;
-  context: GPUCanvasContext;
-}
+export const webGPU: InitRenderer = async function initWebGPU() {
+  const canvas = document.querySelector<HTMLCanvasElement>("#webgpu")!;
+  const [device, shaderCode] = await Promise.all([
+    navigator.gpu?.requestAdapter().then((adapter) => adapter?.requestDevice()),
+    fetch(shaderFile).then((r) => r.text()),
+  ]);
+  if (device === undefined) {
+    console.log("WebGPU is not supported");
+    return () => Promise.resolve();
+  }
+  const context = canvas.getContext("webgpu");
+  if (!context) {
+    console.log("WebGPU is not supported");
+    return () => Promise.resolve();
+  }
+  const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
+  context.configure({
+    device,
+    format: presentationFormat,
+  });
 
-export const webGPU: Renderer<State | null> = {
-  async init() {
-    const canvas = document.querySelector<HTMLCanvasElement>("#webgpu")!;
-    const [device, shaderCode] = await Promise.all([
-      navigator.gpu
-        ?.requestAdapter()
-        .then((adapter) => adapter?.requestDevice()),
-      fetch(shaderFile).then((r) => r.text()),
-    ]);
-    if (device === undefined) {
-      console.log("WebGPU is not supported");
-      return null;
-    }
-    const context = canvas.getContext("webgpu");
-    if (!context) {
-      console.log("WebGPU is not supported");
-      return null;
-    }
-    const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
-    context.configure({
-      device,
-      format: presentationFormat,
-    });
-
-    const module = device.createShaderModule({
-      label: "maze shader",
-      code: shaderCode,
-    });
-    const pipeline = await device.createRenderPipelineAsync({
-      label: "maze pipeline",
-      layout: "auto",
-      primitive: { topology: "triangle-strip" },
-      vertex: {
-        module,
-        entryPoint: "vs",
-      },
-      fragment: {
-        module,
-        entryPoint: "fs",
-        targets: [{ format: presentationFormat }],
-      },
-    });
-    return { canvas, device, pipeline, context };
-  },
-
-  render({ computer, maze }, state) {
-    if (state === null) {
-      return Promise.resolve();
-    }
-    const { canvas, device, pipeline, context } = state;
+  const module = device.createShaderModule({
+    label: "maze shader",
+    code: shaderCode,
+  });
+  const pipeline = await device.createRenderPipelineAsync({
+    label: "maze pipeline",
+    layout: "auto",
+    primitive: { topology: "triangle-strip" },
+    vertex: {
+      module,
+      entryPoint: "vs",
+    },
+    fragment: {
+      module,
+      entryPoint: "fs",
+      targets: [{ format: presentationFormat }],
+    },
+  });
+  return function renderWebGPU({ computer, maze }) {
     const dimensions: [number, number] = [
       computer.maze_width(maze),
       computer.maze_height(maze),
@@ -115,5 +98,5 @@ export const webGPU: Renderer<State | null> = {
     device.queue.submit([commandBuffer]);
     canvas.classList.add("canvas-ready");
     return Promise.resolve();
-  },
+  };
 };

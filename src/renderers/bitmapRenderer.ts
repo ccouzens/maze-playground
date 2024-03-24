@@ -1,23 +1,16 @@
-import { Renderer } from "./type";
+import { type InitRenderer } from "./type";
 
-interface State {
-  canvas: HTMLCanvasElement;
-  context: ImageBitmapRenderingContext;
-}
+export const bitmapRenderer: InitRenderer = function initBitmapRenderer() {
+  const canvas = document.querySelector<HTMLCanvasElement>("#bitmapRenderer")!;
+  const context = canvas.getContext("bitmaprenderer")!;
 
-export const bitmapRenderer: Renderer<State> = {
-  init() {
-    const canvas =
-      document.querySelector<HTMLCanvasElement>("#bitmapRenderer")!;
-    const context = canvas.getContext("bitmaprenderer")!;
-    return Promise.resolve({ canvas, context });
-  },
-
-  async render({ imageBitmapFactory }, { canvas, context }) {
+  return Promise.resolve(async function renderBitmapRenderer({
+    imageBitmapFactory,
+  }) {
     const imageBitmap = await imageBitmapFactory();
     canvas.width = imageBitmap.width;
     canvas.height = imageBitmap.height;
     context.transferFromImageBitmap(imageBitmap);
     canvas.classList.add("canvas-ready");
-  },
+  });
 };
