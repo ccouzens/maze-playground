@@ -42,11 +42,11 @@ gsutil \
 gsutil \
   -h "Content-Type:text/html" \
   cp \
-  "build/index.html" \
+  "build/rendering-playground.html" \
   gs://maze-playground/
 
 gsutil \
   -h "Content-Type:text/html" \
   cp \
-  "build/index.html" \
-  "gs://maze-playground/index-${VERSION}.html"
+  "build/rendering-playground.html" \
+  "gs://maze-playground/rendering-playground-${VERSION}.html"

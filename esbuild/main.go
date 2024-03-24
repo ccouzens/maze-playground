@@ -62,23 +62,25 @@ func build() {
 		log.Fatal()
 	}
 
-	indexFile, err := os.ReadFile("../public/index.html")
-	if err != nil {
-		log.Fatal(err)
-	}
 	fileNameExtractor := regexp.MustCompile("/build/([^-]+)(-[A-Z0-9]{8})(\\..+)")
-	indexHtml := string(indexFile)
+	for _, fileName := range []string{"rendering-playground.html"} {
+		file, err := os.ReadFile("../public/" + fileName)
+		if err != nil {
+			log.Fatal(err)
+		}
+		html := string(file)
 
-	for _, outFile := range buildOutput.OutputFiles {
-		matches := fileNameExtractor.FindStringSubmatch(outFile.Path)
-		name := matches[1]
-		hash := matches[2]
-		ext := matches[3]
-		indexHtml = strings.ReplaceAll(indexHtml, name+ext, name+hash+ext)
-	}
+		for _, outFile := range buildOutput.OutputFiles {
+			matches := fileNameExtractor.FindStringSubmatch(outFile.Path)
+			name := matches[1]
+			hash := matches[2]
+			ext := matches[3]
+			html = strings.ReplaceAll(html, name+ext, name+hash+ext)
+		}
 
-	if err := os.WriteFile("../build/index.html", []byte(indexHtml), 0444); err != nil {
-		log.Fatal(err)
+		if err := os.WriteFile("../build/"+fileName, []byte(html), 0444); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
