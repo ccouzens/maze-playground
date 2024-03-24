@@ -1,17 +1,9 @@
-import { Renderer } from "./type";
+import { type InitRenderer } from "./type";
 
-interface State {
-  url: string | null;
-  image: HTMLImageElement;
-}
-
-export const image: Renderer<State> = {
-  init() {
-    const image = document.querySelector<HTMLImageElement>("#image")!;
-    return Promise.resolve({ image, url: null });
-  },
-
-  async render({ imageBitmapFactory }, { image, url: oldUrl }) {
+export const image: InitRenderer = function initImage() {
+  const image = document.querySelector<HTMLImageElement>("#image")!;
+  const blobUrls: string[] = [];
+  return Promise.resolve(async function renderImage({ imageBitmapFactory }) {
     const imageBitmap = await imageBitmapFactory();
     const canvas = new OffscreenCanvas(imageBitmap.width, imageBitmap.height);
     const context = canvas.getContext("bitmaprenderer")!;
@@ -20,8 +12,9 @@ export const image: Renderer<State> = {
     const url = URL.createObjectURL(blob);
     image.src = url;
     image.classList.add("canvas-ready");
-    if (oldUrl !== null) {
-      URL.revokeObjectURL(oldUrl);
+    while (blobUrls.length > 0) {
+      URL.revokeObjectURL(blobUrls.pop()!);
     }
-  },
+    blobUrls.push(url);
+  });
 };
