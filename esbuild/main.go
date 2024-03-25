@@ -63,7 +63,7 @@ func build() {
 	}
 
 	fileNameExtractor := regexp.MustCompile("/build/([^-]+)(-[A-Z0-9]{8})(\\..+)")
-	for _, fileName := range []string{"rendering-playground.html"} {
+	for _, fileName := range []string{"game.html", "rendering-playground.html"} {
 		file, err := os.ReadFile("../public/" + fileName)
 		if err != nil {
 			log.Fatal(err)
