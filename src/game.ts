@@ -1,39 +1,46 @@
-let poppingState = false;
+const urls: Record<string, string> = {
+  links: "#linksDialog",
+};
 
-function showDialog(selector: string, pushState = true) {
-  const dialog = document.querySelector<HTMLDialogElement>(selector)!;
-  dialog.showModal();
-  dialog.addEventListener(
-    "close",
-    () => {
-      if (!poppingState) {
-        history.back();
-      }
-    },
-    { once: true },
-  );
-  if (pushState) {
-    history.pushState(selector, "");
+function navigate(key: string, pushState = true) {
+  const selector = urls[key];
+
+  if (selector) {
+    const dialog = document.querySelector<HTMLDialogElement>(selector)!;
+    dialog.showModal();
+    if (pushState) {
+      history.pushState(key, "", `#${key}`);
+    }
+    dialog.addEventListener(
+      "close",
+      function dialogClose() {
+        if (history.state === key) {
+          history.back();
+        } else {
+          history.replaceState(null, "", "#");
+        }
+      },
+      { once: true },
+    );
   }
 }
 
 window.addEventListener("popstate", function listener({ state }) {
-  poppingState = true;
-  try {
-    if (state === null) {
-      for (const dialog of document.querySelectorAll<HTMLDialogElement>(
-        "dialog[open]",
-      )) {
-        dialog.close();
-      }
-    } else if (typeof state === "string") {
-      showDialog(state, false);
+  if (state === null) {
+    for (const dialog of document.querySelectorAll<HTMLDialogElement>(
+      "dialog[open]",
+    )) {
+      dialog.close();
     }
-  } finally {
-    poppingState = false;
+  } else if (typeof state === "string") {
+    navigate(state, false);
   }
 });
 
 document.getElementById("links")!.addEventListener("click", () => {
-  showDialog("#linksDialog");
+  navigate("links");
 });
+
+if (window.location.hash) {
+  navigate(window.location.hash.slice(1), false);
+}
