@@ -17,7 +17,11 @@ function navigate(key: string, pushState = true) {
         if (history.state === key) {
           history.back();
         } else {
-          history.replaceState(null, "", "#");
+          history.replaceState(
+            null,
+            "",
+            window.location.href.replace(/#.+/, ""),
+          );
         }
       },
       { once: true },
