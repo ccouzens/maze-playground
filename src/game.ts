@@ -29,6 +29,14 @@ function navigate(key: string, pushState = true) {
   }
 }
 
+document.body.addEventListener("click", function clickHander(ev) {
+  if (ev.target instanceof HTMLDialogElement) {
+    ev.target.close();
+  } else if (ev.target instanceof HTMLButtonElement && ev.target.id) {
+    navigate(ev.target.id);
+  }
+});
+
 window.addEventListener("popstate", function listener({ state }) {
   if (state === null) {
     for (const dialog of document.querySelectorAll<HTMLDialogElement>(
@@ -39,10 +47,6 @@ window.addEventListener("popstate", function listener({ state }) {
   } else if (typeof state === "string") {
     navigate(state, false);
   }
-});
-
-document.getElementById("links")!.addEventListener("click", () => {
-  navigate("links");
 });
 
 if (window.location.hash) {
