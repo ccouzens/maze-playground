@@ -11,7 +11,7 @@ import (
 )
 
 var esbuildOptions = esbuild.BuildOptions{
-	EntryPoints: []string{"../src/script.ts", "../src/game.ts", "../public/style.css"},
+	EntryPoints: []string{"../src/script.ts", "../src/game.ts", "../public/style.css", "../public/game.css"},
 	Loader: map[string]esbuild.Loader{
 		".wasm": esbuild.LoaderFile,
 		".glsl": esbuild.LoaderFile,

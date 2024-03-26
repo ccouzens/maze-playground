@@ -1,0 +1,9 @@
+dialog {
+  padding: 0;
+}
+
+/* Have the child of the dialog take up all of it, so that clicks outside of it are easier to detect. */
+dialog > * {
+  padding: 1rem;
+  margin: 0;
+}
