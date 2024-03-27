@@ -1,4 +1,5 @@
 const urls: Record<string, string> = {
+  options: "#optionsDialog",
   links: "#linksDialog",
 };
 

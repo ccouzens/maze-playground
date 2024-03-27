@@ -12,10 +12,31 @@
     <header>
       <h1>Maze</h1>
       <nav>
-        <button>new</button><button>options</button
+        <button>new</button><button id="options">options</button
         ><button id="links">links</button>
       </nav>
     </header>
+    <dialog id="optionsDialog">
+      <form>
+        <label for="mazeSize">Size</label>
+        <input id="mazeSize" pattern="\d+x\d+" list="mazeSizeSuggestions" />
+        <datalist id="mazeSizeSuggestions">
+          <option value="6x6"></option>
+          <option value="8x8"></option>
+          <option value="10x10"></option>
+          <option value="12x12"></option>
+          <option value="14x14"></option>
+        </datalist>
+        <label for="mazeAlgorithm">Algorithm</label>
+        <select id="mazeAlgorithm">
+          <option>Binary tree</option>
+          <option>Sidewinder</option>
+          <option>Aldous-Broder</option>
+          <option>Wilson's</option>
+        </select>
+        <input type="submit" value="New maze" />
+      </form>
+    </dialog>
     <dialog id="linksDialog">
       <ul>
         <li>
