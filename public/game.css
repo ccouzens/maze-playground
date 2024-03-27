@@ -1,10 +1,35 @@
 dialog {
+  overflow: visible;
+  border: 0;
   padding: 0;
 }
 
 /* Have the child of the dialog take up all of it, so that clicks outside of it
 are easier to detect. */
-dialog > * {
+dialog > fieldset {
   padding: 1rem;
+  border: 0;
   margin: 0;
+}
+
+dialog > fieldset > legend {
+  text-align: center;
+  border-bottom: solid;
+  position: absolute;
+  top: -1rem;
+  display: none;
+}
+
+#optionsDialog form {
+  display: grid;
+  grid-template-columns: min-content min-content;
+  gap: 1em;
+}
+
+#optionsDialog form label {
+  text-align: right;
+}
+
+#optionsDialog form input[type="submit"] {
+  grid-column: 2;
 }
