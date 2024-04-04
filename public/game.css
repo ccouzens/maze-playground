@@ -1,6 +1,6 @@
 :root {
   font-family: sans-serif;
-  color: red;
+  color: green;
 }
 
 body {
@@ -15,22 +15,28 @@ header {
 nav {
   display: flex;
   flex-wrap: wrap;
+  gap: 0.5em;
 }
 
 h1 {
   margin: 0;
 }
 
-nav > button {
+nav > button,
+nav > a {
   background: none;
   border: none;
   text-decoration-line: underline;
   cursor: pointer;
   color: currentColor;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
 }
 
 dialog {
   padding: 0;
+  color: currentColor;
 }
 
 dialog::backdrop {

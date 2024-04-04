@@ -33,8 +33,12 @@ function navigate(key: string, pushState = true) {
 document.body.addEventListener("click", function clickHander(ev) {
   if (ev.target instanceof HTMLDialogElement) {
     ev.target.close();
-  } else if (ev.target instanceof HTMLButtonElement && ev.target.id) {
-    navigate(ev.target.id);
+  } else if (ev.target instanceof HTMLAnchorElement) {
+    const hrefAttr = ev.target.getAttribute("href");
+    if (hrefAttr?.startsWith("#")) {
+      navigate(hrefAttr.slice(1));
+      ev.preventDefault();
+    }
   }
 });
 
