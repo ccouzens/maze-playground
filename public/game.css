@@ -1,5 +1,40 @@
+:root {
+  font-family: sans-serif;
+  color: red;
+}
+
+body {
+  margin: 0;
+}
+
+header {
+  background-color: color-mix(in lch, currentColor 10%, transparent);
+  padding: 1rem 1rem 0;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+h1 {
+  margin: 0;
+}
+
+nav > button {
+  background: none;
+  border: none;
+  text-decoration-line: underline;
+  cursor: pointer;
+  color: currentColor;
+}
+
 dialog {
   padding: 0;
+}
+
+dialog::backdrop {
+  background-color: color-mix(in lch, currentColor 10%, transparent);
 }
 
 /* Have the child of the dialog take up all of it, so that clicks outside of it
