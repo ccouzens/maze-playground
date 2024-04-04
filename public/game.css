@@ -20,6 +20,10 @@ dialog > div {
   text-align: right;
 }
 
+#optionsDialog form label::after {
+  content: ":";
+}
+
 #optionsDialog form input[type="submit"] {
   grid-column: 2;
 }
