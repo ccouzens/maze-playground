@@ -7,6 +7,7 @@ set -e
 VERSION="$(git rev-parse HEAD)"
 
 gsutil \
+  -Z \
   -h "Content-Type:text/plain" \
   cp \
   "build/frag-*.glsl" \
@@ -15,24 +16,28 @@ gsutil \
   gs://maze-playground/
 
 gsutil \
+  -Z \
   -h "Content-Type:application/wasm" \
   cp \
   "build/*.wasm" \
   gs://maze-playground/
 
 gsutil \
+  -Z \
   -h "Content-Type:text/javascript" \
   cp \
   "build/*.js" \
   gs://maze-playground/
   
 gsutil \
+  -Z \
   -h "Content-Type:text/css" \
   cp \
   "build/*.css" \
   gs://maze-playground/
   
 gsutil \
+  -Z \
   -h "Content-Type:application/json" \
   cp \
   "build/*.js.map" \
@@ -40,24 +45,22 @@ gsutil \
   gs://maze-playground/
 
 gsutil \
+  -Z \
   -h "Content-Type:text/html" \
   cp \
   "build/rendering-playground.html" \
+  "build/game.html" \
   gs://maze-playground/
 
 gsutil \
+  -Z \
   -h "Content-Type:text/html" \
   cp \
   "build/rendering-playground.html" \
   "gs://maze-playground/rendering-playground-${VERSION}.html"
 
 gsutil \
-  -h "Content-Type:text/html" \
-  cp \
-  "build/game.html" \
-  gs://maze-playground/
-
-gsutil \
+  -Z \
   -h "Content-Type:text/html" \
   cp \
   "build/game.html" \
