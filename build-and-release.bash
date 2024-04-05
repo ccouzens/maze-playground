@@ -22,10 +22,17 @@ gsutil \
 
 gsutil \
   -m \
+  -h "Content-Type:application/json" \
   cp \
   -Z \
   build/*.js.map \
   build/*.css.map \
+  gs://maze-playground/
+
+gsutil \
+  -m \
+  cp \
+  -Z \
   build/*.js \
   build/*.css \
   build/*.html \
