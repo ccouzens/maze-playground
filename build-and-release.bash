@@ -1,4 +1,4 @@
-set -e
+set -ex
 
 # rustup target add wasm32-unknown-unknown
 
