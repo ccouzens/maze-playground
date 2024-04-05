@@ -1,6 +1,11 @@
 :root {
   font-family: sans-serif;
   --main-highlight-color: hsl(120 100% 50%);
+  --subtle-highlight-color: color-mix(
+    in srgb,
+    var(--main-highlight-color) 30%,
+    transparent
+  );
   --main-text-color: black;
   --main-background-color: white;
   color: var(--main-text-color);
@@ -25,11 +30,7 @@ body {
 }
 
 header {
-  background-color: color-mix(
-    in srgb,
-    var(--main-highlight-color) 30%,
-    transparent
-  );
+  background-color: var(--subtle-highlight-color);
   padding: 1rem 1rem 0;
 }
 
@@ -104,4 +105,13 @@ dialog > div {
 
 #optionsDialog form input[type="submit"] {
   grid-column: 2;
+}
+
+select,
+input {
+  border-radius: 0;
+  border-style: solid;
+  border-color: var(--subtle-highlight-color);
+  background-color: var(--subtle-highlight-color);
+  font-size: 1em;
 }
