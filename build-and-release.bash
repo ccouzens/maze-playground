@@ -6,6 +6,10 @@ set -e
 
 VERSION="$(git rev-parse HEAD)"
 
+gsutil help cp
+
+gsutil version
+
 gsutil \
   cp \
   -Z \
