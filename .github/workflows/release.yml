@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Install rust wasm
         run: rustup target add wasm32-unknown-unknown
+      - name: Install wasm-opt
+        run: apt-get update && apt-get install binaryen --assume-yes --no-install-recommends --no-install-suggests
       - name: Checkout
         uses: actions/checkout@v4
       - uses: "google-github-actions/auth@v2"

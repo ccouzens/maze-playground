@@ -1,6 +1,6 @@
-FROM docker.io/library/rust:1.76 AS builder
+FROM docker.io/library/rust:1.77 AS builder
 RUN rustup target add wasm32-unknown-unknown
-RUN apt-get update && apt-get install golang --assume-yes --no-install-recommends --no-install-suggests
+RUN apt-get update && apt-get install golang binaryen --assume-yes --no-install-recommends --no-install-suggests
 
 COPY ./esbuild/ /app/esbuild/
 WORKDIR /app/esbuild/

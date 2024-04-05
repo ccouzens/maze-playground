@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io"
 	"log"
 	"os"
 	"os/exec"
@@ -29,6 +30,28 @@ func compileRust() {
 	cargo.Dir = "../computer"
 	if err := cargo.Run(); err != nil {
 		log.Fatal(err)
+	}
+
+	computeSrc := "../computer/target/wasm32-unknown-unknown/release/computer.wasm"
+	computeDst := "../public/computer.wasm"
+	wasmopt := exec.Command("wasm-opt", "-O3", "-o", computeDst, computeSrc)
+	wasmopt.Stderr = os.Stderr
+	wasmopt.Stdout = os.Stdout
+	if err := wasmopt.Run(); err != nil {
+		src, err := os.Open(computeSrc)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer src.Close()
+
+		dst, err := os.Create(computeDst)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer dst.Close()
+		if _, err := io.Copy(dst, src); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 

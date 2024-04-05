@@ -1,4 +1,4 @@
-import computerFile from "../computer/target/wasm32-unknown-unknown/release/computer.wasm";
+import computerFile from "../public/computer.wasm";
 import { imageBitmap, type Computer } from "./computer";
 import { svg } from "./renderers/svg";
 import { image } from "./renderers/image";

@@ -3,3 +3,5 @@ build/
 gha-creds-*.json
 node_modules/
 computer/target/
+public/*.wasm
+
