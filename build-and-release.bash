@@ -50,3 +50,15 @@ gsutil \
   cp \
   "build/rendering-playground.html" \
   "gs://maze-playground/rendering-playground-${VERSION}.html"
+
+gsutil \
+  -h "Content-Type:text/html" \
+  cp \
+  "build/game.html" \
+  gs://maze-playground/
+
+gsutil \
+  -h "Content-Type:text/html" \
+  cp \
+  "build/game.html" \
+  "gs://maze-playground/game-${VERSION}.html"
