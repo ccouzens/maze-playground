@@ -33,6 +33,7 @@ gsutil \
   -m \
   cp \
   -Z \
+  build/*.wasm \
   build/*.js \
   build/*.css \
   build/*.html \
