@@ -13,7 +13,6 @@ ls -- build
 
 gsutil \
   -h "Content-Type:text/plain" \
-  -Z \
   cp \
   build/*.glsl \
   build/*.wgsl \
@@ -21,21 +20,18 @@ gsutil \
 
 gsutil \
   -h "Content-Type:application/wasm" \
-  -Z \
   cp \
   build/*.wasm \
   gs://maze-playground/
   
 gsutil \
   -h "Content-Type:application/json" \
-  -Z \
   cp \
   build/*.js.map \
   build/*.css.map \
   gs://maze-playground/
 
 gsutil \
-  -Z \
   cp \
   build/*.js \
   build/*.css \
