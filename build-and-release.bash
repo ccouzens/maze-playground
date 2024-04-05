@@ -12,6 +12,7 @@ cp build/rendering-playground.html "build/rendering-playground-${VERSION}.html"
 ls -- build
 
 gsutil \
+  -m \
   -h "Content-Type:text/plain" \
   cp \
   -Z \
@@ -20,23 +21,11 @@ gsutil \
   gs://maze-playground/
 
 gsutil \
-  -h "Content-Type:application/wasm" \
-  cp \
-  -Z \
-  build/*.wasm \
-  gs://maze-playground/
-  
-gsutil \
-  -h "Content-Type:application/json" \
+  -m \
   cp \
   -Z \
   build/*.js.map \
   build/*.css.map \
-  gs://maze-playground/
-
-gsutil \
-  cp \
-  -Z \
   build/*.js \
   build/*.css \
   build/*.html \
