@@ -1,6 +1,12 @@
 :root {
   font-family: sans-serif;
-  color: green;
+  --main-highlight-color: hsl(120 100% 50%);
+  --main-text-color: light-dark(black, white);
+  --main-background-color: light-dark(white, black);
+  color: var(--main-text-color);
+  background-color: var(--main-background-color);
+  color-scheme: light dark;
+  accent-color: var(--main-highlight-color);
 }
 
 body {
@@ -8,7 +14,11 @@ body {
 }
 
 header {
-  background-color: color-mix(in lch, currentColor 10%, transparent);
+  background-color: color-mix(
+    in lch,
+    var(--main-highlight-color) 30%,
+    transparent
+  );
   padding: 1rem 1rem 0;
 }
 
@@ -28,10 +38,13 @@ nav > a {
   border: none;
   text-decoration-line: underline;
   cursor: pointer;
-  color: currentColor;
   font-size: 1em;
   margin: 0;
   padding: 0;
+}
+
+a {
+  color: var(--main-text-color);
 }
 
 #maze {
@@ -40,11 +53,18 @@ nav > a {
 
 dialog {
   padding: 0;
-  color: currentColor;
+  color: var(--main-text-color);
+  background-color: var(--main-background-color);
+  border-color: var(--main-highlight-color);
+  border-width: thin;
 }
 
 dialog::backdrop {
-  background-color: color-mix(in lch, currentColor 10%, transparent);
+  background-color: color-mix(
+    in lch,
+    var(--main-highlight-color) 10%,
+    transparent
+  );
 }
 
 /* Have the child of the dialog take up all of it, so that clicks outside of it
