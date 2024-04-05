@@ -62,7 +62,7 @@ dialog {
 dialog::backdrop {
   background-color: color-mix(
     in lch,
-    var(--main-highlight-color) 10%,
+    var(--main-background-color) 10%,
     transparent
   );
 }
