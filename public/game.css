@@ -42,6 +42,7 @@ body {
 header {
   background-color: var(--subtle-highlight-color);
   padding: 1rem 1rem 0;
+  text-align: center;
 }
 
 nav {
@@ -49,6 +50,7 @@ nav {
   flex-wrap: wrap;
   gap: 0.5em;
   align-items: baseline;
+  justify-content: center;
 }
 
 h1 {
@@ -124,4 +126,13 @@ input {
   border-color: var(--subtle-highlight-color);
   background-color: var(--input-background-color);
   font-size: 1em;
+}
+
+#linksDialog ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  text-align: center;
 }
