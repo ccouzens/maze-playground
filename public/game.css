@@ -8,6 +8,11 @@
   );
   --main-text-color: black;
   --main-background-color: white;
+  --input-background-color: color-mix(
+    in srgb,
+    var(--main-highlight-color) 5%,
+    var(--main-background-color)
+  );
   color: var(--main-text-color);
   background-color: var(--main-background-color);
   color-scheme: light dark;
@@ -18,6 +23,11 @@
   :root {
     --main-text-color: white;
     --main-background-color: black;
+    --input-background-color: color-mix(
+      in srgb,
+      var(--main-highlight-color) 15%,
+      var(--main-background-color)
+    );
   }
 }
 
@@ -112,6 +122,6 @@ input {
   border-radius: 0;
   border-style: solid;
   border-color: var(--subtle-highlight-color);
-  background-color: var(--subtle-highlight-color);
+  background-color: var(--input-background-color);
   font-size: 1em;
 }
