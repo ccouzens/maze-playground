@@ -1,12 +1,19 @@
 :root {
   font-family: sans-serif;
   --main-highlight-color: hsl(120 100% 50%);
-  --main-text-color: light-dark(black, white);
-  --main-background-color: light-dark(white, black);
+  --main-text-color: black;
+  --main-background-color: white;
   color: var(--main-text-color);
   background-color: var(--main-background-color);
   color-scheme: light dark;
   accent-color: var(--main-highlight-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-text-color: white;
+    --main-background-color: black;
+  }
 }
 
 body {
@@ -15,7 +22,7 @@ body {
 
 header {
   background-color: color-mix(
-    in lch,
+    in srgb,
     var(--main-highlight-color) 30%,
     transparent
   );
@@ -26,6 +33,7 @@ nav {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5em;
+  align-items: baseline;
 }
 
 h1 {
@@ -61,7 +69,7 @@ dialog {
 
 dialog::backdrop {
   background-color: color-mix(
-    in lch,
+    in srgb,
     var(--main-background-color) 10%,
     transparent
   );
