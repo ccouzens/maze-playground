@@ -16,6 +16,10 @@
   }
 }
 
+::selection {
+  background-color: var(--main-highlight-color);
+}
+
 body {
   margin: 0;
 }
@@ -49,6 +53,7 @@ nav > a {
   font-size: 1em;
   margin: 0;
   padding: 0;
+  color: var(--main-text-color);
 }
 
 a {
