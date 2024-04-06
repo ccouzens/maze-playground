@@ -1,6 +1,6 @@
 :root {
   font-family: sans-serif;
-  --main-highlight-color: hsl(120 100% 50%);
+  --main-highlight-color: Highlight;
   --subtle-highlight-color: color-mix(
     in srgb,
     var(--main-highlight-color) 30%,
