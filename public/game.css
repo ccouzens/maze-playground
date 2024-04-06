@@ -1,9 +1,6 @@
 :root {
   font-family: sans-serif;
-  /* Use AccentColor once supported
-  https://caniuse.com/mdn-css_types_color_system-color_accentcolor_accentcolortext
-   */
-  --main-highlight-color: Highlight;
+  --main-highlight-color: hsl(120 100% 50%);
   --subtle-highlight-color: color-mix(
     in srgb,
     var(--main-highlight-color) 30%,
@@ -34,12 +31,16 @@
   }
 }
 
+::selection {
+  background-color: var(--main-highlight-color);
+}
+
 body {
   margin: 0;
 }
 
 header {
-  background-color: var(--main-highlight-color);
+  background-color: var(--subtle-highlight-color);
   padding: 1rem 1rem 0;
   text-align: center;
 }
