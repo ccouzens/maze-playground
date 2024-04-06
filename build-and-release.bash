@@ -8,6 +8,7 @@ VERSION="$(git rev-parse HEAD)"
 
 cp build/game.html "build/game-${VERSION}.html"
 cp build/rendering-playground.html "build/rendering-playground-${VERSION}.html"
+cp build/rendering-playground.html "build/index.html"
 
 ls -- build
 
