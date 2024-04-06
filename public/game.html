@@ -25,40 +25,14 @@
       <div>
         <form method="dialog">
           <label for="mazeSize">Size</label>
-          <input
-            id="mazeSize"
-            inputmode="decimal"
-            list="mazeSizeSuggestions"
-            type="text"
-            maxlength="7"
-            spellcheck="false"
-            size="7"
-          />
-          <datalist id="mazeSizeSuggestions">
-            <option value="6x6"></option>
-            <option value="7x7"></option>
-            <option value="8x8"></option>
-            <option value="9x9"></option>
-            <option value="10x10"></option>
-            <option value="11x11"></option>
-            <option value="12x12"></option>
-            <option value="13x13"></option>
-            <option value="14x14"></option>
-            <option value="15x15"></option>
-            <option value="16x16"></option>
-            <option value="17x17"></option>
-            <option value="18x18"></option>
-            <option value="19x19"></option>
-            <option value="20x20"></option>
-          </datalist>
+          <input id="mazeSize" type="range" min="6" max="20" value="10" />
           <label for="mazeAlgorithm">Algorithm</label>
           <select id="mazeAlgorithm">
             <option>Binary tree</option>
             <option>Sidewinder</option>
             <option>Aldous-Broder</option>
-            <option>Wilson's</option>
+            <option selected>Wilson's</option>
           </select>
-          <input type="submit" value="New maze" />
         </form>
       </div>
     </dialog>
