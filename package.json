@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "cd esbuild; go run . serve",
+    "typeCheck": "tsc --noEmit",
     "format": "prettier --write './**/*.{mjs,ts,md,json,html,js,yml,yaml,css}' && clang-format -i public/{vert,frag}.glsl"
   },
   "devDependencies": {
