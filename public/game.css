@@ -31,16 +31,12 @@
   }
 }
 
-::selection {
-  background-color: var(--main-highlight-color);
-}
-
 body {
   margin: 0;
 }
 
 header {
-  background-color: var(--subtle-highlight-color);
+  background-color: var(--main-highlight-color);
   padding: 1rem 1rem 0;
   text-align: center;
 }
@@ -129,8 +125,14 @@ input {
   text-align: center;
 }
 
-:focus-visible,
-:active {
+a:focus-visible,
+a:active,
+button:focus-visible,
+button:active,
+input:focus-visible,
+input:active,
+select:focus-visible,
+select:active {
   border-color: var(--main-highlight-color);
   outline-color: var(--main-highlight-color);
 }
