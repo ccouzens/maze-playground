@@ -4,7 +4,7 @@
   --subtle-highlight-color: color-mix(
     in srgb,
     var(--main-highlight-color) 30%,
-    transparent
+    var(--main-background-color)
   );
   --main-text-color: black;
   --main-background-color: white;
@@ -127,6 +127,12 @@ input {
   background-color: var(--input-background-color);
   font-size: 1em;
   text-align: center;
+}
+
+:focus-visible,
+:active {
+  border-color: var(--main-highlight-color);
+  outline-color: var(--main-highlight-color);
 }
 
 #linksDialog ul {
