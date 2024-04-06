@@ -13,7 +13,7 @@
     <header>
       <h1>Maze</h1>
       <nav>
-        <button>new</button><a href="#options">options</a
+        <button value="new">new</button><a href="#options">options</a
         ><a href="#links">links</a>
       </nav>
     </header>
@@ -23,11 +23,11 @@
     </svg>
     <dialog id="optionsDialog">
       <div>
-        <form>
+        <form method="dialog">
           <label for="mazeSize">Size</label>
           <input
             id="mazeSize"
-            pattern="\d+x\d+"
+            inputmode="decimal"
             list="mazeSizeSuggestions"
             type="text"
             maxlength="7"
@@ -36,10 +36,20 @@
           />
           <datalist id="mazeSizeSuggestions">
             <option value="6x6"></option>
+            <option value="7x7"></option>
             <option value="8x8"></option>
+            <option value="9x9"></option>
             <option value="10x10"></option>
+            <option value="11x11"></option>
             <option value="12x12"></option>
+            <option value="13x13"></option>
             <option value="14x14"></option>
+            <option value="15x15"></option>
+            <option value="16x16"></option>
+            <option value="17x17"></option>
+            <option value="18x18"></option>
+            <option value="19x19"></option>
+            <option value="20x20"></option>
           </datalist>
           <label for="mazeAlgorithm">Algorithm</label>
           <select id="mazeAlgorithm">
