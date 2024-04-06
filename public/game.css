@@ -126,6 +126,7 @@ input {
   border-color: var(--subtle-highlight-color);
   background-color: var(--input-background-color);
   font-size: 1em;
+  text-align: center;
 }
 
 #linksDialog ul {
