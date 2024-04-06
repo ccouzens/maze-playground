@@ -110,11 +110,7 @@ dialog {
 }
 
 dialog::backdrop {
-  background-color: color-mix(
-    in srgb,
-    var(--main-background-color) 10%,
-    transparent
-  );
+  backdrop-filter: blur(0.2rem);
 }
 
 /* Have the child of the dialog take up all of it, so that clicks outside of it
