@@ -1,3 +1,3 @@
 import { initialiseApp } from "./game/app";
 
-initialiseApp(window);
+initialiseApp(window).catch((reason) => console.error(reason));

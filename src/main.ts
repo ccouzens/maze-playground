@@ -1,25 +1,10 @@
-import computerFile from "../public/computer.wasm";
-import { imageBitmap, type Computer } from "./computer";
+import { imageBitmap, initializeComputer } from "./computer";
 import { svg } from "./renderers/svg";
 import { image } from "./renderers/image";
 import { bitmapRenderer } from "./renderers/bitmapRenderer";
 import { webGL } from "./renderers/webGL";
 import { webGPU } from "./renderers/webGPU";
 import { type RenderProps, type InitRenderer } from "./renderers/type";
-
-async function initializeComputer(): Promise<Computer> {
-  let computer: Computer;
-  const wasm = await WebAssembly.instantiateStreaming(fetch(computerFile), {
-    random: {
-      fill_bytes(offset: number, length: number) {
-        const bytes = new Uint8Array(computer.memory.buffer, offset, length);
-        crypto.getRandomValues(bytes);
-      },
-    },
-  });
-  computer = wasm.instance.exports as unknown as Computer;
-  return computer;
-}
 
 function measureSync<T>(name: string[], callback: () => T): T {
   const start = performance.now();

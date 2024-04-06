@@ -1,3 +1,5 @@
+import { initializeComputer, rustStringToJS, type Computer } from "../computer";
+
 interface WindowType {
   addEventListener: Window["addEventListener"];
   document: {
@@ -22,21 +24,24 @@ interface WindowType {
 interface App {
   optionsDialog: HTMLDialogElement;
   linksDialog: HTMLDialogElement;
+  wallsSvgPath: SVGPathElement;
+  routeSvgPath: SVGPathElement;
+  mazeSvg: SVGElement;
+  computer: Computer;
+  width: number;
+  height: number;
   window: WindowType;
 }
 
-const urls: Record<string, "optionsDialog" | "linksDialog"> = {
-  "#options": "optionsDialog",
-  "#links": "linksDialog",
-};
-
 function navigate(app: App, key: string, pushState = true) {
-  const selector = urls[key];
-  if (selector === undefined) {
+  let dialog: HTMLDialogElement;
+  if (key === "#options") {
+    dialog = app.optionsDialog;
+  } else if (key === "#links") {
+    dialog = app.linksDialog;
+  } else {
     return;
   }
-
-  const dialog = app[selector];
   dialog.showModal();
   if (pushState) {
     app.window.history.pushState(key, "", key);
@@ -90,12 +95,20 @@ function clickHandlerFactory(
   };
 }
 
-export function initialiseApp(window: WindowType) {
+export async function initialiseApp(window: WindowType) {
+  const computer = await initializeComputer();
+  const mazeSvg = window.document.querySelector<SVGElement>("#maze")!;
   const app: App = {
     optionsDialog:
       window.document.querySelector<HTMLDialogElement>("#optionsDialog")!,
     linksDialog:
       window.document.querySelector<HTMLDialogElement>("#linksDialog")!,
+    wallsSvgPath: mazeSvg.querySelector<SVGPathElement>("#walls")!,
+    routeSvgPath: mazeSvg.querySelector<SVGPathElement>("#route")!,
+    mazeSvg,
+    computer,
+    width: 10,
+    height: 10,
     window,
   };
   const clickHandler = clickHandlerFactory(app);
@@ -107,5 +120,19 @@ export function initialiseApp(window: WindowType) {
 
   if (window.location.hash) {
     navigate(app, app.window.location.hash, false);
+  }
+
+  const maze = computer.new_maze(app.width, app.height);
+  try {
+    app.wallsSvgPath.setAttribute(
+      "d",
+      rustStringToJS(computer, computer.maze_svg_path(maze)),
+    );
+    mazeSvg.setAttribute(
+      "viewBox",
+      `-0.125 -0.125 ${computer.maze_width(maze) + 0.25} ${computer.maze_height(maze) + 0.25}`,
+    );
+  } finally {
+    computer.free_maze(maze);
   }
 }

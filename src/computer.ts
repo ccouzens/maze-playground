@@ -1,3 +1,4 @@
+import computerFile from "../public/computer.wasm";
 declare const tag: unique symbol;
 export type Maze = number & { readonly [tag]: "MAZE" };
 type RustString = number & { readonly [tag]: "RUST_STRING" };
@@ -24,6 +25,20 @@ export interface Computer {
   bitmap_renderer_height: (bitmapRenderer: BitmapRenderer) => number;
   bitmap_renderer_to_bitmap: (bitmapRenderer: BitmapRenderer) => RustVecU8;
   free_bitmap_renderer: (bitmapRenderer: BitmapRenderer) => void;
+}
+
+export async function initializeComputer(): Promise<Computer> {
+  let computer: Computer;
+  const wasm = await WebAssembly.instantiateStreaming(fetch(computerFile), {
+    random: {
+      fill_bytes(offset: number, length: number) {
+        const bytes = new Uint8Array(computer.memory.buffer, offset, length);
+        crypto.getRandomValues(bytes);
+      },
+    },
+  });
+  computer = wasm.instance.exports as unknown as Computer;
+  return computer;
 }
 
 export function rustStringToJS(

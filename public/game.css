@@ -74,7 +74,15 @@ a {
 }
 
 #maze {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100svh;
+  padding: 1rem;
+}
+
+#walls {
+  stroke-width: 0.25;
+  stroke: var(--main-text-color);
+  stroke-linecap: square;
 }
 
 dialog {
