@@ -122,7 +122,7 @@ export async function initialiseApp(window: WindowType) {
     navigate(app, app.window.location.hash, false);
   }
 
-  const maze = computer.new_maze(app.width, app.height);
+  const maze = computer.new_maze_wilsons(app.width, app.height);
   try {
     app.wallsSvgPath.setAttribute(
       "d",

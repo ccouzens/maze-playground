@@ -7,7 +7,10 @@ type BitmapRenderer = number & { readonly [tag]: "BITMAP_RENDERER" };
 
 export interface Computer {
   memory: WebAssembly.Memory;
-  new_maze: (width: number, height: number) => Maze;
+  new_maze_wilsons: (width: number, height: number) => Maze;
+  new_maze_aldous_broder: (width: number, height: number) => Maze;
+  new_maze_binary_tree: (width: number, height: number) => Maze;
+  new_maze_sidewinder: (width: number, height: number) => Maze;
   free_maze: (maze: Maze) => void;
   string_ptr: (str: RustString) => number;
   string_length: (str: RustString) => number;

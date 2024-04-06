@@ -46,7 +46,7 @@ export async function putMazeOnPage() {
     renderers.push([name, renderer]);
   }
   async function rerender() {
-    const maze = measureSync(["new maze"], () => computer.new_maze(30, 30));
+    const maze = measureSync(["new maze"], () => computer.new_maze_wilsons(30, 30));
     try {
       const bitmap = await measureAsync(["image bitmap"], () =>
         imageBitmap(computer, maze),

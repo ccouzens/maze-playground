@@ -28,8 +28,28 @@ impl rand::RngCore for JSRand {
 }
 
 #[no_mangle]
-pub extern "C" fn new_maze(width: usize, height: usize) -> &'static mut Maze {
+pub extern "C" fn new_maze_wilsons(width: usize, height: usize) -> &'static mut Maze {
     let maze = maze::generators::generate_maze_with_wilsons_algorithm(&mut JSRand(), width, height);
+    Box::leak(Box::new(maze))
+}
+
+#[no_mangle]
+pub extern "C" fn new_maze_aldous_broder(width: usize, height: usize) -> &'static mut Maze {
+    let maze = maze::generators::generate_maze_with_aldous_broder(&mut JSRand(), width, height);
+    Box::leak(Box::new(maze))
+}
+
+#[no_mangle]
+pub extern "C" fn new_maze_binary_tree(width: usize, height: usize) -> &'static mut Maze {
+    let maze =
+        maze::generators::generate_maze_with_binary_tree_algorithm(&mut JSRand(), width, height);
+    Box::leak(Box::new(maze))
+}
+
+#[no_mangle]
+pub extern "C" fn new_maze_sidewinder(width: usize, height: usize) -> &'static mut Maze {
+    let maze =
+        maze::generators::generate_maze_with_sidewinder_algorithm(&mut JSRand(), width, height);
     Box::leak(Box::new(maze))
 }
 
