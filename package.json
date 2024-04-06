@@ -4,10 +4,10 @@
     "format": "prettier --write './**/*.{mjs,ts,md,json,html,js,yml,yaml,css}' && clang-format -i public/{vert,frag}.glsl"
   },
   "devDependencies": {
-    "@tsconfig/strictest": "^2.0.3",
-    "@types/node": "^20.11.30",
+    "@tsconfig/strictest": "^2.0.5",
+    "@types/node": "^20.12.5",
     "@webgpu/types": "^0.1.40",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.4"
   }
 }
