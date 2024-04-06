@@ -1,5 +1,8 @@
 :root {
   font-family: sans-serif;
+  /* Use AccentColor once supported
+  https://caniuse.com/mdn-css_types_color_system-color_accentcolor_accentcolortext
+   */
   --main-highlight-color: Highlight;
   --subtle-highlight-color: color-mix(
     in srgb,
