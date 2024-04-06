@@ -88,6 +88,14 @@ a {
   color: var(--main-text-color);
 }
 
+a:focus-visible,
+a:active,
+button:focus-visible,
+button:active {
+  border-color: var(--main-highlight-color);
+  outline-color: var(--main-highlight-color);
+}
+
 #maze {
   flex-grow: 1;
   padding: 1rem;
@@ -123,43 +131,17 @@ dialog > div {
 }
 
 #optionsDialog form {
-  display: grid;
-  grid-template-columns: min-content min-content;
+  display: flex;
+  flex-direction: column;
   gap: 1em;
 }
 
-#optionsDialog form label {
-  text-align: right;
-}
-
-#optionsDialog form label::after {
-  content: ":";
-}
-
-#optionsDialog form input[type="submit"] {
-  grid-column: 2;
-}
-
-select,
-input {
-  border-radius: 0;
-  border-style: solid;
-  border-color: var(--subtle-highlight-color);
-  background-color: var(--input-background-color);
-  font-size: 1em;
-  text-align: center;
-}
-
-a:focus-visible,
-a:active,
-button:focus-visible,
-button:active,
-input:focus-visible,
-input:active,
-select:focus-visible,
-select:active {
-  border-color: var(--main-highlight-color);
-  outline-color: var(--main-highlight-color);
+#algorithm {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  row-gap: 1rem;
+  column-gap: 0.5rem;
+  align-items: baseline;
 }
 
 #linksDialog ul {
