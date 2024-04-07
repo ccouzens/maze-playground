@@ -18,11 +18,15 @@
         <a href="#links">Links</a>
       </nav>
     </header>
-    <svg id="maze" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      id="maze"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="line drawing of a maze"
+    >
       <path id="walls" xmlns="http://www.w3.org/2000/svg" d=""></path>
       <path id="route" xmlns="http://www.w3.org/2000/svg" d=""></path>
     </svg>
-    <dialog id="optionsDialog">
+    <dialog id="optionsDialog" aria-label="Configuration options for the maze">
       <div>
         <form method="dialog">
           <label for="mazeSize">Size</label>
@@ -69,7 +73,7 @@
         </form>
       </div>
     </dialog>
-    <dialog id="linksDialog">
+    <dialog id="linksDialog" aria-label="Hyperlinks">
       <div>
         <ul>
           <li>
