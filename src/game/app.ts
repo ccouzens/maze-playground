@@ -32,6 +32,7 @@ interface App {
   wallsSvgPath: SVGPathElement;
   routeSvgPath: SVGPathElement;
   mazeSvg: SVGElement;
+  optionsForm: HTMLFormElement;
   mazeSizeInput: HTMLInputElement;
   algorithmRadioGroup: RadioNodeList;
   computer: Computer;
@@ -141,13 +142,14 @@ function clickHandlerFactory(
   };
 }
 
-export async function initialiseApp(window: WindowType) {
-  const computer = await initializeComputer();
+function lookupElements(
+  window: WindowType,
+): Omit<App, "computer" | "maze" | "window"> {
   const mazeSvg = window.document.querySelector<SVGElement>("#maze")!;
   const optionsForm = window.document.querySelector<HTMLFormElement>(
     "#optionsDialog form",
   )!;
-  const app: App = {
+  return {
     optionsDialog:
       window.document.querySelector<HTMLDialogElement>("#optionsDialog")!,
     linksDialog:
@@ -155,19 +157,31 @@ export async function initialiseApp(window: WindowType) {
     wallsSvgPath: mazeSvg.querySelector<SVGPathElement>("#walls")!,
     routeSvgPath: mazeSvg.querySelector<SVGPathElement>("#route")!,
     mazeSizeInput: optionsForm.elements.namedItem("size") as HTMLInputElement,
+    optionsForm,
     algorithmRadioGroup: optionsForm.elements.namedItem(
       "algorithm",
     ) as RadioNodeList,
     mazeSvg,
+  };
+}
+
+export async function initialiseApp(window: WindowType) {
+  const [computer, partialApp] = await Promise.all([
+    initializeComputer(),
+    lookupElements(window),
+  ]);
+  const app: App = {
+    ...partialApp,
     computer,
     maze: null,
     window,
   };
   const clickHandler = clickHandlerFactory(app);
+  const optionsInputHandler = () => newMaze(app);
   const popstateHandler = popstateHandlerFactory(app);
 
   window.document.body.addEventListener("click", clickHandler);
-
+  app.optionsForm.addEventListener("input", optionsInputHandler);
   window.addEventListener("popstate", popstateHandler);
 
   if (window.location.hash) {
