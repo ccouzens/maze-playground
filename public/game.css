@@ -118,8 +118,17 @@ dialog {
   border-width: thin;
 }
 
-dialog::backdrop {
-  backdrop-filter: blur(0.2rem);
+@media (update: fast) {
+  dialog::backdrop {
+    backdrop-filter: blur(0.1rem);
+  }
+}
+
+@media print {
+  header,
+  dialog {
+    display: none;
+  }
 }
 
 /* Have the child of the dialog take up all of it, so that clicks outside of it
