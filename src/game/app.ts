@@ -1,4 +1,9 @@
-import { initializeComputer, rustStringToJS, type Computer } from "../computer";
+import {
+  Maze,
+  initializeComputer,
+  rustStringToJS,
+  type Computer,
+} from "../computer";
 
 interface WindowType {
   addEventListener: Window["addEventListener"];
@@ -28,6 +33,7 @@ interface App {
   routeSvgPath: SVGPathElement;
   mazeSvg: SVGElement;
   computer: Computer;
+  maze: Maze | null;
   width: number;
   height: number;
   window: WindowType;
@@ -63,6 +69,23 @@ function navigate(app: App, key: string, pushState = true) {
   );
 }
 
+function newMaze(app: App): void {
+  if (app.maze !== null) {
+    app.computer.free_maze(app.maze);
+    app.maze = null;
+  }
+
+  app.maze = app.computer.new_maze_wilsons(app.width, app.height);
+  app.wallsSvgPath.setAttribute(
+    "d",
+    rustStringToJS(app.computer, app.computer.maze_svg_path(app.maze)),
+  );
+  app.mazeSvg.setAttribute(
+    "viewBox",
+    `-0.125 -0.125 ${app.computer.maze_width(app.maze) + 0.25} ${app.computer.maze_height(app.maze) + 0.25}`,
+  );
+}
+
 function popstateHandlerFactory(
   app: App,
 ): (this: Window, ev: WindowEventMap["popstate"]) => void {
@@ -91,6 +114,11 @@ function clickHandlerFactory(
         navigate(app, hrefAttr);
         ev.preventDefault();
       }
+    } else if (ev.target instanceof HTMLButtonElement) {
+      const value = ev.target.value;
+      if (value === "new") {
+        newMaze(app);
+      }
     }
   };
 }
@@ -107,6 +135,7 @@ export async function initialiseApp(window: WindowType) {
     routeSvgPath: mazeSvg.querySelector<SVGPathElement>("#route")!,
     mazeSvg,
     computer,
+    maze: null,
     width: 10,
     height: 10,
     window,
@@ -122,17 +151,5 @@ export async function initialiseApp(window: WindowType) {
     navigate(app, app.window.location.hash, false);
   }
 
-  const maze = computer.new_maze_wilsons(app.width, app.height);
-  try {
-    app.wallsSvgPath.setAttribute(
-      "d",
-      rustStringToJS(computer, computer.maze_svg_path(maze)),
-    );
-    mazeSvg.setAttribute(
-      "viewBox",
-      `-0.125 -0.125 ${computer.maze_width(maze) + 0.25} ${computer.maze_height(maze) + 0.25}`,
-    );
-  } finally {
-    computer.free_maze(maze);
-  }
+  newMaze(app);
 }
