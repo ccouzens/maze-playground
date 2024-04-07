@@ -32,10 +32,10 @@ interface App {
   wallsSvgPath: SVGPathElement;
   routeSvgPath: SVGPathElement;
   mazeSvg: SVGElement;
+  mazeSizeInput: HTMLInputElement;
+  algorithmRadioGroup: RadioNodeList;
   computer: Computer;
   maze: Maze | null;
-  width: number;
-  height: number;
   window: WindowType;
 }
 
@@ -75,7 +75,25 @@ function newMaze(app: App): void {
     app.maze = null;
   }
 
-  app.maze = app.computer.new_maze_wilsons(app.width, app.height);
+  const size = app.mazeSizeInput.valueAsNumber;
+  const algorithm = app.algorithmRadioGroup.value;
+
+  switch (algorithm) {
+    case "binary tree":
+      app.maze = app.computer.new_maze_binary_tree(size, size);
+      break;
+    case "sidewinder":
+      app.maze = app.computer.new_maze_sidewinder(size, size);
+      break;
+    case "aldous broder":
+      app.maze = app.computer.new_maze_aldous_broder(size, size);
+      break;
+    case "wilson's":
+      app.maze = app.computer.new_maze_wilsons(size, size);
+      break;
+    default:
+      return;
+  }
   app.wallsSvgPath.setAttribute(
     "d",
     rustStringToJS(app.computer, app.computer.maze_svg_path(app.maze)),
@@ -126,6 +144,9 @@ function clickHandlerFactory(
 export async function initialiseApp(window: WindowType) {
   const computer = await initializeComputer();
   const mazeSvg = window.document.querySelector<SVGElement>("#maze")!;
+  const optionsForm = window.document.querySelector<HTMLFormElement>(
+    "#optionsDialog form",
+  )!;
   const app: App = {
     optionsDialog:
       window.document.querySelector<HTMLDialogElement>("#optionsDialog")!,
@@ -133,11 +154,13 @@ export async function initialiseApp(window: WindowType) {
       window.document.querySelector<HTMLDialogElement>("#linksDialog")!,
     wallsSvgPath: mazeSvg.querySelector<SVGPathElement>("#walls")!,
     routeSvgPath: mazeSvg.querySelector<SVGPathElement>("#route")!,
+    mazeSizeInput: optionsForm.elements.namedItem("size") as HTMLInputElement,
+    algorithmRadioGroup: optionsForm.elements.namedItem(
+      "algorithm",
+    ) as RadioNodeList,
     mazeSvg,
     computer,
     maze: null,
-    width: 10,
-    height: 10,
     window,
   };
   const clickHandler = clickHandlerFactory(app);
