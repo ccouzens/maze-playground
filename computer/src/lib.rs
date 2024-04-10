@@ -79,8 +79,8 @@ pub unsafe extern "C" fn free_maze(maze: &mut Maze) {
 }
 
 #[no_mangle]
-pub extern "C" fn maze_svg_path(maze: &Maze) -> &'static String {
-    let path = maze.to_svg_path(maze.width() as f64, maze.height() as f64);
+pub extern "C" fn maze_walls_svg_path(maze: &Maze) -> &'static String {
+    let path = maze.walls_to_svg_path(maze.width() as f64, maze.height() as f64);
     Box::leak(Box::new(path))
 }
 

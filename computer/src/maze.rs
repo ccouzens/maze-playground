@@ -30,6 +30,28 @@ pub struct Maze {
     /// └───┴───┴───┘
     /// ```
     walls: Vec<bool>,
+
+    /// Array of indices representing the user's path through the maze.
+    ///
+    /// The first entry in the bottom left corner and if they solve it the last entry will be the top right corner.
+    /// If the user backtracks, then entries are popped from the end.
+    /// If the user progresses forwards, then new entries are pushed to the end.
+    ///
+    /// The mapping from coordinates to cells:
+    ///
+    /// ```text
+    /// ┌───┬───┬───┐
+    /// │0,0│1,0│2,0│
+    /// │   │   │   │
+    /// ├───┼───┼───┤
+    /// │0,1│1,1│2,1│
+    /// │   │   │   │
+    /// ├───┼───┼───┤
+    /// │0,2│1,2│2,2│
+    /// │   │  1│   │
+    /// └───┴───┴───┘
+    /// ```
+    path: Vec<(usize, usize)>,
 }
 use thiserror::Error;
 
@@ -46,6 +68,7 @@ impl Maze {
                 width: 0,
                 height: 0,
                 walls: vec![],
+                path: vec![],
             });
         }
         let wall_size = usize::checked_add(
@@ -58,6 +81,7 @@ impl Maze {
             width,
             height,
             walls: vec![true; wall_size],
+            path: vec![(0, height - 1)],
         })
     }
 
@@ -77,7 +101,7 @@ impl Maze {
     /// The native coordinate space is (0,0) top left, (1, 1) bottom right.
     /// Use the scale values to better fit your viewbox.
     /// https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#path_commands
-    pub fn to_svg_path(&self, scale_x: f64, scale_y: f64) -> String {
+    pub fn walls_to_svg_path(&self, scale_x: f64, scale_y: f64) -> String {
         let scale_x = scale_x / self.width as f64;
         let scale_y = scale_y / self.height as f64;
         let mut output = String::new();

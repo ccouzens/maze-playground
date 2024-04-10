@@ -12,7 +12,7 @@ export const svg: InitRenderer = function initSvg() {
     );
     path.setAttribute(
       "d",
-      rustStringToJS(computer, computer.maze_svg_path(maze)),
+      rustStringToJS(computer, computer.maze_walls_svg_path(maze)),
     );
     return Promise.resolve();
   });

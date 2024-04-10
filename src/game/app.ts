@@ -97,7 +97,7 @@ function newMaze(app: App): void {
   }
   app.wallsSvgPath.setAttribute(
     "d",
-    rustStringToJS(app.computer, app.computer.maze_svg_path(app.maze)),
+    rustStringToJS(app.computer, app.computer.maze_walls_svg_path(app.maze)),
   );
   app.mazeSvg.setAttribute(
     "viewBox",
