@@ -145,7 +145,7 @@ impl Maze {
     pub fn path_to_svg_path(&self, scale_x: f64, scale_y: f64) -> String {
         let scale_x = scale_x / self.width as f64;
         let scale_y = scale_y / self.height as f64;
-        let mut a = (-1.0, self.height as f64 - 1.0);
+        let mut a = (-0.5, self.height as f64 - 1.0);
         let mut output = format!("M{} {}", (a.0 + 0.5) * scale_x, (a.1 + 0.5) * scale_y);
         let mut draw_line = |b: &(f64, f64), a: &mut (f64, f64)| {
             if b.0 != a.0 {
