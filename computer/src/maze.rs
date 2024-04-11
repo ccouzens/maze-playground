@@ -145,32 +145,30 @@ impl Maze {
     pub fn path_to_svg_path(&self, scale_x: f64, scale_y: f64) -> String {
         let scale_x = scale_x / self.width as f64;
         let scale_y = scale_y / self.height as f64;
-        let mut last_point = (-1.0, self.height as f64 - 1.0);
-        let mut output = format!(
-            "M{} {}",
-            (last_point.0 + 0.5) * scale_x,
-            (last_point.1 + 0.5) * scale_y
-        );
-        let mut draw_line = |x1: f64, y1: f64| {
-            if x1 != last_point.0 {
-                write!(&mut output, "H{}", (x1 + 0.5) * scale_x)
+        let mut a = (-1.0, self.height as f64 - 1.0);
+        let mut output = format!("M{} {}", (a.0 + 0.5) * scale_x, (a.1 + 0.5) * scale_y);
+        let mut draw_line = |b: &(f64, f64), a: &mut (f64, f64)| {
+            if b.0 != a.0 {
+                write!(&mut output, "H{}", (b.0 + 0.5) * scale_x)
             } else {
-                write!(&mut output, "V{}", (y1 + 0.5) * scale_y)
+                write!(&mut output, "V{}", (b.1 + 0.5) * scale_y)
             }
             .unwrap();
-            last_point = (x1, y1);
+            *a = *b;
         };
 
-        let mut last_used_position = (-1.0, self.height as f64 - 1.0);
-        for (a, b) in self.path.iter().skip(1).zip(self.path.iter().skip(2)) {
-            if b.0 as f64 != last_used_position.0 && b.1 as f64 != last_used_position.1 {
-                draw_line(a.0 as f64, a.1 as f64);
-                last_used_position = (a.0 as f64, a.1 as f64);
-            }
-        }
-        if let Some(b) = self.path.last() {
-            if b.0 as f64 != last_used_position.0 || b.1 as f64 != last_used_position.1 {
-                draw_line(b.0 as f64, b.1 as f64);
+        let mut path_iter = self
+            .path
+            .iter()
+            .map(|p| (p.0 as f64, p.1 as f64))
+            .peekable();
+        while let Some(b) = path_iter.next() {
+            if path_iter
+                .peek()
+                .map(|c| c.0 != a.0 && c.1 != a.1)
+                .unwrap_or(true)
+            {
+                draw_line(&b, &mut a)
             }
         }
 
