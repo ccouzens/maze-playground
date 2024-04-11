@@ -110,6 +110,12 @@ button:active {
   stroke-linecap: square;
 }
 
+#route {
+  stroke-width: 0.25;
+  stroke: var(--main-highlight-color);
+  stroke-linecap: square;
+}
+
 dialog {
   padding: 0;
   color: var(--main-text-color);

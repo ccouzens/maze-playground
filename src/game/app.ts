@@ -99,6 +99,10 @@ function newMaze(app: App): void {
     "d",
     rustStringToJS(app.computer, app.computer.maze_walls_svg_path(app.maze)),
   );
+  app.routeSvgPath.setAttribute(
+    "d",
+    rustStringToJS(app.computer, app.computer.maze_path_svg_path(app.maze)),
+  );
   app.mazeSvg.setAttribute(
     "viewBox",
     `-0.125 -0.125 ${app.computer.maze_width(app.maze) + 0.25} ${app.computer.maze_height(app.maze) + 0.25}`,

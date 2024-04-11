@@ -85,6 +85,12 @@ pub extern "C" fn maze_walls_svg_path(maze: &Maze) -> &'static String {
 }
 
 #[no_mangle]
+pub extern "C" fn maze_path_svg_path(maze: &Maze) -> &'static String {
+    let path = maze.path_to_svg_path(maze.width() as f64, maze.height() as f64);
+    Box::leak(Box::new(path))
+}
+
+#[no_mangle]
 pub extern "C" fn string_ptr(string: &String) -> *const u8 {
     string.as_ptr()
 }

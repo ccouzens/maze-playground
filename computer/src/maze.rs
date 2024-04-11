@@ -36,21 +36,6 @@ pub struct Maze {
     /// The first entry in the bottom left corner and if they solve it the last entry will be the top right corner.
     /// If the user backtracks, then entries are popped from the end.
     /// If the user progresses forwards, then new entries are pushed to the end.
-    ///
-    /// The mapping from coordinates to cells:
-    ///
-    /// ```text
-    /// ┌───┬───┬───┐
-    /// │0,0│1,0│2,0│
-    /// │   │   │   │
-    /// ├───┼───┼───┤
-    /// │0,1│1,1│2,1│
-    /// │   │   │   │
-    /// ├───┼───┼───┤
-    /// │0,2│1,2│2,2│
-    /// │   │  1│   │
-    /// └───┴───┴───┘
-    /// ```
     path: Vec<(usize, usize)>,
 }
 use thiserror::Error;
@@ -81,7 +66,8 @@ impl Maze {
             width,
             height,
             walls: vec![true; wall_size],
-            path: vec![(0, height - 1)],
+            // path: vec![(0, height - 1)],
+            path: vec![(0, height - 1), (1, height - 1), (1, height - 2)],
         })
     }
 
@@ -150,6 +136,48 @@ impl Maze {
                 }
 
                 x += 1;
+            }
+        }
+
+        output
+    }
+
+    pub fn path_to_svg_path(&self, scale_x: f64, scale_y: f64) -> String {
+        let scale_x = scale_x / self.width as f64;
+        let scale_y = scale_y / self.height as f64;
+        let mut output = String::new();
+        let mut draw_line = |x1: f64, y1: f64, x2: f64, y2: f64| {
+            write!(
+                &mut output,
+                "M{} {} {} {}",
+                (x1 + 0.5) * scale_x,
+                (y1 + 0.5) * scale_y,
+                (x2 + 0.5) * scale_x,
+                (y2 + 0.5) * scale_y
+            )
+            .unwrap();
+        };
+
+        let mut last_used_position = (-1.0, self.height as f64 - 1.0);
+        for (a, b) in self.path.iter().skip(1).zip(self.path.iter().skip(2)) {
+            if b.0 as f64 != last_used_position.0 && b.1 as f64 != last_used_position.1 {
+                draw_line(
+                    last_used_position.0,
+                    last_used_position.1,
+                    a.0 as f64,
+                    a.1 as f64,
+                );
+                last_used_position = (a.0 as f64, a.1 as f64);
+            }
+        }
+        if let Some(b) = self.path.last() {
+            if b.0 as f64 != last_used_position.0 || b.1 as f64 != last_used_position.1 {
+                draw_line(
+                    last_used_position.0 as f64,
+                    last_used_position.1 as f64,
+                    b.0 as f64,
+                    b.1 as f64,
+                );
             }
         }
 
