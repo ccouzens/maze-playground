@@ -150,6 +150,15 @@ function clickHandlerFactory(
       if (value === "new") {
         newMaze(app);
       }
+    } else if (ev.target instanceof Node && app.mazeSvg.contains(ev.target)) {
+      const m = (
+        (app.mazeSvg as any).getScreenCTM() as DOMMatrixReadOnly
+      ).inverse();
+      const x = ev.x;
+      const y = ev.y;
+      const mazeX = Math.floor(m.a * x + m.c * y + m.e);
+      const mazeY = Math.floor(m.b * x + m.d * y + m.f);
+      console.log(mazeX, mazeY);
     }
   };
 }
