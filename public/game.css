@@ -114,6 +114,7 @@ button:active {
   stroke-width: 0.25;
   stroke: var(--main-highlight-color);
   stroke-linecap: square;
+  fill: none;
 }
 
 dialog {
