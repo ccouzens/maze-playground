@@ -91,6 +91,12 @@ pub extern "C" fn maze_path_svg_path(maze: &Maze) -> &'static String {
 }
 
 #[no_mangle]
+pub extern "C" fn maze_next_move_svg_path(maze: &Maze, steps: usize) -> &'static String {
+    let path = String::from("M1 10H2V7H1Z");
+    Box::leak(Box::new(path))
+}
+
+#[no_mangle]
 pub extern "C" fn string_ptr(string: &String) -> *const u8 {
     string.as_ptr()
 }
