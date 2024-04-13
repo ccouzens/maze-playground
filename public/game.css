@@ -156,8 +156,11 @@ dialog > div {
   display: grid;
   grid-template-columns: min-content 1fr;
   row-gap: 1rem;
-  column-gap: 0.5rem;
   align-items: baseline;
+}
+
+#algorithm > label {
+  padding-left: 0.5em;
 }
 
 #linksDialog ul {
