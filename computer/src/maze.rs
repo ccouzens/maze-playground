@@ -66,8 +66,7 @@ impl Maze {
             width,
             height,
             walls: vec![true; wall_size],
-            // path: vec![(0, height - 1)],
-            path: vec![(0, height - 1), (1, height - 1), (1, height - 2)],
+            path: vec![(0, height - 1)],
         })
     }
 
@@ -172,6 +171,10 @@ impl Maze {
             }
         }
 
+        if self.path.last().cloned() == Some((self.width - 1, 0)) {
+            write!(&mut output, "H{}", self.width).unwrap();
+        }
+
         output
     }
 
@@ -212,6 +215,22 @@ impl Maze {
             }
         }
         None
+    }
+
+    pub fn move_to_cell(&mut self, cell_x: usize, cell_y: usize) -> bool {
+        if self.path.iter().nth_back(1).cloned() == Some((cell_x, cell_y)) {
+            self.path.pop();
+            true
+        } else if let Some(&(cx, cy)) = self.path.last() {
+            if self.is_connected_pair(cell_x, cell_y, cx, cy) {
+                self.path.push((cell_x, cell_y));
+                true
+            } else {
+                false
+            }
+        } else {
+            false
+        }
     }
 
     fn is_connected_pair(

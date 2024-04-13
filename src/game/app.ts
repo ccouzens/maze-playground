@@ -150,7 +150,11 @@ function clickHandlerFactory(
       if (value === "new") {
         newMaze(app);
       }
-    } else if (ev.target instanceof Node && app.mazeSvg.contains(ev.target)) {
+    } else if (
+      app.maze !== null &&
+      ev.target instanceof Node &&
+      app.mazeSvg.contains(ev.target)
+    ) {
       const m = (
         (app.mazeSvg as any).getScreenCTM() as DOMMatrixReadOnly
       ).inverse();
@@ -158,7 +162,11 @@ function clickHandlerFactory(
       const y = ev.y;
       const mazeX = Math.floor(m.a * x + m.c * y + m.e);
       const mazeY = Math.floor(m.b * x + m.d * y + m.f);
-      console.log(mazeX, mazeY);
+      app.computer.maze_move_to(app.maze, mazeX, mazeY);
+      app.routeSvgPath.setAttribute(
+        "d",
+        rustStringToJS(app.computer, app.computer.maze_path_svg_path(app.maze)),
+      );
     }
   };
 }

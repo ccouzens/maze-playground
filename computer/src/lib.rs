@@ -112,6 +112,11 @@ pub unsafe extern "C" fn free_string(string: &mut String) {
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn maze_move_to(maze: &mut Maze, x: usize, y: usize) -> bool {
+    maze.move_to_cell(x, y)
+}
+
+#[no_mangle]
 pub extern "C" fn maze_to_bitmap_renderer(maze: &Maze) -> &'static BitmapRenderer {
     let b = maze.as_bitmap_printer();
     Box::leak(Box::new(b))

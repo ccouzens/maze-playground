@@ -25,6 +25,7 @@ export interface Computer {
   maze_walls_svg_path: (maze: Maze) => RustString;
   maze_path_svg_path: (maze: Maze) => RustString;
   maze_next_move_svg_path: (maze: Maze, steps: number) => RustString;
+  maze_move_to: (maze: Maze, x: number, y: number) => boolean;
   maze_to_bitmap_renderer: (maze: Maze) => BitmapRenderer;
   bitmap_renderer_width: (bitmapRenderer: BitmapRenderer) => number;
   bitmap_renderer_height: (bitmapRenderer: BitmapRenderer) => number;
