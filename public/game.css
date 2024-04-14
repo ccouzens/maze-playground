@@ -1,3 +1,5 @@
+@import url("game-win-animations.css") not (prefers-reduced-motion);
+
 :root {
   font-family: sans-serif;
   --main-highlight-color: hsl(120 100% 50%);

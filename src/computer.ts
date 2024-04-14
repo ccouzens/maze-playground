@@ -20,6 +20,7 @@ export interface Computer {
   free_vec_u8: (str: RustVecU8) => void;
   maze_width: (maze: Maze) => number;
   maze_height: (maze: Maze) => number;
+  maze_is_solved: (maze: Maze) => boolean;
   maze_walls_ptr: (maze: Maze) => number;
   maze_walls_length: (maze: Maze) => number;
   maze_walls_svg_path: (maze: Maze) => RustString;

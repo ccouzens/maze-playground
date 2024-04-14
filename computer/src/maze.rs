@@ -248,6 +248,10 @@ impl Maze {
         }
     }
 
+    pub fn is_solved(&self) -> bool {
+        self.path.last().cloned() == Some((self.width - 1, 0))
+    }
+
     fn is_connected_pair(
         &self,
         cell_a_x: usize,

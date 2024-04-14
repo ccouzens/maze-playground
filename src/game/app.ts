@@ -29,11 +29,13 @@ interface WindowType {
 interface App {
   optionsDialog: HTMLDialogElement;
   linksDialog: HTMLDialogElement;
+  winDialog: HTMLDialogElement;
   wallsSvgPath: SVGPathElement;
   routeSvgPath: SVGPathElement;
   mazeSvg: SVGElement;
   optionsForm: HTMLFormElement;
   mazeSizeInput: HTMLInputElement;
+  root: HTMLElement;
   algorithmRadioGroup: RadioNodeList;
   computer: Computer;
   maze: Maze | null;
@@ -46,6 +48,11 @@ function navigate(app: App, key: string, pushState = true) {
     dialog = app.optionsDialog;
   } else if (key === "#links") {
     dialog = app.linksDialog;
+  } else if (key === "#win") {
+    if (!app.maze || !app.computer.maze_is_solved(app.maze)) {
+      return;
+    }
+    dialog = app.winDialog;
   } else {
     return;
   }
@@ -99,14 +106,11 @@ function newMaze(app: App): void {
     "d",
     rustStringToJS(app.computer, app.computer.maze_walls_svg_path(app.maze)),
   );
-  app.routeSvgPath.setAttribute(
-    "d",
-    rustStringToJS(app.computer, app.computer.maze_path_svg_path(app.maze)),
-  );
   app.mazeSvg.setAttribute(
     "viewBox",
     `-0.125 -0.125 ${app.computer.maze_width(app.maze) + 0.25} ${app.computer.maze_height(app.maze) + 0.25}`,
   );
+  renderAfterMove(app);
 }
 
 function popstateHandlerFactory(
@@ -158,10 +162,7 @@ function move(app: App, x: number, y: number) {
   const mazeX = Math.floor(m.a * x + m.c * y + m.e);
   const mazeY = Math.floor(m.b * x + m.d * y + m.f);
   app.computer.maze_move_to(app.maze, mazeX, mazeY);
-  app.routeSvgPath.setAttribute(
-    "d",
-    rustStringToJS(app.computer, app.computer.maze_path_svg_path(app.maze)),
-  );
+  renderAfterMove(app);
 }
 
 function pointerMoveHandlerFactory(
@@ -184,7 +185,7 @@ function keyDownHanderFactory(
 ): (this: SVGElement, ev: KeyboardEvent) => void {
   return function keyDownHandler(ev) {
     if (app.maze === null) {
-      return null;
+      return;
     }
     let direction: number | null = null;
     if (ev.key === "ArrowUp") {
@@ -202,12 +203,24 @@ function keyDownHanderFactory(
     }
 
     if (app.computer.maze_move_direction(app.maze, direction)) {
-      app.routeSvgPath.setAttribute(
-        "d",
-        rustStringToJS(app.computer, app.computer.maze_path_svg_path(app.maze)),
-      );
+      renderAfterMove(app);
     }
   };
+}
+
+function renderAfterMove(app: App) {
+  if (app.maze !== null) {
+    app.routeSvgPath.setAttribute(
+      "d",
+      rustStringToJS(app.computer, app.computer.maze_path_svg_path(app.maze)),
+    );
+
+    const won = app.computer.maze_is_solved(app.maze);
+    if (won && !app.root.classList.contains("win")) {
+      navigate(app, "#win", true);
+    }
+    app.root.classList.toggle("win", won);
+  }
 }
 
 function lookupElements(
@@ -222,6 +235,7 @@ function lookupElements(
       window.document.querySelector<HTMLDialogElement>("#optionsDialog")!,
     linksDialog:
       window.document.querySelector<HTMLDialogElement>("#linksDialog")!,
+    winDialog: window.document.querySelector<HTMLDialogElement>("#winDialog")!,
     wallsSvgPath: mazeSvg.querySelector<SVGPathElement>("#walls")!,
     routeSvgPath: mazeSvg.querySelector<SVGPathElement>("#route")!,
     mazeSizeInput: optionsForm.elements.namedItem("size") as HTMLInputElement,
@@ -230,6 +244,7 @@ function lookupElements(
       "algorithm",
     ) as RadioNodeList,
     mazeSvg,
+    root: window.document.querySelector("html")!,
   };
 }
 

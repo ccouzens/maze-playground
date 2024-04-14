@@ -64,6 +64,11 @@ pub extern "C" fn maze_height(maze: &Maze) -> usize {
 }
 
 #[no_mangle]
+pub extern "C" fn maze_is_solved(maze: &Maze) -> bool {
+    maze.is_solved()
+}
+
+#[no_mangle]
 pub extern "C" fn maze_walls_ptr(maze: &Maze) -> *const bool {
     maze.walls().as_ptr()
 }
@@ -106,12 +111,12 @@ pub unsafe extern "C" fn free_string(string: &mut String) {
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn maze_move_to(maze: &mut Maze, x: usize, y: usize) -> bool {
+pub extern "C" fn maze_move_to(maze: &mut Maze, x: usize, y: usize) -> bool {
     maze.move_to_cell(x, y)
 }
 
 #[no_mangle]
-pub unsafe extern "C" fn maze_move_direction(maze: &mut Maze, direction: u32) -> bool {
+pub extern "C" fn maze_move_direction(maze: &mut Maze, direction: u32) -> bool {
     maze.move_direction(direction)
 }
 

@@ -1,0 +1,23 @@
+:root.win #route {
+  animation: 5s infinite normal stroke-dash-array;
+}
+
+:root.win #walls {
+  animation: 10s infinite normal stroke-dash-array;
+}
+
+@keyframes stroke-dash-array {
+  from {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 5 0;
+  }
+
+  50% {
+    stroke-dasharray: 0 5;
+  }
+
+  to {
+    stroke-dashoffset: 5;
+    stroke-dasharray: 5 0;
+  }
+}
