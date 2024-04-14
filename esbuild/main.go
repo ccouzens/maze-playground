@@ -21,6 +21,8 @@ var esbuildOptions = esbuild.BuildOptions{
 	LogLevel:  esbuild.LogLevelInfo,
 	Bundle:    true,
 	Sourcemap: esbuild.SourceMapLinked,
+	Format:    esbuild.FormatESModule,
+	Splitting: true,
 }
 
 func compileRust() {
@@ -66,6 +68,8 @@ func build() {
 		LogLevel:          esbuildOptions.LogLevel,
 		Bundle:            esbuildOptions.Bundle,
 		Sourcemap:         esbuildOptions.Sourcemap,
+		Format:            esbuildOptions.Format,
+		Splitting:         esbuildOptions.Splitting,
 		EntryNames:        "[name]-[hash]",
 		AssetNames:        "[name]-[hash]",
 		MinifyWhitespace:  true,
@@ -114,6 +118,8 @@ func serve() {
 		LogLevel:    esbuildOptions.LogLevel,
 		Bundle:      esbuildOptions.Bundle,
 		Sourcemap:   esbuildOptions.Sourcemap,
+		Format:      esbuildOptions.Format,
+		Splitting:   esbuildOptions.Splitting,
 		EntryNames:  "[name]",
 		AssetNames:  "[name]",
 		Outdir:      "../public/",

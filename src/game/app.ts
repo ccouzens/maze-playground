@@ -289,4 +289,6 @@ export async function initialiseApp(window: WindowType) {
   app.root.classList.toggle("supports-share", "share" in window.navigator);
 
   newMaze(app);
+
+  console.log(new URL("./offlineWorker.ts", import.meta.url));
 }
