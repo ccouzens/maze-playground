@@ -12,11 +12,12 @@ import (
 )
 
 var esbuildOptions = esbuild.BuildOptions{
-	EntryPoints: []string{"../src/script.ts", "../src/game.ts", "../public/style.css", "../public/game.css"},
+	EntryPoints: []string{"../src/script.ts", "../src/game.ts", "../src/game/offline.worker.ts", "../public/style.css", "../public/game.css"},
 	Loader: map[string]esbuild.Loader{
-		".wasm": esbuild.LoaderFile,
-		".glsl": esbuild.LoaderFile,
-		".wgsl": esbuild.LoaderFile,
+		".worker.ts": esbuild.LoaderFile,
+		".wasm":      esbuild.LoaderFile,
+		".glsl":      esbuild.LoaderFile,
+		".wgsl":      esbuild.LoaderFile,
 	},
 	LogLevel:  esbuild.LogLevelInfo,
 	Bundle:    true,

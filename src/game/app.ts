@@ -5,6 +5,8 @@ import {
   type Computer,
 } from "../computer";
 
+import workerUrl from "./offline.worker"
+
 interface WindowType {
   addEventListener: Window["addEventListener"];
   document: {
@@ -290,5 +292,5 @@ export async function initialiseApp(window: WindowType) {
 
   newMaze(app);
 
-  console.log(new URL("./offlineWorker.ts", import.meta.url));
+  console.log(workerUrl);
 }
