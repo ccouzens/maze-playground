@@ -111,6 +111,11 @@ pub unsafe extern "C" fn maze_move_to(maze: &mut Maze, x: usize, y: usize) -> bo
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn maze_move_direction(maze: &mut Maze, direction: u32) -> bool {
+    maze.move_direction(direction)
+}
+
+#[no_mangle]
 pub extern "C" fn maze_to_bitmap_renderer(maze: &Maze) -> &'static BitmapRenderer {
     let b = maze.as_bitmap_printer();
     Box::leak(Box::new(b))

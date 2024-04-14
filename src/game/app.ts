@@ -179,6 +179,37 @@ function pointerMoveHandlerFactory(
   };
 }
 
+function keyDownHanderFactory(
+  app: App,
+): (this: SVGElement, ev: KeyboardEvent) => void {
+  return function keyDownHandler(ev) {
+    if (app.maze === null) {
+      return null;
+    }
+    let direction: number | null = null;
+    if (ev.key === "ArrowUp") {
+      direction = 0;
+    } else if (ev.key === "ArrowRight") {
+      direction = 1;
+    } else if (ev.key === "ArrowDown") {
+      direction = 2;
+    } else if (ev.key === "ArrowLeft") {
+      direction = 3;
+    }
+
+    if (direction === null) {
+      return;
+    }
+
+    if (app.computer.maze_move_direction(app.maze, direction)) {
+      app.routeSvgPath.setAttribute(
+        "d",
+        rustStringToJS(app.computer, app.computer.maze_path_svg_path(app.maze)),
+      );
+    }
+  };
+}
+
 function lookupElements(
   window: WindowType,
 ): Omit<App, "computer" | "maze" | "window"> {
@@ -217,11 +248,13 @@ export async function initialiseApp(window: WindowType) {
   const optionsInputHandler = () => newMaze(app);
   const popstateHandler = popstateHandlerFactory(app);
   const pointerMoveHandler = pointerMoveHandlerFactory(app);
+  const keyDownHandler = keyDownHanderFactory(app);
 
   window.document.body.addEventListener("click", clickHandler);
   app.optionsForm.addEventListener("input", optionsInputHandler);
   window.addEventListener("popstate", popstateHandler);
   app.mazeSvg.addEventListener("pointermove", pointerMoveHandler);
+  app.mazeSvg.addEventListener("keydown", keyDownHandler);
 
   if (window.location.hash) {
     navigate(app, app.window.location.hash, false);

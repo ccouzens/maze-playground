@@ -233,6 +233,21 @@ impl Maze {
         }
     }
 
+    pub fn move_direction(&mut self, direction: u32) -> bool {
+        if let Some(&(x, y)) = self.path.last() {
+            let (x, y) = match direction {
+                0 => (x, y.saturating_sub(1)),
+                1 => (x + 1, y),
+                2 => (x, y + 1),
+                3 => (x.saturating_sub(1), y),
+                _ => (x, y),
+            };
+            self.move_to_cell(x, y)
+        } else {
+            false
+        }
+    }
+
     fn is_connected_pair(
         &self,
         cell_a_x: usize,
