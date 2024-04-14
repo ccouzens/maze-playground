@@ -118,12 +118,6 @@ button:active {
   fill: none;
 }
 
-#next_move {
-  stroke-width: 0.25;
-  stroke: var(--subtle-highlight-color);
-  fill: var(--subtle-highlight-color);
-}
-
 dialog {
   padding: 0;
   color: var(--main-text-color);

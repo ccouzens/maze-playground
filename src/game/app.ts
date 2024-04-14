@@ -31,7 +31,6 @@ interface App {
   linksDialog: HTMLDialogElement;
   wallsSvgPath: SVGPathElement;
   routeSvgPath: SVGPathElement;
-  nextMoveSvgPath: SVGElement;
   mazeSvg: SVGElement;
   optionsForm: HTMLFormElement;
   mazeSizeInput: HTMLInputElement;
@@ -103,13 +102,6 @@ function newMaze(app: App): void {
   app.routeSvgPath.setAttribute(
     "d",
     rustStringToJS(app.computer, app.computer.maze_path_svg_path(app.maze)),
-  );
-  app.nextMoveSvgPath.setAttribute(
-    "d",
-    rustStringToJS(
-      app.computer,
-      app.computer.maze_next_move_svg_path(app.maze, 3),
-    ),
   );
   app.mazeSvg.setAttribute(
     "viewBox",
@@ -201,7 +193,6 @@ function lookupElements(
       window.document.querySelector<HTMLDialogElement>("#linksDialog")!,
     wallsSvgPath: mazeSvg.querySelector<SVGPathElement>("#walls")!,
     routeSvgPath: mazeSvg.querySelector<SVGPathElement>("#route")!,
-    nextMoveSvgPath: mazeSvg.querySelector<SVGPathElement>("#next_move")!,
     mazeSizeInput: optionsForm.elements.namedItem("size") as HTMLInputElement,
     optionsForm,
     algorithmRadioGroup: optionsForm.elements.namedItem(
