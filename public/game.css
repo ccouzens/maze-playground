@@ -102,6 +102,7 @@ button:active {
   min-width: 5rem;
   min-height: 5rem;
   aspect-ratio: 1;
+  touch-action: pinch-zoom;
 }
 
 #walls {

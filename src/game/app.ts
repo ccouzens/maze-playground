@@ -150,24 +150,40 @@ function clickHandlerFactory(
       if (value === "new") {
         newMaze(app);
       }
-    } else if (
-      app.maze !== null &&
-      ev.target instanceof Node &&
-      app.mazeSvg.contains(ev.target)
-    ) {
-      const m = (
-        (app.mazeSvg as any).getScreenCTM() as DOMMatrixReadOnly
-      ).inverse();
-      const x = ev.x;
-      const y = ev.y;
-      const mazeX = Math.floor(m.a * x + m.c * y + m.e);
-      const mazeY = Math.floor(m.b * x + m.d * y + m.f);
-      app.computer.maze_move_to(app.maze, mazeX, mazeY);
-      app.routeSvgPath.setAttribute(
-        "d",
-        rustStringToJS(app.computer, app.computer.maze_path_svg_path(app.maze)),
-      );
+    } else if (ev.target instanceof Node && app.mazeSvg.contains(ev.target)) {
+      move(app, ev.x, ev.y);
     }
+  };
+}
+
+function move(app: App, x: number, y: number) {
+  if (app.maze === null) {
+    return;
+  }
+  const m = (
+    (app.mazeSvg as any).getScreenCTM() as DOMMatrixReadOnly
+  ).inverse();
+  const mazeX = Math.floor(m.a * x + m.c * y + m.e);
+  const mazeY = Math.floor(m.b * x + m.d * y + m.f);
+  app.computer.maze_move_to(app.maze, mazeX, mazeY);
+  app.routeSvgPath.setAttribute(
+    "d",
+    rustStringToJS(app.computer, app.computer.maze_path_svg_path(app.maze)),
+  );
+}
+
+function pointerMoveHandlerFactory(
+  app: App,
+): (this: HTMLElement | SVGElement, ev: PointerEvent) => void {
+  return function pointerMoveHandler(ev) {
+    if (
+      ev instanceof PointerEvent &&
+      ev.pointerType === "mouse" &&
+      ev.buttons !== 1
+    ) {
+      return;
+    }
+    move(app, ev.x, ev.y);
   };
 }
 
@@ -209,10 +225,12 @@ export async function initialiseApp(window: WindowType) {
   const clickHandler = clickHandlerFactory(app);
   const optionsInputHandler = () => newMaze(app);
   const popstateHandler = popstateHandlerFactory(app);
+  const pointerMoveHandler = pointerMoveHandlerFactory(app);
 
   window.document.body.addEventListener("click", clickHandler);
   app.optionsForm.addEventListener("input", optionsInputHandler);
   window.addEventListener("popstate", popstateHandler);
+  app.mazeSvg.addEventListener("pointermove", pointerMoveHandler);
 
   if (window.location.hash) {
     navigate(app, app.window.location.hash, false);
