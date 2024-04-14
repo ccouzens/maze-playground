@@ -139,7 +139,9 @@ dialog {
 
 @media print {
   header,
-  dialog {
+  dialog,
+  #route,
+  #next_move {
     display: none;
   }
 }
