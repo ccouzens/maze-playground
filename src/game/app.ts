@@ -20,6 +20,9 @@ interface WindowType {
     replaceState: Window["history"]["replaceState"];
     state: Window["history"]["state"];
   };
+  navigator: {
+    share: Window["navigator"]["share"];
+  };
   location: {
     hash: Window["location"]["hash"];
     href: Window["location"]["href"];
@@ -146,6 +149,11 @@ function clickHandlerFactory(
       const value = ev.target.value;
       if (value === "new") {
         newMaze(app);
+      } else if (value === "share") {
+        app.window.navigator.share({
+          url: app.window.location.href,
+          title: "Maze puzzle",
+        });
       }
     } else if (ev.target instanceof Node && app.mazeSvg.contains(ev.target)) {
       move(app, ev.x, ev.y);
@@ -275,6 +283,8 @@ export async function initialiseApp(window: WindowType) {
   if (window.location.hash) {
     navigate(app, app.window.location.hash, false);
   }
+
+  app.root.classList.toggle("supports-share", "share" in window.navigator);
 
   newMaze(app);
 }

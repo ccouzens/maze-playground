@@ -1,4 +1,5 @@
-@import url("game-win-animations.css") not (prefers-reduced-motion);
+@import url("game-win-animations.css") screen and (update: fast) and
+  (not (prefers-reduced-motion));
 
 :root {
   font-family: sans-serif;
@@ -74,7 +75,7 @@ h1 {
   margin: 0;
 }
 
-nav > button,
+button,
 nav > a {
   background: none;
   border: none;
@@ -175,4 +176,16 @@ dialog > div {
   flex-direction: column;
   gap: 1em;
   text-align: center;
+}
+
+.share-supported {
+  display: none;
+}
+
+:root.supports-share .share-supported {
+  display: initial;
+}
+
+:root.supports-share .share-not-supported {
+  display: none;
 }
