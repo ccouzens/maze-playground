@@ -1,8 +1,8 @@
-:root.win #route {
+:root.win[data-animation="1"] #route {
   animation: 5s infinite normal stroke-dash-array;
 }
 
-:root.win #walls {
+:root.win[data-animation="1"] #walls {
   animation: 10s infinite normal stroke-dash-array;
 }
 
@@ -19,5 +19,44 @@
   to {
     stroke-dashoffset: 5;
     stroke-dasharray: 5 0;
+  }
+}
+
+:root.win[data-animation="2"] #route {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  animation: 2.5s infinite alternate expand-width;
+}
+
+:root.win[data-animation="2"] #walls {
+  animation: 5s infinite alternate fade-to-transparent;
+}
+
+@keyframes expand-width {
+  to {
+    stroke-width: 5;
+  }
+}
+
+@keyframes fade-to-transparent {
+  to {
+    stroke: transparent;
+  }
+}
+
+:root.win[data-animation="3"] #route {
+  animation: 5s infinite alternate fade-to-transparent;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+:root.win[data-animation="3"] #walls {
+  stroke-linecap: round;
+  animation: 5s infinite alternate expand-to-1;
+}
+
+@keyframes expand-to-1 {
+  to {
+    stroke-width: 1;
   }
 }
