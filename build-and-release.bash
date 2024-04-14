@@ -8,7 +8,7 @@ VERSION="$(git rev-parse HEAD)"
 
 cp build/game.html "build/game-${VERSION}.html"
 cp build/rendering-playground.html "build/rendering-playground-${VERSION}.html"
-cp build/rendering-playground.html "build/index.html"
+cp build/game.html "build/index.html"
 
 ls -- build
 
@@ -37,5 +37,11 @@ gsutil \
   build/*.wasm \
   build/*.js \
   build/*.css \
+  gs://maze-playground/
+
+gsutil \
+  -m \
+  cp \
+  -Z \
   build/*.html \
   gs://maze-playground/
