@@ -150,8 +150,10 @@ function clickHandlerFactory(
       if (value === "new") {
         newMaze(app);
       } else if (value === "share") {
+        const url = new URL(app.window.location.href);
+        url.hash = "";
         app.window.navigator.share({
-          url: app.window.location.href,
+          url: url.href,
           title: "Maze puzzle",
         });
       }
