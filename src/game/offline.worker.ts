@@ -1,1 +1,2 @@
-console.log(42);
+const x: number = 42;
+console.log(x);
