@@ -217,7 +217,7 @@ impl Maze {
         None
     }
 
-    pub fn move_to_cell(&mut self, cell_x: usize, cell_y: usize) -> bool {
+    fn move_to_neighbour(&mut self, cell_x: usize, cell_y: usize) -> bool {
         if self.path.iter().nth_back(1).cloned() == Some((cell_x, cell_y)) {
             self.path.pop();
             true
@@ -233,6 +233,30 @@ impl Maze {
         }
     }
 
+    pub fn move_to_cell(&mut self, new_x: usize, new_y: usize) -> bool {
+        use std::cmp::Ordering::*;
+        if let Some(&(x, y)) = self.path.last() {
+            let (direction, mut steps) = match (
+                x.abs_diff(new_x).cmp(&y.abs_diff(new_y)),
+                x.cmp(&new_x),
+                y.cmp(&new_y),
+            ) {
+                (_, Equal, Equal) => return true,
+                (Greater, Greater, _) => (3, x - new_x),
+                (Greater, Less, _) => (1, new_x - x),
+                (Less, _, Greater) => (0, y - new_y),
+                (Less, _, Less) => (2, new_y - y),
+                (_, _, _) => return false,
+            };
+            while self.move_direction(direction) && steps > 1 {
+                steps -= 1;
+            }
+            true
+        } else {
+            false
+        }
+    }
+
     pub fn move_direction(&mut self, direction: u32) -> bool {
         if let Some(&(x, y)) = self.path.last() {
             let (x, y) = match direction {
@@ -242,7 +266,7 @@ impl Maze {
                 3 => (x.saturating_sub(1), y),
                 _ => (x, y),
             };
-            self.move_to_cell(x, y)
+            self.move_to_neighbour(x, y)
         } else {
             false
         }
