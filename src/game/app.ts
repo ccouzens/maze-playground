@@ -113,7 +113,7 @@ function newMaze(app: App): void {
     "viewBox",
     `-0.125 -0.125 ${app.computer.maze_width(app.maze) + 0.25} ${app.computer.maze_height(app.maze) + 0.25}`,
   );
-  app.root.dataset["animation"] = `${Math.floor(Math.random() * 3) + 1}`;
+  app.root.dataset["animation"] = `${Math.floor(Math.random() * 4) + 1}`;
   renderAfterMove(app);
 }
 

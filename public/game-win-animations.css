@@ -60,3 +60,23 @@
     stroke-width: 1;
   }
 }
+
+:root {
+  animation: 10s infinite normal hue-rotate;
+  animation-timing-function: linear;
+  animation-play-state: paused;
+}
+
+:root.win[data-animation="4"] {
+  animation-play-state: running;
+}
+
+@keyframes hue-rotate {
+  from {
+    filter: hue-rotate(0);
+  }
+
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
