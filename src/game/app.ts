@@ -193,9 +193,12 @@ function pointerMoveHandlerFactory(
 
 function keyDownHanderFactory(
   app: App,
-): (this: SVGElement, ev: KeyboardEvent) => void {
+): (this: SVGElement | HTMLElement, ev: KeyboardEvent) => void {
   return function keyDownHandler(ev) {
     if (app.maze === null) {
+      return;
+    }
+    if (ev.target instanceof Element && ev.target.closest("dialog") !== null) {
       return;
     }
     let direction: number | null = null;
@@ -276,11 +279,11 @@ export async function initialiseApp(window: WindowType) {
   const pointerMoveHandler = pointerMoveHandlerFactory(app);
   const keyDownHandler = keyDownHanderFactory(app);
 
-  window.document.body.addEventListener("click", clickHandler);
+  app.window.document.body.addEventListener("click", clickHandler);
   app.optionsForm.addEventListener("input", optionsInputHandler);
-  window.addEventListener("popstate", popstateHandler);
+  app.window.addEventListener("popstate", popstateHandler);
   app.mazeSvg.addEventListener("pointermove", pointerMoveHandler);
-  app.mazeSvg.addEventListener("keydown", keyDownHandler);
+  app.window.addEventListener("keydown", keyDownHandler);
 
   if (window.location.hash) {
     navigate(app, app.window.location.hash, false);
