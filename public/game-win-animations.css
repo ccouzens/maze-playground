@@ -23,8 +23,6 @@
 }
 
 :root.win[data-animation="2"] #route {
-  stroke-linejoin: round;
-  stroke-linecap: round;
   animation: 2.5s infinite alternate expand-width;
 }
 
@@ -46,25 +44,24 @@
 
 :root.win[data-animation="3"] #route {
   animation: 5s infinite alternate fade-to-transparent;
-  stroke-linejoin: round;
-  stroke-linecap: round;
 }
 
 :root.win[data-animation="3"] #walls {
-  stroke-linecap: round;
-  animation: 5s infinite alternate expand-to-1;
+  animation: 5s linear calc(-5s / 4) infinite alternate expand-to-0-99;
 }
 
-@keyframes expand-to-1 {
+@keyframes expand-to-0-99 {
+  from {
+    stroke-width: 0.05;
+  }
+
   to {
-    stroke-width: 1;
+    stroke-width: 0.98;
   }
 }
 
 :root {
-  animation: 4s infinite normal hue-rotate;
-  animation-timing-function: linear;
-  animation-play-state: paused;
+  animation: 4s linear infinite normal paused hue-rotate;
 }
 
 :root.win[data-animation="4"] {
