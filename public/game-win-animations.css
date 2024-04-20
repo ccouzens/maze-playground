@@ -62,7 +62,7 @@
 }
 
 :root {
-  animation: 10s infinite normal hue-rotate;
+  animation: 4s infinite normal hue-rotate;
   animation-timing-function: linear;
   animation-play-state: paused;
 }

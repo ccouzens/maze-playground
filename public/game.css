@@ -11,11 +11,6 @@
   );
   --main-text-color: black;
   --main-background-color: white;
-  --input-background-color: color-mix(
-    in srgb,
-    var(--main-highlight-color) 5%,
-    var(--main-background-color)
-  );
   color: var(--main-text-color);
   background-color: var(--main-background-color);
   color-scheme: light dark;
@@ -26,11 +21,6 @@
   :root {
     --main-text-color: white;
     --main-background-color: black;
-    --input-background-color: color-mix(
-      in srgb,
-      var(--main-highlight-color) 15%,
-      var(--main-background-color)
-    );
   }
 }
 
@@ -111,13 +101,14 @@ button:active {
 #walls {
   stroke-width: 0.25;
   stroke: var(--main-text-color);
-  stroke-linecap: square;
+  stroke-linecap: round;
 }
 
 #route {
   stroke-width: 0.25;
   stroke: var(--main-highlight-color);
-  stroke-linecap: square;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   fill: none;
 }
 
