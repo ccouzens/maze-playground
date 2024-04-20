@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <filter id="f">
+    <feFlood flood-color="white">
+      <animate attributeName="flood-opacity" from="1" to="0" dur="3s" repeatCount="indefinite" />
+    </feFlood>
+
+    <feBlend in2="SourceGraphic" operator="multiply" />
+
+    <feOffset>
+      <animate attributeName="dx" from="1" to="0" dur="3s" repeatCount="indefinite" />
+      <animate attributeName="dy" from="1" to="0" dur="3s" repeatCount="indefinite" />
+    </feOffset>
+
+    <feMerge>
+      <feMergeNode/>
+      <feMergeNode in="SourceGraphic" />
+    </feMerge>
+  </filter>
+</svg>
+

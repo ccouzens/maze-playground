@@ -17,6 +17,7 @@ var esbuildOptions = esbuild.BuildOptions{
 		".wasm": esbuild.LoaderFile,
 		".glsl": esbuild.LoaderFile,
 		".wgsl": esbuild.LoaderFile,
+		".svg":  esbuild.LoaderFile,
 	},
 	LogLevel:  esbuild.LogLevelInfo,
 	Bundle:    true,
