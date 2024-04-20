@@ -9,9 +9,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "./game.html",
+  "start_url": "http://storage.googleapis.com/maze-playground/game.html",
   "display": "standalone",
   "categories": ["games"],
   "description": "Maze puzzles for your amusement",
-  "scope": "./"
+  "scope": "http://storage.googleapis.com/maze-playground/"
 }
