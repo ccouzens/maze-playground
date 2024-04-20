@@ -9,7 +9,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "../game.html",
+  "start_url": "./game.html",
   "display": "standalone",
   "categories": ["games"],
   "description": "Maze puzzles for your amusement",
