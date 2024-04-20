@@ -4,7 +4,11 @@ set -ex
 
 (cd esbuild; go run .)
 
-cp public/manifest.json public/icon.svg build/
+cp \
+  public/icon-monochrome.svg \
+  public/icon.svg \
+  public/manifest.json \
+  build/
 
 VERSION="$(git rev-parse HEAD)"
 

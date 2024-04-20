@@ -4,9 +4,15 @@
   "icons": [
     {
       "purpose": "monochrome",
+      "src": "./icon-monochrome.svg",
+      "type": "image/svg",
+      "sizes": "any"
+    },
+    {
+      "purpose": "any",
       "src": "./icon.svg",
       "type": "image/svg",
-      "sizes": "512x512"
+      "sizes": "any"
     }
   ],
   "start_url": "http://storage.googleapis.com/maze-playground/game.html",
