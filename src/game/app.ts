@@ -172,7 +172,7 @@ function move(app: App, x: number, y: number) {
   ).inverse();
   const mazeX = Math.floor(m.a * x + m.c * y + m.e);
   const mazeY = Math.floor(m.b * x + m.d * y + m.f);
-  app.computer.maze_move_to(app.maze, mazeX, mazeY);
+  app.computer.maze_move_to(app.maze, Math.max(mazeX, 0), Math.max(mazeY, 0));
   renderAfterMove(app);
 }
 
