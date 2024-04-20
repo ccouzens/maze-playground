@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/web-manifest.json",
+  "name": "Maze",
+  "icons": [
+    {
+      "purpose": "monochrome",
+      "src": "./icon.svg",
+      "type": "image/svg",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "../game.html",
+  "display": "standalone",
+  "categories": ["games"],
+  "description": "Maze puzzles for your amusement",
+  "scope": "./"
+}

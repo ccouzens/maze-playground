@@ -4,6 +4,8 @@ set -ex
 
 (cd esbuild; go run .)
 
+cp public/manifest.json public/icon.svg build/
+
 VERSION="$(git rev-parse HEAD)"
 
 cp build/game.html "build/game-${VERSION}.html"
@@ -37,6 +39,8 @@ gsutil \
   build/*.wasm \
   build/*.js \
   build/*.css \
+  build/*.json \
+  build/*.svg \
   gs://maze-playground/
 
 gsutil \

@@ -1,0 +1,8 @@
+<svg id="maze" xmlns="http://www.w3.org/2000/svg" aria-label="line drawing of a maze" viewBox="-0.125 -0.125 6.25 6.25">
+    <path
+      d="M0 5 0 0M1 3 1 2M1 5 1 4M2 5 2 4M3 2 3 1M3 4 3 3M4 3 4 0M4 6 4 4M6 6 6 1M6 0 0 0M5 1 1 1M2 2 1 2M5 2 4 2M3 3 1 3M6 3 5 3M1 4 0 4M3 4 2 4M5 4 4 4M4 5 2 5M6 5 5 5M6 6 0 6"
+      stroke="black"
+      stroke-width="0.25"
+      stroke-linecap="round"
+    ></path>
+</svg>
