@@ -12,7 +12,7 @@
       "purpose": "any",
       "src": "./icon.svg",
       "type": "image/svg",
-      "sizes": "144x144"
+      "sizes": "150x150"
     },
     {
       "purpose": "any",
@@ -25,5 +25,5 @@
   "display": "standalone",
   "categories": ["games"],
   "description": "Maze puzzles for your amusement",
-  "scope": "http://storage.googleapis.com/maze-playground/"
+  "scope": "https://storage.googleapis.com/maze-playground/"
 }
