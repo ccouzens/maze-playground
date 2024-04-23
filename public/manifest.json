@@ -12,10 +12,16 @@
       "purpose": "any",
       "src": "./icon.svg",
       "type": "image/svg",
+      "sizes": "144x144"
+    },
+    {
+      "purpose": "any",
+      "src": "./icon.svg",
+      "type": "image/svg",
       "sizes": "any"
     }
   ],
-  "start_url": "http://storage.googleapis.com/maze-playground/game.html",
+  "start_url": "https://storage.googleapis.com/maze-playground/game.html",
   "display": "standalone",
   "categories": ["games"],
   "description": "Maze puzzles for your amusement",
