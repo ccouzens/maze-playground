@@ -7,6 +7,7 @@ set -ex
 cp \
   public/icon-monochrome.svg \
   public/icon.svg \
+  public/icon-512.png \
   public/manifest.json \
   public/sw.js \
   build/
@@ -46,6 +47,7 @@ gsutil \
   build/*.css \
   build/*.json \
   build/*.svg \
+  build/*.png \
   gs://maze-playground/
 
 gsutil \

@@ -9,13 +9,11 @@
       "sizes": "any"
     },
     {
-      "purpose": "any",
-      "src": "./icon.svg",
-      "type": "image/svg",
-      "sizes": "150x150"
+      "src": "./icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     },
     {
-      "purpose": "any",
       "src": "./icon.svg",
       "type": "image/svg",
       "sizes": "any"
