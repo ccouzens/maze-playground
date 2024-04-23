@@ -8,6 +8,7 @@ cp \
   public/icon-monochrome.svg \
   public/icon.svg \
   public/manifest.json \
+  public/sw.js \
   build/
 
 VERSION="$(git rev-parse HEAD)"
