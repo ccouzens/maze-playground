@@ -2,7 +2,7 @@
   "scripts": {
     "start": "cd esbuild; go run . serve",
     "typeCheck": "tsc --noEmit",
-    "format": "prettier --write './**/*.{mjs,ts,md,json,html,js,yml,yaml,css}' && clang-format -i public/{vert,frag}.glsl && (cd computer; cargo fmt)"
+    "format": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,html,js,yml,yaml,css}' && clang-format -i public/{vert,frag}.glsl && (cd computer; cargo fmt)"
   },
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.5",
