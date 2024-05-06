@@ -96,6 +96,7 @@ button:active {
   min-height: 5rem;
   aspect-ratio: 1;
   touch-action: pinch-zoom;
+  user-select: none;
 }
 
 #walls {
