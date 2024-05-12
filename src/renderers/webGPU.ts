@@ -1,7 +1,7 @@
 import { type InitRenderer } from "./type";
 
 import { mazeWalls } from "../computer";
-import shaderFile from "../../public/shader.wgsl";
+import shaderFile from "/shader.wgsl?url";
 
 const WALLSIZE: [number, number] = [1, 1];
 const CELLSIZE: [number, number] = [4, 4];

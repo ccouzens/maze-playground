@@ -1,8 +1,8 @@
 import { mazeWalls } from "../computer";
 import { type InitRenderer } from "./type";
 
-import fragShaderFile from "../../public/frag.glsl";
-import vertShaderFile from "../../public/vert.glsl";
+import fragShaderFile from "/frag.glsl?url";
+import vertShaderFile from "/vert.glsl?url";
 
 const WALL_SIZE = 1;
 const PASSAGE_SIZE = 3;
