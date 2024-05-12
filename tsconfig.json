@@ -2,11 +2,10 @@
   "extends": "@tsconfig/strictest/tsconfig.json",
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "outDir": "./public/",
     "target": "ES2022",
+    "useDefineForClassFields": true,
     "types": ["vite/client", "@webgpu/types"],
     "module": "ESNext",
-    "skipLibCheck": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,

@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typeCheck": "tsc --noEmit",
     "format": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,html,js,yml,yaml,css}' && clang-format -i public/{vert,frag}.glsl && (cd computer; cargo fmt)"
