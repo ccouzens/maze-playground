@@ -1,4 +1,4 @@
-import computerFile from "/computer.wasm?url";
+import computerFile from "./computer.wasm?url";
 declare const tag: unique symbol;
 export type Maze = number & { readonly [tag]: "MAZE" };
 type RustString = number & { readonly [tag]: "RUST_STRING" };
