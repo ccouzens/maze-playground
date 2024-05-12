@@ -4,7 +4,14 @@
   "compilerOptions": {
     "outDir": "./public/",
     "target": "ES2022",
-    "types": ["@webgpu/types"]
+    "types": ["@webgpu/types"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
-  "include": ["src/**/*"]
+  "include": ["src"]
 }

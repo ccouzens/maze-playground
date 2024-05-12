@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "start": "cd esbuild; go run . serve",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "typeCheck": "tsc --noEmit",
     "format": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,html,js,yml,yaml,css}' && clang-format -i public/{vert,frag}.glsl && (cd computer; cargo fmt)"
   },
@@ -9,6 +11,7 @@
     "@types/node": "^20.12.5",
     "@webgpu/types": "^0.1.40",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.4",
+    "vite": "^5.2.11"
   }
 }
