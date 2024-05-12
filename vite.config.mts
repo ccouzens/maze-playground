@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
+import UnpluginInjectPreload from 'unplugin-inject-preload/vite'
 
 export default defineConfig({
   build: {
@@ -10,4 +11,13 @@ export default defineConfig({
       },
     },
   },
+  plugins: [
+    UnpluginInjectPreload({
+      files: [
+        {outputMatch: /computer.*\.wasm.*$/, attributes: { as: 'fetch'}},
+        {outputMatch: /\.glsl.*$/, attributes: { as: 'fetch'}},
+        {outputMatch: /\.wgsl.*$/, attributes: { as: 'fetch'}},
+      ]
+    })
+  ]
 });
