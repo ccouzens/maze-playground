@@ -193,7 +193,7 @@ function pointerMoveHandlerFactory(
 
 function keyDownHanderFactory(
   app: App,
-): (this: SVGElement | HTMLElement, ev: KeyboardEvent) => void {
+): (this: SVGElement | HTMLElement | Window, ev: KeyboardEvent) => void {
   return function keyDownHandler(ev) {
     if (app.maze === null) {
       return;

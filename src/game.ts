@@ -1,5 +1,5 @@
 import { initialiseApp } from "./game/app";
-import sw from "./sw.js?url";
+import sw from "./sw.ts?url";
 
 initialiseApp(window).catch((reason) => console.error(reason));
 

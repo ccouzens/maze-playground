@@ -4,7 +4,7 @@
   "compilerOptions": {
     "outDir": "./public/",
     "target": "ES2022",
-    "types": ["@webgpu/types"],
+    "types": ["vite/client", "@webgpu/types"],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
