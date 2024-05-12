@@ -1,4 +1,4 @@
-import computerInit from "./computer.wasm?init";
+import computerFile from "/computer.wasm?url";
 declare const tag: unique symbol;
 export type Maze = number & { readonly [tag]: "MAZE" };
 type RustString = number & { readonly [tag]: "RUST_STRING" };
@@ -36,7 +36,7 @@ export interface Computer {
 
 export async function initializeComputer(): Promise<Computer> {
   let computer: Computer;
-  const wasmInstance = await computerInit({
+  const wasm = await WebAssembly.instantiateStreaming(fetch(computerFile), {
     random: {
       fill_bytes(offset: number, length: number) {
         const bytes = new Uint8Array(computer.memory.buffer, offset, length);
@@ -44,7 +44,7 @@ export async function initializeComputer(): Promise<Computer> {
       },
     },
   });
-  computer = wasmInstance.exports as unknown as Computer;
+  computer = wasm.instance.exports as unknown as Computer;
   return computer;
 }
 

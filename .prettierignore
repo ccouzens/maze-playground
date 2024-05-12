@@ -3,4 +3,5 @@ gha-creds-*.json
 /node_modules/
 /computer/target/
 /dist/
-*.wasm
+/public/*.wasm
+
