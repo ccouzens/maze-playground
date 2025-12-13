@@ -26,7 +26,7 @@ interface App {
   winDialog: HTMLDialogElement;
   wallsSvgPath: SVGPathElement;
   routeSvgPath: SVGPathElement;
-  mazeSvg: SVGElement;
+  mazeSvg: SVGGraphicsElement;
   optionsForm: HTMLFormElement;
   mazeSizeInput: HTMLInputElement;
   root: HTMLElement;
@@ -96,12 +96,10 @@ function clickHandlerFactory(
 }
 
 function move(app: App, x: number, y: number) {
-  if (app.maze === null) {
+  const m = app.mazeSvg.getScreenCTM()?.inverse();
+  if (app.maze == null || m === undefined) {
     return;
   }
-  const m = (
-    (app.mazeSvg as any).getScreenCTM() as DOMMatrixReadOnly
-  ).inverse();
   const mazeX = Math.floor(m.a * x + m.c * y + m.e);
   const mazeY = Math.floor(m.b * x + m.d * y + m.f);
   app.computer.maze_move_to(app.maze, Math.max(mazeX, 0), Math.max(mazeY, 0));
@@ -168,7 +166,7 @@ function renderAfterMove(app: App) {
 function lookupElements(
   window: WindowType,
 ): Omit<App, "computer" | "maze" | "window"> {
-  const mazeSvg = window.document.querySelector<SVGElement>("#maze")!;
+  const mazeSvg = window.document.querySelector<SVGGraphicsElement>("#maze")!;
   const optionsForm = window.document.querySelector<HTMLFormElement>(
     "#optionsDialog form",
   )!;
