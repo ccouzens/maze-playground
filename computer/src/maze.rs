@@ -70,15 +70,15 @@ impl Maze {
         })
     }
 
-    pub fn as_block_printer(&self) -> BlockPrinter {
+    pub fn as_block_printer(&'_ self) -> BlockPrinter<'_> {
         BlockPrinter { maze: self }
     }
 
-    pub fn as_box_drawing_printer(&self) -> BoxDrawingPrinter {
+    pub fn as_box_drawing_printer(&'_ self) -> BoxDrawingPrinter<'_> {
         BoxDrawingPrinter { maze: self }
     }
 
-    pub fn as_bitmap_printer(&self) -> BitmapRenderer {
+    pub fn as_bitmap_printer(&'_ self) -> BitmapRenderer<'_> {
         BitmapRenderer { maze: self }
     }
 
@@ -362,8 +362,9 @@ mod test {
 █   █  
 █ █ █ █
   █   █
-███████"
-            .trim();
+███████
+"
+        .trim_start();
 
         let mut maze = Maze::new(3, 2).unwrap();
         maze.connect_pair(0, 1, 0, 0);

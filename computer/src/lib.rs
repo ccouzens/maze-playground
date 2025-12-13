@@ -121,7 +121,7 @@ pub extern "C" fn maze_move_direction(maze: &mut Maze, direction: u32) -> bool {
 }
 
 #[no_mangle]
-pub extern "C" fn maze_to_bitmap_renderer(maze: &Maze) -> &'static BitmapRenderer {
+pub extern "C" fn maze_to_bitmap_renderer(maze: &'_ Maze) -> &'static BitmapRenderer<'_> {
     let b = maze.as_bitmap_printer();
     Box::leak(Box::new(b))
 }

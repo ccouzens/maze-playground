@@ -133,7 +133,7 @@ pub fn generate_maze_with_wilsons_algorithm(
             .nth(rng.gen_range(0..unvisited.len()))
             .unwrap();
         let mut path = vec![cell];
-        while unvisited.get(&cell).is_some() {
+        while unvisited.contains(&cell) {
             cell = random_neighbour(rng, cell.0, cell.1, width, height);
             if let Some(position) = path.iter().position(|&c| c == cell) {
                 path.truncate(position + 1);
