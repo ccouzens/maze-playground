@@ -123,9 +123,7 @@ function pointerMoveHandlerFactory(
   };
 }
 
-function keyDownHanderFactory(
-  app: App,
-): (this: SVGElement | HTMLElement, ev: KeyboardEvent) => void {
+function keyDownHanderFactory(app: App): (ev: KeyboardEvent) => void {
   return function keyDownHandler(ev) {
     if (app.maze === null) {
       return;
