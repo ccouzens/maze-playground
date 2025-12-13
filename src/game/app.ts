@@ -75,7 +75,7 @@ function newMaze(app: App): void {
 
 function clickHandlerFactory(
   app: App,
-): (this: HTMLElement, ev: HTMLElementEventMap["click"]) => void {
+): (ev: HTMLElementEventMap["click"]) => void {
   return function clickHandler(ev) {
     if (ev.target instanceof HTMLDialogElement) {
       ev.target.close();
@@ -108,9 +108,7 @@ function move(app: App, x: number, y: number) {
   renderAfterMove(app);
 }
 
-function pointerMoveHandlerFactory(
-  app: App,
-): (this: HTMLElement | SVGElement, ev: PointerEvent) => void {
+function pointerMoveHandlerFactory(app: App): (ev: PointerEvent) => void {
   return function pointerMoveHandler(ev) {
     if (
       ev instanceof PointerEvent &&
