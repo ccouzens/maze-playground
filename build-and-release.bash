@@ -9,7 +9,6 @@ cp \
   public/icon.svg \
   public/icon-512.png \
   public/manifest.json \
-  public/sw.js \
   build/
 
 VERSION="$(git rev-parse HEAD)"
