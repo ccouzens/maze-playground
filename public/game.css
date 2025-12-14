@@ -147,7 +147,8 @@ dialog > div {
 }
 
 #optionsDialog form {
-  > * {
+  > *,
+  legend {
     display: block;
   }
 
