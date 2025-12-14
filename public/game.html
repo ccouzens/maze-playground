@@ -1,69 +1,69 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang=en-GB>
 
 	<head>
-		<meta charset="utf-8">
-		<link rel="stylesheet" href="game.css">
-		<script src="./game.js" type="module"></script>
-		<link rel="preload" href="computer.wasm" as="fetch" crossorigin>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="manifest" href="manifest.json">
-		<link rel="icon" href="icon.svg">
+		<meta charset=utf-8>
+		<link rel=stylesheet href=game.css>
+		<script src=game.js type=module></script>
+		<link rel=preload href=computer.wasm as=fetch crossorigin>
+		<meta name=viewport content="width=device-width, initial-scale=1">
+		<link rel=manifest href=manifest.json>
+		<link rel=icon href=icon.svg>
 		<title>Maze</title>
-		<meta name="theme-color" content="color(srgb 0.7 1 0.7)" media="(prefers-color-scheme: light)">
-		<meta name="theme-color" content="color(srgb 0 0.3 0)" media="(prefers-color-scheme: dark)">
+		<meta name=theme-color content="color(srgb 0.7 1 0.7)" media="(prefers-color-scheme: light)">
+		<meta name=theme-color content="color(srgb 0 0.3 0)" media="(prefers-color-scheme: dark)">
 	</head>
 
 	<body>
 		<header>
 			<h1>Maze</h1>
 			<nav>
-				<button value="new">New</button>
-				<button command="show-modal" commandfor="optionsDialog">Options</button>
-				<button command="show-modal" commandfor="linksDialog">Links</button>
+				<button value=new>New</button>
+				<button command=show-modal commandfor=optionsDialog>Options</button>
+				<button command=show-modal commandfor=linksDialog>Links</button>
 			</nav>
 		</header>
-		<svg id="maze" xmlns="http://www.w3.org/2000/svg" aria-label="line drawing of a maze">
-			<path id="route" d=""></path>
-			<path id="walls" d=""></path>
+		<svg id=maze xmlns="http://www.w3.org/2000/svg" aria-label="line drawing of a maze">
+			<path id=route d=""></path>
+			<path id=walls d=""></path>
 		</svg>
-		<dialog id="optionsDialog" aria-label="Configuration options for the maze">
+		<dialog id=optionsDialog aria-label="Configuration options for the maze">
 			<div>
-				<form method="dialog">
-					<label for="mazeSize">Size</label>
-					<input id="mazeSize" type="range" min="6" max="30" value="10" name="size">
+				<form method=dialog>
+					<label for=mazeSize>Size</label>
+					<input id=mazeSize type=range min=6 max=30 value=10 name=size>
 					<fieldset>
 						<legend>Algorithm</legend>
-						<label><input type="radio" id="binaryTree" name="algorithm" value="binary tree">Binary tree</label>
-						<label for="sidewinder"><input type="radio" id="sidewinder" name="algorithm" value="sidewinder">Sidewinder</label>
-						<label for="aldousBroder"><input type="radio" id="aldousBroder" name="algorithm" value="aldous broder">Aldous–Broder</label>
-						<label for="wilsons"><input type="radio" id="wilsons" name="algorithm" value="wilson's" checked>Wilson's</label>
+						<label><input type=radio name=algorithm value="binary tree">Binary tree</label>
+						<label><input type=radio name=algorithm value=sidewinder>Sidewinder</label>
+						<label><input type=radio name=algorithm value="aldous broder">Aldous–Broder</label>
+						<label><input type=radio name=algorithm value="wilson's" checked>Wilson's</label>
 					</fieldset>
 				</form>
 			</div>
 		</dialog>
-		<dialog id="linksDialog" aria-label="Hyperlinks">
+		<dialog id=linksDialog aria-label=Hyperlinks>
 			<div>
 				<ul>
 					<li>
-						<a href="https://social.treehouse.systems/@ccouzens" target="_blank">Author</a>
+						<a href=https://social.treehouse.systems/@ccouzens target=_blank>Author</a>
 					</li>
 					<li>
-						<a href="https://github.com/ccouzens/maze-playground" target="_blank">Source code</a>
+						<a href=https://github.com/ccouzens/maze-playground target=_blank>Source code</a>
 					</li>
 					<li>
-						<a href="./rendering-playground.html" target="_blank">Rendering playground</a>
+						<a href=rendering-playground.html target=_blank>Rendering playground</a>
 					</li>
 				</ul>
 			</div>
 		</dialog>
-		<dialog id="winDialog" aria-label="Congratulations dialog">
+		<dialog id=winDialog aria-label="Congratulations dialog">
 			<div>
 				<p>Amazing work!</p>
 				<p>
 					If you enjoyed this, please
-					<button value="share" class="share-supported">share</button>
-					<span class="share-not-supported">share</span>
+					<button value=share class=share-supported>share</button>
+					<span class=share-not-supported>share</span>
 					it with your friends.
 				</p>
 			</div>
