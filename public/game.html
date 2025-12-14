@@ -32,17 +32,13 @@
 				<form method="dialog">
 					<label for="mazeSize">Size</label>
 					<input id="mazeSize" type="range" min="6" max="30" value="10" name="size">
-					<label for="algorithm">Algorithm</label>
-					<div id="algorithm">
-						<input type="radio" id="binaryTree" name="algorithm" value="binary tree">
-						<label for="binaryTree">Binary tree</label>
-						<input type="radio" id="sidewinder" name="algorithm" value="sidewinder">
-						<label for="sidewinder">Sidewinder</label>
-						<input type="radio" id="aldousBroder" name="algorithm" value="aldous broder">
-						<label for="aldousBroder">Aldous–Broder</label>
-						<input type="radio" id="wilsons" name="algorithm" value="wilson's" checked>
-						<label for="wilsons">Wilson's</label>
-					</div>
+					<fieldset>
+						<legend>Algorithm</legend>
+						<label><input type="radio" id="binaryTree" name="algorithm" value="binary tree">Binary tree</label>
+						<label for="sidewinder"><input type="radio" id="sidewinder" name="algorithm" value="sidewinder">Sidewinder</label>
+						<label for="aldousBroder"><input type="radio" id="aldousBroder" name="algorithm" value="aldous broder">Aldous–Broder</label>
+						<label for="wilsons"><input type="radio" id="wilsons" name="algorithm" value="wilson's" checked>Wilson's</label>
+					</fieldset>
 				</form>
 			</div>
 		</dialog>

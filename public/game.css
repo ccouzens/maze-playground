@@ -1,6 +1,10 @@
 @import url("game-win-animations.css") screen and (update: fast) and
   (not (prefers-reduced-motion));
 
+legend {
+  all: unset;
+}
+
 :root {
   font-family: sans-serif;
   --main-highlight-color: hsl(120 100% 50%);
@@ -143,20 +147,21 @@ dialog > div {
 }
 
 #optionsDialog form {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-
-#algorithm {
   display: grid;
+  column-gap: 0.5em;
+  row-gap: 1em;
   grid-template-columns: min-content 1fr;
-  row-gap: 1rem;
   align-items: baseline;
-}
 
-#algorithm > label {
-  padding-left: 0.5em;
+  > *:not(fieldset),
+  legend {
+    grid-column: span 2;
+  }
+
+  fieldset,
+  fieldset > label {
+    display: contents;
+  }
 }
 
 #linksDialog ul {
