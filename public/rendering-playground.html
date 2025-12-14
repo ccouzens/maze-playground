@@ -1,51 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <script src=" ./script.js" type="module"></script>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preload" href="computer.wasm" as="fetch" crossorigin />
-    <link rel="preload" href="frag.glsl" as="fetch" crossorigin />
-    <link rel="preload" href="vert.glsl" as="fetch" crossorigin />
-    <link rel="preload" href="shader.wgsl" as="fetch" crossorigin />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Rendering playground</title>
-  </head>
+	<head>
+		<meta charset="utf-8">
+		<script src=" ./script.js" type="module"></script>
+		<link rel="stylesheet" href="style.css">
+		<link rel="preload" href="computer.wasm" as="fetch" crossorigin>
+		<link rel="preload" href="frag.glsl" as="fetch" crossorigin>
+		<link rel="preload" href="vert.glsl" as="fetch" crossorigin>
+		<link rel="preload" href="shader.wgsl" as="fetch" crossorigin>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Rendering playground</title>
+	</head>
 
-  <body>
-    <svg id="filter" xmlns="http://www.w3.org/2000/svg">
-      <filter id="applyColours">
-        <feFlood flood-color="currentColor" result="floodFill" />
-        <feColorMatrix
-          in="SourceGraphic"
-          type="matrix"
-          result="matrix"
-          values="0 0 0 0 0
+	<body>
+		<svg id="filter" xmlns="http://www.w3.org/2000/svg">
+			<filter id="applyColours">
+				<feFlood flood-color="currentColor" result="floodFill"/>
+				<feColorMatrix in="SourceGraphic" type="matrix" result="matrix" values="0 0 0 0 0
                 0 0 0 0 0
                 0 0 0 0 0
-                1 0 0 0 0"
-        />
-        <feComposite in="floodFill" in2="matrix" operator="in" />
-      </filter>
-    </svg>
-    <h1>Maze rendering playground</h1>
-    <noscript
-      >This page contains webassembly and javascript content, please enable
-      javascript in your browser.</noscript
-    >
-    <h2>SVG</h2>
-    <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
-    <h2>Img</h2>
-    <img
-      id="image"
-      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-      alt="Line image of a maze"
-    />
-    <h2>Canvas bitmaprenderer context</h2>
-    <canvas id="bitmapRenderer"></canvas>
-    <h2>Canvas webgl2 context</h2>
-    <canvas id="webgl2"></canvas>
-    <h2>Canvas webgpu context</h2>
-    <canvas id="webgpu"></canvas>
-  </body>
+                1 0 0 0 0"/>
+				<feComposite in="floodFill" in2="matrix" operator="in"/>
+			</filter>
+		</svg>
+		<h1>Maze rendering playground</h1>
+		<noscript>This page contains webassembly and javascript content, please enable
+			javascript in your browser.</noscript>
+		<h2>SVG</h2>
+		<svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
+		<h2>Img</h2>
+		<img id="image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Line image of a maze">
+		<h2>Canvas bitmaprenderer context</h2>
+		<canvas id="bitmapRenderer"></canvas>
+		<h2>Canvas webgl2 context</h2>
+		<canvas id="webgl2"></canvas>
+		<h2>Canvas webgpu context</h2>
+		<canvas id="webgpu"></canvas>
+	</body>
 </html>
