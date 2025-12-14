@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-GB">
+
 	<head>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="game.css">
@@ -22,12 +23,9 @@
 				<button command="show-modal" commandfor="linksDialog">Links</button>
 			</nav>
 		</header>
-		<svg id="maze"
-		     xmlns="http://www.w3.org/2000/svg"
-		     aria-label="line drawing of a maze"
-		>
-			<path id="route"></path>
-			<path id="walls"></path>
+		<svg id="maze" xmlns="http://www.w3.org/2000/svg" aria-label="line drawing of a maze">
+			<path id="route" d=""></path>
+			<path id="walls" d=""></path>
 		</svg>
 		<dialog id="optionsDialog" aria-label="Configuration options for the maze">
 			<div>
@@ -52,19 +50,13 @@
 			<div>
 				<ul>
 					<li>
-						<a href="https://social.treehouse.systems/@ccouzens"
-						   target="_blank"
-						>Author</a>
+						<a href="https://social.treehouse.systems/@ccouzens" target="_blank">Author</a>
 					</li>
 					<li>
-						<a href="https://github.com/ccouzens/maze-playground"
-						   target="_blank"
-						>Source code</a>
+						<a href="https://github.com/ccouzens/maze-playground" target="_blank">Source code</a>
 					</li>
 					<li>
-						<a href="./rendering-playground.html"
-						   target="_blank"
-						>Rendering playground</a>
+						<a href="./rendering-playground.html" target="_blank">Rendering playground</a>
 					</li>
 				</ul>
 			</div>
