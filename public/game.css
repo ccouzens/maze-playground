@@ -147,20 +147,25 @@ dialog > div {
 }
 
 #optionsDialog form {
-  display: grid;
-  column-gap: 0.5em;
-  row-gap: 1em;
-  grid-template-columns: min-content 1fr;
-  align-items: baseline;
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
+  align-items: stretch;
 
   > *:not(fieldset),
   legend {
     grid-column: span 2;
   }
 
-  fieldset,
-  fieldset > label {
+  fieldset {
     display: contents;
+
+    > label {
+      display: grid;
+      grid-template-columns: min-content 1fr;
+      align-items: baseline;
+      gap: 0.5em;
+    }
   }
 }
 
