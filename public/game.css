@@ -141,20 +141,20 @@ dialog {
 /* Have the child of the dialog take up all of it, so that clicks outside of it
 are easier to detect. */
 dialog > div {
-  padding: 1rem;
+  padding: 0.5em 1em;
   border: 0;
   margin: 0;
 }
 
 #optionsDialog form {
-  display: flex;
-  gap: 1em;
-  flex-direction: column;
-  align-items: stretch;
+  > * {
+    display: block;
+  }
 
-  > *:not(fieldset),
+  > input,
+  label,
   legend {
-    grid-column: span 2;
+    padding-block: 0.5em;
   }
 
   fieldset {
