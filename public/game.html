@@ -27,40 +27,46 @@
 			<path id=route d=""></path>
 			<path id=walls d=""></path>
 		</svg>
-		<dialog id=optionsDialog aria-label="Configuration options for the maze" closedby=any>
-			<form method=dialog>
-				<label for=mazeSize>Size</label>
-				<input id=mazeSize type=range min=6 max=30 value=10 name=size>
-				<fieldset>
-					<legend>Algorithm</legend>
-					<label><input type=radio name=algorithm value="binary tree">Binary tree</label>
-					<label><input type=radio name=algorithm value=sidewinder>Sidewinder</label>
-					<label><input type=radio name=algorithm value="aldous broder">Aldous–Broder</label>
-					<label><input type=radio name=algorithm value="wilson's" checked>Wilson's</label>
-				</fieldset>
-			</form>
+		<dialog id=optionsDialog aria-label="Configuration options for the maze">
+			<div>
+				<form method=dialog>
+					<label for=mazeSize>Size</label>
+					<input id=mazeSize type=range min=6 max=30 value=10 name=size>
+					<fieldset>
+						<legend>Algorithm</legend>
+						<label><input type=radio name=algorithm value="binary tree">Binary tree</label>
+						<label><input type=radio name=algorithm value=sidewinder>Sidewinder</label>
+						<label><input type=radio name=algorithm value="aldous broder">Aldous–Broder</label>
+						<label><input type=radio name=algorithm value="wilson's" checked>Wilson's</label>
+					</fieldset>
+				</form>
+			</div>
 		</dialog>
-		<dialog id=linksDialog aria-label=Hyperlinks closedby=any>
-			<ul>
-				<li>
-					<a href=https://social.treehouse.systems/@ccouzens target=_blank>Author</a>
-				</li>
-				<li>
-					<a href=https://github.com/ccouzens/maze-playground target=_blank>Source code</a>
-				</li>
-				<li>
-					<a href=rendering-playground.html target=_blank>Rendering playground</a>
-				</li>
-			</ul>
+		<dialog id=linksDialog aria-label=Hyperlinks>
+			<div>
+				<ul>
+					<li>
+						<a href=https://social.treehouse.systems/@ccouzens target=_blank>Author</a>
+					</li>
+					<li>
+						<a href=https://github.com/ccouzens/maze-playground target=_blank>Source code</a>
+					</li>
+					<li>
+						<a href=rendering-playground.html target=_blank>Rendering playground</a>
+					</li>
+				</ul>
+			</div>
 		</dialog>
-		<dialog id=winDialog aria-label="Congratulations dialog" closedby=any>
-			<p>Amazing work!</p>
-			<p>
-				If you enjoyed this, please
-				<button value=share class=share-supported>share</button>
-				<span class=share-not-supported>share</span>
-				it with your friends.
-			</p>
+		<dialog id=winDialog aria-label="Congratulations dialog">
+			<div>
+				<p>Amazing work!</p>
+				<p>
+					If you enjoyed this, please
+					<button value=share class=share-supported>share</button>
+					<span class=share-not-supported>share</span>
+					it with your friends.
+				</p>
+			</div>
 		</dialog>
 	</body>
 </html>

@@ -8,6 +8,9 @@ import {
 interface WindowType {
   addEventListener: Window["addEventListener"];
   document: {
+    body: {
+      addEventListener: Window["document"]["body"]["addEventListener"];
+    };
     querySelector: Window["document"]["querySelector"];
     querySelectorAll: Window["document"]["querySelectorAll"];
   };
@@ -74,7 +77,9 @@ function clickHandlerFactory(
   app: App,
 ): (ev: HTMLElementEventMap["click"]) => void {
   return function clickHandler(ev) {
-    if (ev.target instanceof HTMLButtonElement) {
+    if (ev.target instanceof HTMLDialogElement) {
+      ev.target.close();
+    } else if (ev.target instanceof HTMLButtonElement) {
       const value = ev.target.value;
       if (value === "new") {
         newMaze(app);
@@ -195,7 +200,7 @@ export async function initialiseApp(window: WindowType) {
   const pointerMoveHandler = pointerMoveHandlerFactory(app);
   const keyDownHandler = keyDownHanderFactory(app);
 
-  app.window.addEventListener("click", clickHandler);
+  app.window.document.body.addEventListener("click", clickHandler);
   app.optionsForm.addEventListener("input", optionsInputHandler);
   app.mazeSvg.addEventListener("pointermove", pointerMoveHandler);
   app.window.addEventListener("keydown", keyDownHandler);
