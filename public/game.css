@@ -13,19 +13,10 @@ legend {
     var(--main-highlight-color) 30%,
     var(--main-background-color)
   );
-  --main-text-color: black;
-  --main-background-color: white;
-  color: var(--main-text-color);
-  background-color: var(--main-background-color);
+  --main-text-color: light-dark(black, white);
+  --main-background-color: light-dark(white, black);
   color-scheme: light dark;
   accent-color: var(--main-highlight-color);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --main-text-color: white;
-    --main-background-color: black;
-  }
 }
 
 ::selection {
@@ -67,6 +58,7 @@ nav {
 
 h1 {
   margin: 0;
+  color: var(--main-text-color);
 }
 
 button {
@@ -100,6 +92,7 @@ button:active {
   aspect-ratio: 1;
   touch-action: pinch-zoom;
   user-select: none;
+  background-color: var(--main-background-color);
 }
 
 #walls {
