@@ -15,6 +15,7 @@ legend {
   );
   --main-text-color: light-dark(black, white);
   --main-background-color: light-dark(white, black);
+  background-color: var(--main-background-color);
   color-scheme: light dark;
   accent-color: var(--main-highlight-color);
 }
