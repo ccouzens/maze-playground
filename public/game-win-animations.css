@@ -30,6 +30,12 @@
   animation: 5s linear calc(-5s / 4) infinite alternate expand-to-0-99;
 }
 
+@keyframes fade-to-transparent {
+  to {
+    stroke: transparent;
+  }
+}
+
 @keyframes expand-to-0-99 {
   from {
     stroke-width: 0.05;
