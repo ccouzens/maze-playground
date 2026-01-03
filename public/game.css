@@ -119,20 +119,8 @@ dialog {
 }
 
 @media (update: fast) {
-  dialog:open,
-  dialog:open::backdrop {
-    animation: 5s forwards dialog-backdrop-open;
-  }
   dialog::backdrop {
     background-color: color(from var(--main-highlight-color) srgb r g b / 0.5);
-  }
-  @keyframes dialog-backdrop-open {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
   }
 }
 
