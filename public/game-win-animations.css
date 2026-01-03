@@ -70,10 +70,10 @@
 
 @keyframes hue-rotate {
   from {
-    --hue: 0deg;
+    filter: hue-rotate(0);
   }
 
   to {
-    --hue: 360deg;
+    filter: hue-rotate(360deg);
   }
 }
