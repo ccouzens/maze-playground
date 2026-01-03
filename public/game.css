@@ -6,7 +6,6 @@ legend {
 }
 
 :root {
-  font-family: sans-serif;
   --main-highlight-color: #0f0;
   --header-background-color: color-mix(
     in srgb,
@@ -18,6 +17,10 @@ legend {
   background-color: var(--main-background-color);
   color-scheme: light dark;
   accent-color: var(--main-highlight-color);
+}
+
+* {
+  font-family: sans-serif;
 }
 
 ::selection {
