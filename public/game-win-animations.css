@@ -23,30 +23,10 @@
 }
 
 :root.win[data-animation="2"] #route {
-  animation: 2.5s infinite alternate expand-width;
+  animation: 5s infinite alternate fade-to-transparent;
 }
 
 :root.win[data-animation="2"] #walls {
-  animation: 5s infinite alternate fade-to-transparent;
-}
-
-@keyframes expand-width {
-  to {
-    stroke-width: 5;
-  }
-}
-
-@keyframes fade-to-transparent {
-  to {
-    stroke: transparent;
-  }
-}
-
-:root.win[data-animation="3"] #route {
-  animation: 5s infinite alternate fade-to-transparent;
-}
-
-:root.win[data-animation="3"] #walls {
   animation: 5s linear calc(-5s / 4) infinite alternate expand-to-0-99;
 }
 
@@ -57,23 +37,5 @@
 
   to {
     stroke-width: 0.98;
-  }
-}
-
-:root {
-  animation: 4s linear infinite normal paused hue-rotate;
-}
-
-:root.win[data-animation="4"] {
-  animation-play-state: running;
-}
-
-@keyframes hue-rotate {
-  from {
-    filter: hue-rotate(0);
-  }
-
-  to {
-    filter: hue-rotate(360deg);
   }
 }
