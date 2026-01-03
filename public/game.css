@@ -5,8 +5,14 @@ legend {
   all: unset;
 }
 
+@property --hue {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 120deg;
+}
+
 :root {
-  --main-highlight-color: #0f0;
+  --main-highlight-color: hsl(calc(var(--hue) + 120deg) 100% 50%);
   --header-background-color: color-mix(
     in srgb,
     var(--main-highlight-color) 30%,
