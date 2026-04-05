@@ -1,9 +1,9 @@
 import {
-  Maze,
+  type Maze,
   initializeComputer,
   rustStringToJS,
   type Computer,
-} from "../computer";
+} from "../computer.ts";
 
 interface WindowType {
   addEventListener: Window["addEventListener"];
