@@ -1,6 +1,6 @@
-/build/
 gha-creds-*.json
 /node_modules/
 /computer/target/
-/public/*.wasm
+/src/computer.wasm
 /dist
+/.turbo

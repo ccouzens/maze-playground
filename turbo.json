@@ -1,0 +1,43 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "tasks": {
+    "compile-computer": {
+      "inputs": [
+        "computer/Cargo.lock",
+        "computer/Cargo.toml",
+        "computer/src/**/*.rs"
+      ],
+      "outputs": [
+        "computer/target/wasm32-unknown-unknown/release/computer.wasm"
+      ]
+    },
+    "optimise-and-copy-computer": {
+      "inputs": [
+        "computer/target/wasm32-unknown-unknown/release/computer.wasm"
+      ],
+      "outputs": ["src/computer.wasm"]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false,
+      "dependsOn": ["optimise-and-copy-computer"]
+    },
+    "build": {
+      "dependsOn": ["optimise-and-copy-computer"]
+    },
+    "preview": {
+      "dependsOn": ["build"],
+      "persistent": true,
+      "cache": false
+    },
+    "check": {
+      "dependsOn": ["format:check", "tsc:check", "oxlint:check"]
+    },
+    "format": {
+      "dependsOn": ["superhtml", "oxfmt", "clang-format"]
+    },
+    "format:check": {
+      "dependsOn": ["superhtml:check", "oxfmt:check", "clang-format:check"]
+    }
+  }
+}
