@@ -12,6 +12,7 @@
 		<title>Maze</title>
 		<meta name=theme-color content="color(srgb 0.7 1 0.7)" media="(prefers-color-scheme: light)">
 		<meta name=theme-color content="color(srgb 0 0.3 0)" media="(prefers-color-scheme: dark)">
+		<meta name=description content="Square 2d maze generator and game">
 	</head>
 
 	<body>
@@ -23,7 +24,7 @@
 				<button command=show-modal commandfor=linksDialog>Links</button>
 			</nav>
 		</header>
-		<svg id=maze xmlns="http://www.w3.org/2000/svg" aria-label="line drawing of a maze">
+		<svg id=maze xmlns="http://www.w3.org/2000/svg" aria-label="line drawing of a maze" role=main>
 			<path id=route d=""></path>
 			<path id=walls d=""></path>
 		</svg>
