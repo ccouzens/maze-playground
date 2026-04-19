@@ -3,6 +3,10 @@ set -ex
 # rustup target add wasm32-unknown-unknown
 # pnpm install
 
+wasm-opt --version
+
+which wasm-opt
+
 pnpm exec turbo build --env-mode=loose
 
 VERSION="$(git rev-parse HEAD)"
