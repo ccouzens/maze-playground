@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "compile-computer": "cargo build --target=wasm32-unknown-unknown --release",
-    "optimise-and-copy-computer": "wasm-opt -O3 --enable-bulk-memory-opt -o src/computer.wasm computer/target/wasm32-unknown-unknown/release/computer.wasm",
+    "compile-computer": "cd computer; cargo +stable build --target=wasm32-unknown-unknown --release",
+    "optimise-and-copy-computer": "wasm-opt -O3 --enable-bulk-memory -o src/computer.wasm computer/target/wasm32-unknown-unknown/release/computer.wasm",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -10,7 +10,7 @@
     "format:superhtml": "superhtml fmt *.html",
     "format:prettier": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,js,yml,yaml,css}'",
     "format:clang": "clang-format -i src/{vert,frag}.glsl",
-    "format:rust": "(cd computer; cargo fmt)"
+    "format:rust": "cd computer; cargo +stable fmt"
   },
   "devDependencies": {
     "@webgpu/types": "^0.1.68",

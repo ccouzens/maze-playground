@@ -12,6 +12,7 @@
       ]
     },
     "optimise-and-copy-computer": {
+      "dependsOn": ["compile-computer"],
       "inputs": [
         "computer/target/wasm32-unknown-unknown/release/computer.wasm"
       ],
