@@ -40,10 +40,16 @@ gsutil \
   dist/assets/*.wasm \
   dist/assets/*.js \
   dist/assets/*.css \
-  dist/assets/*.json \
-  dist/assets/*.svg \
-  dist/assets/*.png \
   gs://maze-playground/assets/
+
+gsutil \
+  -m \
+  cp \
+  -Z \
+  dist/*.json \
+  dist/*.svg \
+  dist/*.png \
+  gs://maze-playground/
 
 gsutil \
   -m \
