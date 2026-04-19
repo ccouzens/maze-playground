@@ -25,7 +25,7 @@ jobs:
           ls -a -- "${GITHUB_WORKSPACE}/binaryen-version_129/bin"
           echo "${GITHUB_WORKSPACE}/binaryen-version_129/bin" >> "$GITHUB_PATH"
       - name: wasm-opt version
-        uses: wasm-opt --version
+        run: wasm-opt --version
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install pnpm
