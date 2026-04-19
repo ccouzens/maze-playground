@@ -21,30 +21,30 @@ gsutil \
   -h "Content-Type:text/plain" \
   cp \
   -Z \
-  dist/*.glsl \
-  dist/*.wgsl \
-  gs://maze-playground/
+  dist/assets/*.glsl \
+  dist/assets/*.wgsl \
+  gs://maze-playground/assets/
 
 gsutil \
   -m \
   -h "Content-Type:application/json" \
   cp \
   -Z \
-  dist/*.js.map \
-  dist/*.css.map \
-  gs://maze-playground/
+  dist/assets/*.js.map \
+  dist/assets/*.css.map \
+  gs://maze-playground/assets/
 
 gsutil \
   -m \
   cp \
   -Z \
-  dist/*.wasm \
-  dist/*.js \
-  dist/*.css \
-  dist/*.json \
-  dist/*.svg \
-  dist/*.png \
-  gs://maze-playground/
+  dist/assets/*.wasm \
+  dist/assets/*.js \
+  dist/assets/*.css \
+  dist/assets/*.json \
+  dist/assets/*.svg \
+  dist/assets/*.png \
+  gs://maze-playground/assets/
 
 gsutil \
   -m \
