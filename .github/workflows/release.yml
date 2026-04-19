@@ -9,7 +9,9 @@ jobs:
   build-deploy:
     name: Build and deploy
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        node-version: [20]
     permissions:
       contents: "read"
       id-token: "write"
@@ -23,6 +25,17 @@ jobs:
           --no-install-recommends --no-install-suggests
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
       - uses: "google-github-actions/auth@v2"
         with:
           project_id: "maze-playground"

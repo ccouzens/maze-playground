@@ -1,31 +1,25 @@
 set -ex
 
 # rustup target add wasm32-unknown-unknown
+# pnpm install
 
-(cd esbuild; go run .)
-
-cp \
-  public/icon-monochrome.svg \
-  public/icon.svg \
-  public/icon-512.png \
-  public/manifest.json \
-  build/
+pnpm exec turbo build
 
 VERSION="$(git rev-parse HEAD)"
 
-cp build/game.html "build/game-${VERSION}.html"
-cp build/rendering-playground.html "build/rendering-playground-${VERSION}.html"
-cp build/game.html "build/index.html"
+cp dist/index.html "dist/game-${VERSION}.html"
+cp dist/index.html "dist/game.html"
+cp dist/rendering-playground.html dist/rendering-playground-${VERSION}.html"
 
-ls -- build
+ls -- dist
 
 gsutil \
   -m \
   -h "Content-Type:text/plain" \
   cp \
   -Z \
-  build/*.glsl \
-  build/*.wgsl \
+  dist/*.glsl \
+  dist/*.wgsl \
   gs://maze-playground/
 
 gsutil \
@@ -33,25 +27,25 @@ gsutil \
   -h "Content-Type:application/json" \
   cp \
   -Z \
-  build/*.js.map \
-  build/*.css.map \
+  dist/*.js.map \
+  dist/*.css.map \
   gs://maze-playground/
 
 gsutil \
   -m \
   cp \
   -Z \
-  build/*.wasm \
-  build/*.js \
-  build/*.css \
-  build/*.json \
-  build/*.svg \
-  build/*.png \
+  dist/*.wasm \
+  dist/*.js \
+  dist/*.css \
+  dist/*.json \
+  dist/*.svg \
+  dist/*.png \
   gs://maze-playground/
 
 gsutil \
   -m \
   cp \
   -Z \
-  build/*.html \
+  dist/*.html \
   gs://maze-playground/
