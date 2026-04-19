@@ -1,5 +1,9 @@
 set -ex
 
+echo $PATH
+echo $GITHUB_PATH
+ls -- "$GITHUB_PATH"
+
 # rustup target add wasm32-unknown-unknown
 # pnpm install
 
