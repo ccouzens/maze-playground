@@ -21,7 +21,8 @@ jobs:
         run: rustup target add wasm32-unknown-unknown
       - name: Install wasm-opt
         run: |
-          curl -L https://github.com/WebAssembly/binaryen/releases/download/version_129/binaryen-version_129-x86_64-linux.tar.gz | tar -xz
+          curl --silent -L https://github.com/WebAssembly/binaryen/releases/download/version_129/binaryen-version_129-x86_64-linux.tar.gz | tar -xz
+          ls "${GITHUB_WORKSPACE/binaryen-version_129/bin"
           echo "$GITHUB_WORKSPACE/binaryen-version_129/bin" >> $GITHUB_PATH
       - name: Checkout
         uses: actions/checkout@v4
