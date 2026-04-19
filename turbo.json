@@ -30,14 +30,13 @@
       "persistent": true,
       "cache": false
     },
-    "check": {
-      "dependsOn": ["format:check", "tsc:check", "oxlint:check"]
-    },
     "format": {
-      "dependsOn": ["superhtml", "oxfmt", "clang-format"]
-    },
-    "format:check": {
-      "dependsOn": ["superhtml:check", "oxfmt:check", "clang-format:check"]
+      "dependsOn": [
+        "format:superhtml",
+        "format:prettier",
+        "format:clang",
+        "format:rust"
+      ]
     }
   }
 }

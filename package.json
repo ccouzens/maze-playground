@@ -7,7 +7,10 @@
     "preview": "vite preview",
     "start": "cd esbuild; go run . serve",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,js,yml,yaml,css}' && superhtml fmt *.html && clang-format -i src/{vert,frag}.glsl && (cd computer; cargo fmt)"
+    "format:superhtml": "superhtml fmt *.html",
+    "format:prettier": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,js,yml,yaml,css}'",
+    "format:clang": "clang-format -i src/{vert,frag}.glsl",
+    "format:rust": "(cd computer; cargo fmt)"
   },
   "devDependencies": {
     "@webgpu/types": "^0.1.68",
