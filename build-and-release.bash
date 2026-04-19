@@ -6,17 +6,13 @@ export PATH="$PATH:$(pwd)/binaryen-version_129/bin"
 # rustup target add wasm32-unknown-unknown
 # pnpm install
 
-wasm-opt --version
-
-which wasm-opt
-
-pnpm exec turbo build --env-mode=loose
+pnpm exec turbo build
 
 VERSION="$(git rev-parse HEAD)"
 
 cp dist/index.html "dist/game-${VERSION}.html"
 cp dist/index.html "dist/game.html"
-cp dist/rendering-playground.html dist/rendering-playground-${VERSION}.html"
+cp dist/rendering-playground.html "dist/rendering-playground-${VERSION}.html"
 
 ls -- dist
 
