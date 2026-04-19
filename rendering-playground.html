@@ -16,12 +16,12 @@
 	<body>
 		<svg id=filter xmlns=http://www.w3.org/2000/svg>
 			<filter id=applyColours>
-				<feFlood flood-color=currentColor result=floodFill/>
+				<feFlood flood-color=currentColor result="floodFill"/>
 				<feColorMatrix in=SourceGraphic type=matrix result=matrix values="0 0 0 0 0
                 0 0 0 0 0
                 0 0 0 0 0
                 1 0 0 0 0"/>
-				<feComposite in=floodFill in2=matrix operator=in/>
+				<feComposite in=floodFill in2=matrix operator="in"/>
 			</filter>
 		</svg>
 		<h1>Maze rendering playground</h1>

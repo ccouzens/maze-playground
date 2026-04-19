@@ -1,7 +1,7 @@
 {
   "scripts": {
     "compile-computer": "cd computer; cargo +stable build --target=wasm32-unknown-unknown --release",
-    "optimise-and-copy-computer": "wasm-opt -O3 --enable-bulk-memory -o src/computer.wasm computer/target/wasm32-unknown-unknown/release/computer.wasm",
+    "optimise-and-copy-computer": "wasm-opt -O3 --enable-bulk-memory-opt -o src/computer.wasm computer/target/wasm32-unknown-unknown/release/computer.wasm",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
