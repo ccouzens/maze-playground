@@ -4,6 +4,9 @@ echo $PATH
 echo $GITHUB_PATH
 ls -- "$GITHUB_PATH"
 
+echo "ls binaryen directory"
+ls -- /home/runner/work/maze-playground/maze-playground/binaryen-version_129/bin
+
 # rustup target add wasm32-unknown-unknown
 # pnpm install
 
