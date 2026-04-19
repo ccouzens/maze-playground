@@ -10,11 +10,10 @@
     "format": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,js,yml,yaml,css}' && superhtml fmt *.html && clang-format -i src/{vert,frag}.glsl && (cd computer; cargo fmt)"
   },
   "devDependencies": {
-    "@tsconfig/strictest": "^2.0.8",
     "@webgpu/types": "^0.1.68",
     "prettier": "^3.7.4",
     "turbo": "^2.9.3",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "vite": "^8.0.3"
   },
   "packageManager": "pnpm@10.31.0+sha512.e3927388bfaa8078ceb79b748ffc1e8274e84d75163e67bc22e06c0d3aed43dd153151cbf11d7f8301ff4acb98c68bdc5cadf6989532801ffafe3b3e4a63c268"

@@ -1,7 +1,7 @@
 import { type InitRenderer } from "./type";
 
 import { mazeWalls } from "../computer";
-import shaderFile from "../../public/shader.wgsl";
+import shaderFile from "../shader.wgsl?url";
 
 const WALLSIZE: [number, number] = [1, 1];
 const CELLSIZE: [number, number] = [4, 4];
@@ -17,7 +17,7 @@ export const webGPU: InitRenderer = async function initWebGPU() {
     return () => Promise.resolve();
   }
   const context = canvas.getContext("webgpu");
-  if (!context) {
+  if (!(context instanceof GPUCanvasContext)) {
     console.log("WebGPU is not supported");
     return () => Promise.resolve();
   }
