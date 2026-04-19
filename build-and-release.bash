@@ -31,7 +31,6 @@ gsutil \
   cp \
   -Z \
   dist/assets/*.js.map \
-  dist/assets/*.css.map \
   gs://maze-playground/assets/
 
 gsutil \
