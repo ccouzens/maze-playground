@@ -6,13 +6,13 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "cd esbuild; go run . serve",
-    "typeCheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,js,yml,yaml,css}' && superhtml fmt *.html && clang-format -i src/{vert,frag}.glsl && (cd computer; cargo fmt)"
   },
   "devDependencies": {
     "@webgpu/types": "^0.1.68",
     "prettier": "^3.7.4",
-    "turbo": "^2.9.3",
+    "turbo": "^2.9.6",
     "typescript": "^6.0.2",
     "vite": "^8.0.3"
   },
