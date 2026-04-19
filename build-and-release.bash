@@ -1,11 +1,7 @@
 set -ex
 
-echo $PATH
-echo $GITHUB_PATH
-ls -- "$GITHUB_PATH"
-
-echo "ls binaryen directory"
-ls -- /home/runner/work/maze-playground/maze-playground/binaryen-version_129/bin
+curl --silent -L https://github.com/WebAssembly/binaryen/releases/download/version_129/binaryen-version_129-x86_64-linux.tar.gz | tar -xz
+export PATH="$PATH:$(pwd)/binaryen-version_129/bin"
 
 # rustup target add wasm32-unknown-unknown
 # pnpm install
