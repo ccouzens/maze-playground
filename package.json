@@ -5,7 +5,6 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "cd esbuild; go run . serve",
     "typecheck": "tsc --noEmit",
     "format:superhtml": "superhtml fmt *.html",
     "format:prettier": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,js,yml,yaml,css}'",
