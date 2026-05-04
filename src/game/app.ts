@@ -77,9 +77,7 @@ function clickHandlerFactory(
   app: App,
 ): (ev: HTMLElementEventMap["click"]) => void {
   return function clickHandler(ev) {
-    if (ev.target instanceof HTMLDialogElement) {
-      ev.target.close();
-    } else if (ev.target instanceof HTMLButtonElement) {
+    if (ev.target instanceof HTMLButtonElement) {
       const value = ev.target.value;
       if (value === "new") {
         newMaze(app);
