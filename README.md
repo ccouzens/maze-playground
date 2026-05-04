@@ -43,3 +43,47 @@ podman container run --rm -p 8080:80 "$(podman image build . --quiet | tail -n 1
 # docker
 docker container run --rm -p 8080:80 "$(docker image build . --quiet | tail -n 1)"
 ```
+
+## Development dependencies
+
+- [PNPM](https://pnpm.io/)
+- [Node.js](https://nodejs.org/)
+- [Rust](https://rustup.rs)
+- `wasm32-unknown-unknown`
+  ```
+  rustup target add wasm32-unknown-unknown
+  ```
+- [wasm-opt](https://github.com/WebAssembly/binaryen)
+- [SuperHTML](https://github.com/kristoff-it/superhtml)
+
+## Development commands
+
+```
+# run with hot module reload support
+pnpm exec turbo dev
+# run with production like HTML and assets
+pnpm exec turbo preview
+# format codebase
+pnpm exec turbo format
+```
+
+## Bugs identified
+
+### Firefox `getScreenCTM()` regression
+
+Fixed ✅
+
+This bug stopped Firefox desktop and Android from correctly mapping clicks or
+taps on the maze to internal maze co-ordinates.
+
+[webcompat](https://github.com/webcompat/web-bugs/issues/189202)
+[bugzilla](https://bugzilla.mozilla.org/show_bug.cgi?id=2000531)
+
+### Webkit SVG only partially drawn
+
+Possibly fixed
+
+This bug would cause iPhones to only partially render the maze until it was
+interacted with, or zoomed in.
+
+[webcompat](https://github.com/webcompat/web-bugs/issues/189393)
