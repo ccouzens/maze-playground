@@ -110,7 +110,6 @@ button:active {
   stroke: var(--main-highlight-color);
   stroke-linecap: round;
   stroke-linejoin: round;
-  fill: none;
 }
 
 dialog {
