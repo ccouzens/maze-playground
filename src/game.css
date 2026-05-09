@@ -114,7 +114,7 @@ button:active {
 }
 
 dialog {
-  padding: 0;
+  padding: 0.5em 1em;
   color: var(--main-text-color);
   background-color: var(--main-background-color);
   border-color: var(--main-highlight-color);
@@ -133,14 +133,6 @@ dialog {
   #route {
     display: none;
   }
-}
-
-/* Have the child of the dialog take up all of it, so that clicks outside of it
-are easier to detect. */
-dialog > div {
-  padding: 0.5em 1em;
-  border: 0;
-  margin: 0;
 }
 
 #optionsDialog form {
