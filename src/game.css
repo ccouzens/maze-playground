@@ -31,14 +31,15 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  height: 100svh;
-  width: 100svw;
+  height: 100dvh;
+  width: 100dvw;
   align-items: stretch;
 }
 
 header {
   background-color: var(--header-background-color);
-  padding: 1rem 1rem 0;
+  padding: max(1rem, env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right)) 0 max(1rem, env(safe-area-inset-left));
   text-align: center;
 }
 
@@ -48,16 +49,6 @@ nav {
   gap: 0.5em;
   align-items: baseline;
   justify-content: center;
-}
-
-@media (orientation: landscape) {
-  body {
-    flex-direction: row;
-  }
-
-  nav {
-    flex-direction: column;
-  }
 }
 
 h1 {
@@ -90,7 +81,8 @@ button:active {
 
 #maze {
   flex-grow: 1;
-  padding: 1rem;
+  padding: 1rem max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
   min-width: 5rem;
   min-height: 5rem;
   aspect-ratio: 1;
@@ -180,4 +172,24 @@ dialog {
 
 :root.supports-share .share-not-supported {
   display: none;
+}
+
+@media (orientation: landscape) {
+  body {
+    flex-direction: row;
+  }
+
+  nav {
+    flex-direction: column;
+  }
+
+  header {
+    padding-right: 1rem;
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  #maze {
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-left: 1rem;
+  }
 }
