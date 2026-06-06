@@ -66,7 +66,7 @@ export async function putMazeOnPage() {
     } finally {
       computer.free_maze(maze);
     }
-    setTimeout(rerender, 2000);
+    setTimeout(rerender, 10000);
   }
   await rerender();
 }
