@@ -12,7 +12,6 @@
     "format:rust": "cd computer; cargo +stable fmt"
   },
   "devDependencies": {
-    "@types/node": "^26.1.1",
     "@webgpu/types": "^0.1.68",
     "prettier": "^3.9.5",
     "turbo": "^2.10.4",
