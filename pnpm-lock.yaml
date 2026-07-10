@@ -7,9 +7,9 @@ settings:
 importers:
   .:
     devDependencies:
-      "@webgpu/types":
-        specifier: ^0.1.68
-        version: 0.1.69
+      "@types/web":
+        specifier: ^0.0.352
+        version: 0.0.352
       prettier:
         specifier: ^3.9.5
         version: 3.9.5
@@ -263,6 +263,12 @@ packages:
         integrity: sha512-nxAkRSVkN1Y0JC1W8ky/fTfkGsMmcrRsbx+3XoZE+rMOX71kLYTV7fLXpqud1GpbpP5TuffXFqfX7fH2GgZREw==,
       }
 
+  "@types/web@0.0.352":
+    resolution:
+      {
+        integrity: sha512-UOZDC0FwpYm4zgRK/98jFGXgRirawQYN2TIkhpFbTW4dbQie/GNHJ9uMwJ/BkFxPIhgAEdkIF3AE6qNVaJn1NA==,
+      }
+
   "@typescript/typescript-aix-ppc64@7.0.2":
     resolution:
       {
@@ -442,12 +448,6 @@ packages:
     engines: { node: ">=16.20.0" }
     cpu: [x64]
     os: [win32]
-
-  "@webgpu/types@0.1.69":
-    resolution:
-      {
-        integrity: sha512-RPmm6kgRbI8e98zSD3RVACvnuktIja5+yLgDAkTmxLr90BEwdTXRQWNLF3ETTTyH/8mKhznZuN5AveXYFEsMGQ==,
-      }
 
   detect-libc@2.1.2:
     resolution:
@@ -822,6 +822,8 @@ snapshots:
       undici-types: 8.3.0
     optional: true
 
+  "@types/web@0.0.352": {}
+
   "@typescript/typescript-aix-ppc64@7.0.2":
     optional: true
 
@@ -881,8 +883,6 @@ snapshots:
 
   "@typescript/typescript-win32-x64@7.0.2":
     optional: true
-
-  "@webgpu/types@0.1.69": {}
 
   detect-libc@2.1.2: {}
 

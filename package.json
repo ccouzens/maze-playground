@@ -12,7 +12,7 @@
     "format:rust": "cd computer; cargo +stable fmt"
   },
   "devDependencies": {
-    "@webgpu/types": "^0.1.68",
+    "@types/web": "^0.0.352",
     "prettier": "^3.9.5",
     "turbo": "^2.10.4",
     "typescript": "^7.0.2",
