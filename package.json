@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "compile-computer": "cd computer; cargo +stable build --target=wasm32-unknown-unknown --release",
+    "compile-computer": "cd computer; cargo build --target=wasm32-unknown-unknown --release",
     "optimise-and-copy-computer": "wasm-opt -O3 --enable-bulk-memory-opt -o src/computer.wasm computer/target/wasm32-unknown-unknown/release/computer.wasm",
     "dev": "vite",
     "build": "vite build",
@@ -9,7 +9,7 @@
     "format:superhtml": "superhtml fmt *.html",
     "format:prettier": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,js,yml,yaml,css}'",
     "format:clang": "clang-format -i src/{vert,frag}.glsl",
-    "format:rust": "cd computer; cargo +stable fmt"
+    "format:rust": "cd computer; cargo fmt"
   },
   "devDependencies": {
     "@types/web": "^0.0.352",

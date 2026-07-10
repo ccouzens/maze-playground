@@ -1,10 +1,7 @@
 set -ex
 
-curl --silent -L https://github.com/WebAssembly/binaryen/releases/download/version_129/binaryen-version_129-x86_64-linux.tar.gz | tar -xz
-export PATH="$PATH:$(pwd)/binaryen-version_129/bin"
-
-# rustup target add wasm32-unknown-unknown
-# pnpm install
+curl --silent -L https://github.com/WebAssembly/binaryen/releases/download/version_130/binaryen-version_130-x86_64-linux.tar.gz | tar -xz
+export PATH="$PATH:$(pwd)/binaryen-version_130/bin"
 
 pnpm exec turbo build
 

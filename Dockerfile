@@ -1,6 +1,9 @@
 FROM docker.io/library/rust:1.97 AS builder
 RUN rustup target add wasm32-unknown-unknown
-RUN apt-get update && apt-get install binaryen nodejs node-corepack --assume-yes --no-install-recommends --no-install-suggests
+
+RUN curl --silent -L https://github.com/WebAssembly/binaryen/releases/download/version_130/binaryen-version_130-x86_64-linux.tar.gz | tar -xz
+ENV PATH="${PATH}:$PWD/binaryen-version_130/bin"
+RUN apt-get update && apt-get install nodejs node-corepack --assume-yes --no-install-recommends --no-install-suggests
 RUN corepack enable
 
 WORKDIR /app/
