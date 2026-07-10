@@ -12,12 +12,12 @@
     "format:rust": "cd computer; cargo +stable fmt"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
+    "@types/node": "^26.1.1",
     "@webgpu/types": "^0.1.68",
-    "prettier": "^3.7.4",
-    "turbo": "^2.9.8",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.3"
+    "prettier": "^3.9.5",
+    "turbo": "^2.10.4",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.4"
   },
   "packageManager": "pnpm@10.31.0+sha512.e3927388bfaa8078ceb79b748ffc1e8274e84d75163e67bc22e06c0d3aed43dd153151cbf11d7f8301ff4acb98c68bdc5cadf6989532801ffafe3b3e4a63c268"
 }
