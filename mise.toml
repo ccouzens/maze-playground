@@ -1,5 +1,4 @@
 [tools]
-clang-format = "latest"
 "github:WebAssembly/binaryen" = "latest"
 node = "latest"
 "npm:typescript" = "latest"
@@ -10,4 +9,5 @@ rust-analyzer = "latest"
 superhtml = "latest"
 tombi = "latest"
 turbo = "latest"
+clang-format = "latest"
 
