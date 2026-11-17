@@ -10,44 +10,34 @@ cp dist/rendering-playground.html "dist/rendering-playground-${VERSION}.html"
 
 ls -- dist
 
-gsutil \
-  -m \
-  -h "Content-Type:text/plain" \
-  cp \
-  -Z \
+gcloud storage cp \
+  --content-type="text/plain" \
+  --gzip-local-all \
   dist/assets/*.glsl \
   dist/assets/*.wgsl \
   gs://maze-playground/assets/
 
-gsutil \
-  -m \
-  -h "Content-Type:application/json" \
-  cp \
-  -Z \
+gcloud storage cp \
+  --content-type="application/json" \
+  --gzip-local-all \
   dist/assets/*.js.map \
   gs://maze-playground/assets/
 
-gsutil \
-  -m \
-  cp \
-  -Z \
+gcloud storage cp \
+  --gzip-local-all \
   dist/assets/*.wasm \
   dist/assets/*.js \
   dist/assets/*.css \
   gs://maze-playground/assets/
 
-gsutil \
-  -m \
-  cp \
-  -Z \
+gcloud storage cp \
+  --gzip-local=json,svg \
   dist/*.json \
   dist/*.svg \
   dist/*.png \
   gs://maze-playground/
 
-gsutil \
-  -m \
-  cp \
-  -Z \
+gcloud storage cp \
+  --gzip-local-all \
   dist/*.html \
   gs://maze-playground/
