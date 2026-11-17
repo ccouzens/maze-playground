@@ -331,7 +331,7 @@ impl Maze {
         }
     }
 
-    pub fn every_cell(&self) -> impl Iterator<Item = (usize, usize)> {
+    pub fn every_cell(&self) -> impl Iterator<Item = (usize, usize)> + use<> {
         let width = self.width;
         let height = self.height;
 

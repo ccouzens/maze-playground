@@ -1,5 +1,7 @@
 use std::collections::BTreeSet;
 
+use rand::RngExt;
+
 use super::Maze;
 
 pub fn generate_maze_with_binary_tree_algorithm(
@@ -18,7 +20,7 @@ pub fn generate_maze_with_binary_tree_algorithm(
                 maze.connect_pair(x, y, x, y - 1);
             }
             (false, false) => {
-                let go_up = rng.gen();
+                let go_up = rng.random();
                 maze.connect_pair(
                     x,
                     y,
@@ -46,11 +48,11 @@ pub fn generate_maze_with_sidewinder_algorithm(
     for y in 1..height {
         let mut block_start = 0;
         for x in 0..width {
-            let extend = x != width - 1 && rng.gen();
+            let extend = x != width - 1 && rng.random();
             if extend {
                 maze.connect_pair(x, y, x + 1, y);
             } else {
-                let up_cell = rng.gen_range(block_start..=x);
+                let up_cell = rng.random_range(block_start..=x);
                 maze.connect_pair(up_cell, y, up_cell, y - 1);
                 block_start = x + 1;
             }
@@ -88,7 +90,7 @@ fn random_neighbour(
     candidates
         .iter()
         .filter_map(|c| *c)
-        .nth(rng.gen_range(0..len))
+        .nth(rng.random_range(0..len))
         .unwrap()
 }
 
@@ -100,7 +102,7 @@ pub fn generate_maze_with_aldous_broder(
     let mut maze = Maze::new(width, height).unwrap();
     let mut visited = BTreeSet::new();
 
-    let mut cell = (rng.gen_range(0..width), rng.gen_range(0..height));
+    let mut cell = (rng.random_range(0..width), rng.random_range(0..height));
 
     visited.insert(cell);
 
@@ -123,14 +125,14 @@ pub fn generate_maze_with_wilsons_algorithm(
     let mut unvisited: BTreeSet<(usize, usize)> = maze.every_cell().collect();
     let first = *unvisited
         .iter()
-        .nth(rng.gen_range(0..unvisited.len()))
+        .nth(rng.random_range(0..unvisited.len()))
         .unwrap();
     unvisited.remove(&first);
 
     while !unvisited.is_empty() {
         let mut cell = *unvisited
             .iter()
-            .nth(rng.gen_range(0..unvisited.len()))
+            .nth(rng.random_range(0..unvisited.len()))
             .unwrap();
         let mut path = vec![cell];
         while unvisited.contains(&cell) {
