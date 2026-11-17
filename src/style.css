@@ -35,14 +35,7 @@ h2,
 }
 
 :root {
-  color: black;
-  background-color: hsl(180, 100%, 85%);
+  color: light-dark(black, white);
+  background-color: light-dark(hsl(180, 100%, 85%), hsl(180, 100%, 15%));
   font-family: sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: white;
-    background-color: hsl(180, 100%, 15%);
-  }
 }
