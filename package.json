@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "format:superhtml": "superhtml fmt *.html",
     "format:prettier": "prettier --write --prose-wrap=always './**/*.{mjs,ts,md,json,js,yml,yaml,css}'",
-    "format:clang": "clang-format -i src/{vert,frag}.glsl",
+    "format:clang": "clang-format -i src/vert.glsl src/frag.glsl",
     "format:rust": "cd computer; cargo fmt"
   },
   "devDependencies": {

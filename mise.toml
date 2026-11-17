@@ -1,4 +1,5 @@
 [tools]
+clang-format = "latest"
 "github:WebAssembly/binaryen" = "latest"
 node = "latest"
 pnpm = "latest"
