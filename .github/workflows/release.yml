@@ -15,15 +15,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - uses: jdx/mise-action@v5
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: jdx/mise-action@236a21c3b91f5db6d4e174b348674a0f0caac06d # v5.2.9
       - name: Install dependencies
         run: pnpm install
-      - uses: "google-github-actions/auth@v2"
+      - uses: "google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093" # v3.0.0
         with:
           project_id: "maze-playground"
           workload_identity_provider: "projects/206430360926/locations/global/workloadIdentityPools/github/providers/my-repo"
       - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v2"
+        uses: "google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db" # v3.0.1
       - name: build and deploy
         run: ./build-and-release.bash
