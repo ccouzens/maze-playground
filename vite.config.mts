@@ -12,5 +12,6 @@ export default defineConfig({
         nested: resolve(import.meta.dirname, "rendering-playground.html"),
       },
     },
+    target: ['chrome157', 'firefox160', 'safari27.2']
   },
 });
