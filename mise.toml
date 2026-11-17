@@ -1,0 +1,7 @@
+[tools]
+"github:WebAssembly/binaryen" = "latest"
+node = "latest"
+pnpm = "latest"
+rust = { version = "latest", targets = ["wasm32-unknown-unknown"] }
+superhtml = "latest"
+
