@@ -2,7 +2,12 @@
 clang-format = "latest"
 "github:WebAssembly/binaryen" = "latest"
 node = "latest"
+"npm:typescript" = "latest"
+prettier = "latest"
 pnpm = "latest"
 rust = { version = "latest", targets = ["wasm32-unknown-unknown"] }
+rust-analyzer = "latest"
 superhtml = "latest"
+tombi = "latest"
+turbo = "latest"
 
