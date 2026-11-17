@@ -37,7 +37,8 @@
         "format:superhtml",
         "format:prettier",
         "format:clang",
-        "format:rust"
+        "format:rust",
+        "format:tombi"
       ]
     }
   }
